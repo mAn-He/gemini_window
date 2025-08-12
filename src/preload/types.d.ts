@@ -7,6 +7,9 @@ export interface IElectronAPI {
   processFile: (filePath: string, prompt: string) => Promise<string>;
   deepResearch: (prompt: string, modelName: string) => Promise<{ answer: string; refinedQuery: string }>;
   
+  // New: default web-search chat with citations
+  chatWithWeb: (message: string, modelName: string) => Promise<{ answer: string; citations: { title: string; url: string; snippet: string }[] }>;
+  
   // Canvas APIs
   loadCanvasProject: (projectId: string) => Promise<any>;
   saveCanvasProject: (project: any) => Promise<boolean>;
@@ -19,12 +22,18 @@ export interface IElectronAPI {
   disconnectMCPServer: (serverName: string) => Promise<boolean>;
   deleteMCPServer: (serverName: string) => Promise<boolean>;
   callMCPTool: (serverName: string, toolName: string, args: any) => Promise<any>;
+  getMCPTools: () => Promise<Record<string, Array<{ name: string; description: string }>>>;
   
   // MCP Config APIs
   getMCPConfigPath: () => Promise<string>;
   importMCPConfig: (jsonConfig: string) => Promise<boolean>;
   exportMCPConfig: () => Promise<string>;
   addMCPServerToConfig: (serverName: string, serverConfig: any) => Promise<boolean>;
+}
+
+export interface AppSettings {
+  // Placeholder to satisfy references in types; actual shape defined elsewhere
+  [key: string]: any;
 }
 
 declare global {

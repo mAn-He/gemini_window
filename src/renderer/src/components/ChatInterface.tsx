@@ -16,6 +16,7 @@ interface ChatInterfaceProps {
   isDeepResearchMode: boolean;
   setIsDeepResearchMode: (isMode: boolean) => void;
   researchProgress: string[];
+  onSelectCanvas?: () => void;
 }
 
 const ChatInterface: React.FC<ChatInterfaceProps> = ({
@@ -32,6 +33,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   isDeepResearchMode,
   setIsDeepResearchMode,
   researchProgress,
+  onSelectCanvas,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -68,6 +70,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
     if (toolName === 'Deep research') {
       setIsDeepResearchMode(!isDeepResearchMode); // Toggle the mode
       setIsToolsOpen(false);
+      return;
+    }
+    if (toolName === 'Canvas') {
+      onSelectCanvas?.();
+      setIsToolsOpen(false);
+      return;
     }
     // Handle other tools later
   };
@@ -76,7 +84,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
 
   return (
     <>
-      <div ref={chatContainerRef} className="flex-1 w-full max-w-4xl overflow-y-auto p-4">
+      <div
+        ref={chatContainerRef}
+        className="flex-1 w-full overflow-y-auto p-4 select-text"
+      >
         {messages.length === 0 && !isLoading ? (
           <div className="flex flex-col items-center justify-center h-full">
             <Bot size={48} className="mx-auto mb-4" />
@@ -94,7 +105,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                       <span>{msg.fileName}</span>
                     </div>
                   )}
-                  <p className="whitespace-pre-wrap">{msg.text}</p>
+                  <p className="whitespace-pre-wrap select-text">{msg.text}</p>
                 </div>
               </div>
             ))}
@@ -130,7 +141,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
         )}
       </div>
 
-      <div className="w-full max-w-3xl p-4">
+      <div className="w-full p-4">
         <div className="flex flex-col gap-2">
           {/* The entire isDeepResearchMode block for the URL input is removed */}
           
@@ -181,7 +192,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                 <ChevronDown size={16} />
               </button>
               {isToolsOpen && (
-                <div className="absolute bottom-full mb-2 w-48 bg-[#121212] rounded-md shadow-lg z-10">
+                <div className="absolute bottom-full mb-2 w-64 bg-[#121212] rounded-md shadow-lg z-10 p-1">
                   {tools.map((tool) => {
                     const isDeepResearch = tool.name === 'Deep research';
                     const isActive = isDeepResearch && isDeepResearchMode;
@@ -189,14 +200,22 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                       <button
                         key={tool.name}
                         onClick={() => handleToolClick(tool.name)}
-                        className="flex items-center space-x-2 w-full text-left p-2 hover:bg-gray-700"
+                        className="flex items-center space-x-2 w-full text-left p-2 hover:bg-gray-700 rounded"
                       >
-                        {/* Clone the icon to add conditional styling */}
                         {React.cloneElement(tool.icon, { className: isActive ? 'text-blue-400' : '' })}
-                        <span className={isActive ? 'text-blue-400' : ''}>{tool.name}</span>
+                        <span className={`truncate ${isActive ? 'text-blue-400' : ''}`}>{tool.name}</span>
                       </button>
                     );
                   })}
+
+                  {/* MCP Tools dynamic group (if any) */}
+                  <div className="my-1 border-t border-gray-800"></div>
+                  <div className="px-2 py-1 text-xs text-gray-400">MCP Tools (connected)</div>
+                  <div className="max-h-64 overflow-y-auto">
+                    {/* Rendered by parent App as a separate dropdown later; keeping placeholder for UX */}
+                    {/* To keep the component simple, we rely on parent to open consent & call tool */}
+                    {/* Instructions will be in App using modal */}
+                  </div>
                 </div>
               )}
             </div>

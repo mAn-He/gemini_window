@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [activeModel, setActiveModel] = useState<'pro' | 'flash'>('pro');
   const [activeView, setActiveView] = useState<'chat' | 'canvas' | 'mcp' | 'settings'>('chat');
+  const [showCanvasPane, setShowCanvasPane] = useState<boolean>(false);
   
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [userInput, setUserInput] = useState('');
@@ -43,12 +44,58 @@ const App: React.FC = () => {
   // MCP 관련 상태
   const [mcpServers, setMcpServers] = useState<any[]>([]);
   const [mcpConnectionStatus, setMcpConnectionStatus] = useState<Record<string, 'connected' | 'disconnected' | 'connecting'>>({});
+  const [mcpTools, setMcpTools] = useState<Record<string, Array<{ name: string; description: string }>>>({});
+  const [showConsent, setShowConsent] = useState<{ server?: string; tool?: string } | null>(null);
   
   const tools = [
     { name: 'Deep research', icon: <BrainCircuit size={18} /> },
     { name: 'Canvas', icon: <PencilRuler size={18} /> },
     { name: 'Web search', icon: <ScanSearch size={18} /> },
+    // MCP tools will be appended dynamically below in the dropdown
   ];
+
+  useEffect(() => {
+    const loadTools = async () => {
+      try {
+        const grouped = await window.api.getMCPTools();
+        setMcpTools(grouped || {});
+      } catch (e) {
+        console.warn('Unable to load MCP tools (maybe no servers connected yet).');
+      }
+    };
+    loadTools();
+  }, [activeView]);
+
+  const handleToolInvokeMCP = async (server: string, tool: string) => {
+    // simple first-use consent stub
+    if (showConsent && showConsent.server === server && showConsent.tool === tool) {
+      setShowConsent(null);
+    } else {
+      setShowConsent({ server, tool });
+      return;
+    }
+
+    try {
+      const args = userInput ? { query: userInput } : {};
+      const result = await window.api.callMCPTool(server, tool, args);
+      const text = typeof result?.content?.[0]?.text === 'string' ? result.content[0].text : JSON.stringify(result);
+      const aiMessage: ChatMessage = {
+        id: uuidv4(),
+        text,
+        sender: 'ai',
+        timestamp: new Date().toISOString(),
+      };
+      setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      const aiMessage: ChatMessage = {
+        id: uuidv4(),
+        text: `MCP tool call failed: ${error}`,
+        sender: 'ai',
+        timestamp: new Date().toISOString(),
+      };
+      setMessages(prev => [...prev, aiMessage]);
+    }
+  };
 
   const spring = {
     type: "spring",
@@ -102,7 +149,11 @@ const App: React.FC = () => {
         aiResponseText = await window.api.processFile(attachedFile.path, userInput);
         setAttachedFile(null);
       } else {
-        aiResponseText = await window.api.sendMessage(userInput, currentModelName);
+        const result = await window.api.chatWithWeb(userInput, currentModelName);
+        const refs = (result.citations || [])
+          .map((c, idx) => `- [${idx + 1}] ${c.title} (${c.url})\n  ${c.snippet}`)
+          .join('\n');
+        aiResponseText = refs ? `${result.answer}\n\nReferences:\n${refs}` : result.answer;
       }
 
       const aiMessage: ChatMessage = {
@@ -153,6 +204,12 @@ const App: React.FC = () => {
 
   // 뷰 변경 핸들러
   const handleViewChange = (view: 'chat' | 'canvas' | 'mcp' | 'settings') => {
+    if (view === 'canvas') {
+      // open inline canvas pane instead of navigating away
+      setShowCanvasPane(true);
+      setActiveView('chat');
+      return;
+    }
     setActiveView(view);
   };
 
@@ -301,34 +358,69 @@ const App: React.FC = () => {
         </div>
         
         {/* Content Area */}
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 overflow-auto relative flex">
           {activeView === 'chat' && (
-            <ChatInterface
-              messages={messages}
-              userInput={userInput}
-              isLoading={isLoading}
-              isToolsOpen={isToolsOpen}
-              tools={tools}
-              setUserInput={setUserInput}
-              handleSendMessage={handleSendMessage}
-              setIsToolsOpen={setIsToolsOpen}
-              attachedFile={attachedFile}
-              setAttachedFile={setAttachedFile}
-              isDeepResearchMode={isDeepResearchMode}
-              setIsDeepResearchMode={setIsDeepResearchMode}
-              researchProgress={researchProgress}
-            />
+            <>
+              {/* Left: Chat */}
+              <div className={`flex-1 min-w-0 ${showCanvasPane ? 'border-r border-gray-800' : ''}`}>
+                <ChatInterface
+                  messages={messages}
+                  userInput={userInput}
+                  isLoading={isLoading}
+                  isToolsOpen={isToolsOpen}
+                  tools={tools}
+                  setUserInput={setUserInput}
+                  handleSendMessage={handleSendMessage}
+                  setIsToolsOpen={setIsToolsOpen}
+                  attachedFile={attachedFile}
+                  setAttachedFile={setAttachedFile}
+                  isDeepResearchMode={isDeepResearchMode}
+                  setIsDeepResearchMode={setIsDeepResearchMode}
+                  researchProgress={researchProgress}
+                  onSelectCanvas={() => setShowCanvasPane(true)}
+                />
+              </div>
+
+              {/* Right: Inline Canvas Pane */}
+              {showCanvasPane && (
+                <div className="w-[45%] min-w-[380px] max-w-[900px] h-full">
+                  <CanvasEngine
+                    projectId={currentProjectId}
+                    onAIRequest={handleCanvasAIRequest}
+                    onSave={(project) => {
+                      console.log('Canvas project saved:', project);
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* Floating MCP tool list when Tools is open */}
+              {isToolsOpen && Object.keys(mcpTools).length > 0 && (
+                <div className="absolute left-6 bottom-48 w-80 bg-[#121212] rounded-md shadow-lg z-30 border border-gray-800 p-2">
+                  <div className="text-xs text-gray-400 px-1 pb-1">MCP Tools</div>
+                  <div className="max-h-64 overflow-y-auto space-y-1">
+                    {Object.entries(mcpTools).map(([server, tools]) => (
+                      <div key={server} className="">
+                        <div className="px-2 py-1 text-xs text-gray-500">{server}</div>
+                        {tools.map(t => (
+                          <button
+                            key={`${server}:${t.name}`}
+                            onClick={() => handleToolInvokeMCP(server, t.name)}
+                            className="w-full text-left px-2 py-1 rounded hover:bg-gray-700 text-sm text-gray-200"
+                            title={t.description}
+                          >
+                            {t.name}
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
           
-          {activeView === 'canvas' && (
-            <CanvasEngine
-              projectId={currentProjectId}
-              onAIRequest={handleCanvasAIRequest}
-              onSave={(project) => {
-                console.log('Canvas project saved:', project);
-              }}
-            />
-          )}
+          {/* Canvas standalone view removed in favor of inline pane */}
           
           {activeView === 'mcp' && (
             <MCPManager
@@ -339,6 +431,20 @@ const App: React.FC = () => {
           
           {activeView === 'settings' && <Settings />}
         </div>
+
+        {/* Consent modal for MCP tool (simple) */}
+        {showConsent && (
+          <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 max-w-md w-full">
+              <h3 className="text-lg font-semibold mb-2">Allow MCP Tool</h3>
+              <p className="text-sm text-gray-300 mb-4">Allow tool "{showConsent.tool}" on server "{showConsent.server}" to run with your current input?</p>
+              <div className="flex justify-end space-x-2">
+                <button className="px-3 py-2 bg-gray-600 rounded" onClick={() => setShowConsent(null)}>Cancel</button>
+                <button className="px-3 py-2 bg-blue-600 rounded" onClick={() => handleToolInvokeMCP(showConsent.server!, showConsent.tool!)}>Allow</button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

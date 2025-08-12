@@ -9,6 +9,8 @@
 import { DynamicStructuredTool, Tool } from "@langchain/core/tools";
 import { z } from "zod";
 import { chromium, Browser, Page } from 'playwright';
+import fetch from 'node-fetch';
+import * as cheerio from 'cheerio';
 
 // 실제 구현에서는 Tavily, SerpAPI, Google Custom Search API 클라이언트나
 // Playwright/Cheerio 같은 스크래핑 라이브러리를 사용합니다.
@@ -17,7 +19,7 @@ import { chromium, Browser, Page } from 'playwright';
  * 에이전트가 사용할 수 있는 도구 모음 클래스입니다.
  */
 export class ToolBelt {
-  private tools: Tool[];
+  private tools: any[];
   private browser: Browser | null = null;
 
   constructor() {
@@ -33,7 +35,37 @@ export class ToolBelt {
    * @returns 도구 목록
    */
   public getTools(): Tool[] {
-    return this.tools;
+    return this.tools as unknown as Tool[];
+  }
+
+  /**
+   * 외부 호출용: 웹검색을 실행하고 상위 k개 결과만 정규화하여 반환합니다.
+   */
+  public async runWebSearch(
+    query: string,
+    k: number = 5
+  ): Promise<Array<{ title: string; url: string; snippet: string }>> {
+    const tool = this.createWebSearchTool();
+    const raw = await tool.func({ query });
+
+    try {
+      const parsed = JSON.parse(raw as unknown as string) as Array<{
+        title?: string;
+        url?: string;
+        snippet?: string;
+      }>;
+
+      const normalized = (parsed || []).map((r) => ({
+        title: r.title || 'Untitled',
+        url: r.url || '',
+        snippet: r.snippet || '',
+      }));
+
+      return normalized.slice(0, Math.max(0, k));
+    } catch (e) {
+      console.error('[ToolBelt.runWebSearch] Failed to parse search results:', e);
+      return [];
+    }
   }
 
   /**
@@ -70,84 +102,29 @@ export class ToolBelt {
         console.log(`[Tool][Web Search] 검색 실행: ${query}`);
 
         try {
-          await this.initializeBrowser();
-          const page = await this.browser!.newPage();
+          // DuckDuckGo HTML (no API key required)
+          const url = `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`;
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 10000);
+          const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' }, signal: controller.signal as any });
+          clearTimeout(timer);
+          const html = await res.text();
+          const $ = cheerio.load(html);
 
-          // Google Scholar 또는 일반 검색 엔진 사용
-          let searchUrl = '';
-          if (query.includes('site:arxiv.org') || query.includes('academic') || query.includes('research')) {
-            // 학술 검색
-            searchUrl = `https://scholar.google.com/scholar?q=${encodeURIComponent(query)}`;
-          } else {
-            // 일반 검색
-            searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-          }
-
-          await page.goto(searchUrl, { waitUntil: 'domcontentloaded', timeout: 10000 });
-
-          // 검색 결과 추출
-          const results = await page.evaluate(() => {
-            const results: any[] = [];
-            
-            // Google Scholar 결과 파싱
-            const scholarResults = document.querySelectorAll('.gs_ri');
-            if (scholarResults.length > 0) {
-              scholarResults.forEach((item, index) => {
-                if (index < 5) {
-                  const titleElement = item.querySelector('h3 a') as HTMLAnchorElement;
-                  const snippetElement = item.querySelector('.gs_rs');
-                  
-                  results.push({
-                    title: titleElement ? titleElement.innerText : 'No title found',
-                    snippet: snippetElement ? snippetElement.textContent || '' : 'No snippet found',
-                    url: titleElement ? titleElement.href : 'No link found',
-                  });
-                }
-              });
-            } else {
-              // 일반 Google 검색 결과 파싱
-              const generalResults = document.querySelectorAll('div.g');
-              generalResults.forEach((item, index) => {
-                if (index < 5) {
-                  const titleElement = item.querySelector('h3');
-                  const linkElement = item.querySelector('a');
-                  const snippetElement = item.querySelector('.VwiC3b');
-                  
-                  results.push({
-                    title: titleElement ? titleElement.innerText : 'No title found',
-                    snippet: snippetElement ? snippetElement.textContent || '' : 'No snippet found',
-                    url: linkElement ? linkElement.href : 'No link found',
-                  });
-                }
-              });
-            }
-            
-            return results;
+          const results: Array<{ title: string; url: string; snippet: string }> = [];
+          $('a.result__a').each((i, el) => {
+            if (i >= 10) return false;
+            const title = $(el).text().trim() || 'Untitled';
+            const href = $(el).attr('href') || '';
+            const snippet = $(el).parent().find('.result__snippet').text().trim() || '';
+            results.push({ title, url: href, snippet });
           });
-
-          await page.close();
 
           console.log(`[Tool][Web Search] ${results.length}개 결과 발견`);
           return JSON.stringify(results);
-
         } catch (error) {
           console.error(`[Tool][Web Search] 오류:`, error);
-          
-          // 예시 응답 (Mock Data) - 실제 환경에서는 실제 데이터로 대체해야 합니다.
-          const mockResults = [
-            {
-              title: "그래핀 기반 배터리의 최신 발전 동향 (2025)",
-              snippet: "2025년 연구에 따르면 그래핀 나노구조는 리튬이온 배터리의 에너지 밀도를 30% 향상시켰다...",
-              url: "https://example.com/graphene-battery-2025",
-            },
-            {
-              title: "그래핀 시장 규모 및 예측 (Reuters)",
-              snippet: "글로벌 그래핀 시장은 2030년까지 연평균 25% 성장할 것으로 예상된다...",
-              url: "https://reuters.example.com/graphene-market-size",
-            },
-          ];
-
-          return JSON.stringify(mockResults);
+          return JSON.stringify([]);
         }
       },
     });
@@ -182,14 +159,14 @@ export class ToolBelt {
             let extractedContent = '';
             
             if (abstractElement) {
-              extractedContent += 'ABSTRACT: ' + abstractElement.innerText + '\n\n';
+              extractedContent += 'ABSTRACT: ' + (abstractElement.textContent || '') + '\n\n';
             }
             
             if (mainElement) {
-              extractedContent += 'CONTENT: ' + mainElement.innerText.substring(0, 5000) + '...'; // Limit to avoid too much text
+              extractedContent += 'CONTENT: ' + (mainElement.textContent || '').substring(0, 5000) + '...';
             } else {
               // Fallback to body content with some filtering
-              const bodyText = document.body.innerText;
+              const bodyText = (document.body.textContent || '').trim();
               extractedContent += 'CONTENT: ' + bodyText.substring(0, 3000) + '...';
             }
             
@@ -204,7 +181,7 @@ export class ToolBelt {
         } catch (error) {
           console.error(`[Tool][Deep Web Scraper] 오류:`, error);
 
-          // 예시 응답 (Mock Data) - 재귀적 참고문헌 추적 테스트를 위한 내용 포함 (4.3)
+          // 예시 응답 (Mock Data)
           if (url.includes("graphene-battery-2025")) {
             return `[상세 내용] 그래핀 배터리 연구 상세 보고서... 에너지 밀도 향상은 나노구조 최적화 덕분입니다.
             ... (중략) ...

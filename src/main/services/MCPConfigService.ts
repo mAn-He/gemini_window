@@ -7,6 +7,7 @@ interface MCPServerConfig {
   args: string[];
   env?: Record<string, string>;
   description?: string;
+  disabled?: boolean; // optional: skip connecting on startup
 }
 
 interface MCPConfig {

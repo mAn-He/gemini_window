@@ -288,24 +288,68 @@ class MCPServerConnection {
         this.cleanup();
       });
 
-      // stdout에서 JSON-RPC 메시지 파싱
-      let buffer = '';
+      // stdout에서 JSON-RPC 메시지 파싱 (Content-Length 헤더 우선)
+      let buffer = Buffer.alloc(0);
       this.process.stdout?.on('data', (chunk) => {
-        buffer += chunk.toString();
-        
-        // 완전한 JSON 메시지 파싱
-        let lines = buffer.split('\n');
-        buffer = lines.pop() || ''; // 마지막 불완전한 라인 보관
-        
-        for (const line of lines) {
-          if (line.trim()) {
+        const incoming: Buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+        buffer = Buffer.concat([buffer, incoming]);
+
+        // Try to parse header-framed messages in a loop
+        while (true) {
+          const sep = buffer.indexOf('\r\n\r\n');
+          if (sep === -1) break;
+
+          const headerPart = buffer.slice(0, sep).toString('utf8');
+          const headers = headerPart.split(/\r\n/).reduce<Record<string, string>>((acc, line) => {
+            const idx = line.indexOf(':');
+            if (idx > -1) {
+              const key = line.slice(0, idx).trim().toLowerCase();
+              const val = line.slice(idx + 1).trim();
+              acc[key] = val;
+            }
+            return acc;
+          }, {});
+
+          const lenStr = headers['content-length'];
+          const contentLength = lenStr ? parseInt(lenStr, 10) : NaN;
+          if (!contentLength || isNaN(contentLength)) {
+            // Not a valid header-framed message; fall back to JSONL parsing
+            break;
+          }
+
+          const totalNeeded = sep + 4 + contentLength;
+          if (buffer.length < totalNeeded) {
+            // Wait for more data
+            break;
+          }
+
+          const body = buffer.slice(sep + 4, totalNeeded).toString('utf8');
+          buffer = buffer.slice(totalNeeded);
+
+          try {
+            const message: MCPMessage = JSON.parse(body);
+            this.handleMessage(message);
+          } catch {
+            console.error(`[MCP] Failed to parse framed message from ${this.config.name}`);
+          }
+        }
+
+        // If leftover buffer doesn't contain headers, attempt JSONL per-line fallback
+        const asString = buffer.toString('utf8');
+        if (asString.includes('\n') && !asString.includes('Content-Length')) {
+          const parts = asString.split('\n');
+          const lastPartial = parts.pop() || '';
+          for (const line of parts) {
+            const t = line.trim();
+            if (!t) continue;
             try {
-              const message: MCPMessage = JSON.parse(line.trim());
-              this.handleMessage(message);
-            } catch (error) {
-              console.error(`[MCP] Failed to parse message from ${this.config.name}:`, line);
+              const msg: MCPMessage = JSON.parse(t);
+              this.handleMessage(msg);
+            } catch {
+              // ignore
             }
           }
+          buffer = Buffer.from(lastPartial, 'utf8');
         }
       });
 
@@ -328,7 +372,6 @@ class MCPServerConnection {
   async disconnect(): Promise<void> {
     if (this.process) {
       this.process.kill('SIGTERM');
-      
       // 강제 종료 타이머
       setTimeout(() => {
         if (this.process && !this.process.killed) {
@@ -372,9 +415,10 @@ class MCPServerConnection {
       // 요청 등록
       this.pendingRequests.set(id, { resolve, reject, timeout });
 
-      // 메시지 전송
-      const messageStr = JSON.stringify(message) + '\n';
-      this.process.stdin?.write(messageStr);
+      // 메시지 전송 - header framed
+      const body = JSON.stringify(message);
+      const header = `Content-Length: ${Buffer.byteLength(body, 'utf8')}\r\n\r\n`;
+      this.process.stdin?.write(header + body);
     });
   }
 
@@ -389,8 +433,9 @@ class MCPServerConnection {
       params,
     };
 
-    const messageStr = JSON.stringify(message) + '\n';
-    this.process.stdin?.write(messageStr);
+    const body = JSON.stringify(message);
+    const header = `Content-Length: ${Buffer.byteLength(body, 'utf8')}\r\n\r\n`;
+    this.process.stdin?.write(header + body);
   }
 
   private handleMessage(message: MCPMessage): void {

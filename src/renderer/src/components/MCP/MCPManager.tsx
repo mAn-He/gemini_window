@@ -93,7 +93,7 @@ const MCPManager: React.FC<MCPManagerProps> = ({
       description: 'Workflow automation with N8N',
       command: 'npx',
       args: ['@guinness77/n8n-mcp-server'],
-      icon: <Settings size={20} className="text-blue-400" />
+      icon: <SettingsIcon size={20} className="text-blue-400" />
     },
     {
       name: 'Web Search',
@@ -320,6 +320,14 @@ const MCPManager: React.FC<MCPManagerProps> = ({
               <Code size={16} />
               <span>JSON Config</span>
             </button>
+            <button
+              onClick={() => loadMCPServers()}
+              className="flex items-center space-x-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors"
+              title="Refresh"
+            >
+              <Plug size={16} />
+              <span>Refresh</span>
+            </button>
             
             <button
               onClick={() => setIsAddingServer(true)}
@@ -330,6 +338,20 @@ const MCPManager: React.FC<MCPManagerProps> = ({
             </button>
           </div>
         </div>
+
+        {/* Connected Servers quick view */}
+        {servers.some(s => s.status === 'connected') && (
+          <div className="mb-6">
+            <h2 className="text-sm text-gray-400 mb-2">Connected</h2>
+            <div className="flex flex-wrap gap-2">
+              {servers.filter(s => s.status === 'connected').map(s => (
+                <span key={s.name} className="px-2 py-1 bg-gray-800 border border-gray-700 rounded text-sm text-gray-200">
+                  {s.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Server Templates */}
         {!isAddingServer && servers.length === 0 && (

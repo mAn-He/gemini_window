@@ -9,6 +9,7 @@ import MCPClient from './services/MCPClient';
 import MCPConfigService from './services/MCPConfigService';
 import * as dotenv from 'dotenv'
 import * as path from 'path'
+import { ToolBelt } from './services/ToolBelt'
 
 // Load environment variables
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
@@ -17,6 +18,7 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 let deepResearchAgent: DeepResearchAgent | null = null;
 let aiService: MultimodalAIService | null = null;
 let mcpClient: MCPClient | null = null;
+let toolBelt: ToolBelt | null = null;
 
 // MCP 서버 자동 초기화 함수
 async function initializeMCPServers() {
@@ -25,18 +27,100 @@ async function initializeMCPServers() {
     const config = await configService.loadConfig();
     
     console.log('🔌 Loading MCP servers from config...');
+
+    // Transform npx-based entries to local node execution if needed
+    const toLocal = (name: string, conf: any) => {
+      const map: Record<string, string> = {
+        '@modelcontextprotocol/server-filesystem': 'node_modules/@modelcontextprotocol/server-filesystem/dist/index.js',
+        '@modelcontextprotocol/server-sequential-thinking': 'node_modules/@modelcontextprotocol/server-sequential-thinking/dist/index.js',
+        '@modelcontextprotocol/server-github': 'node_modules/@modelcontextprotocol/server-github/dist/index.js',
+        'tavily-mcp': 'node_modules/tavily-mcp/dist/index.js',
+        '@luminati-io/brightdata-mcp': 'node_modules/@luminati-io/brightdata-mcp/dist/index.js'
+      };
+
+      const cmd = (conf.command || '').toLowerCase();
+      const argsArr: string[] = Array.isArray(conf.args) ? conf.args.slice() : [];
+      const hasNpx = cmd.includes('npx') || argsArr.some(a => typeof a === 'string' && a.toLowerCase() === 'npx');
+      const isCmdWrapper = cmd.endsWith('cmd') && argsArr.some(a => a.toLowerCase() === 'npx');
+
+      if ((hasNpx || isCmdWrapper) && argsArr.length > 0) {
+        // strip wrappers and flags
+        const cleaned = argsArr.filter((a) => a !== '/c' && a.toLowerCase() !== 'npx' && a !== '-y');
+
+        // smithery form: @smithery/cli run <pkg>
+        const hasSmithery = cleaned[0]?.includes('@smithery/cli') || cleaned[0] === '@smithery/cli@latest' || cleaned[0] === '@smithery/cli';
+        const runIdx = cleaned.indexOf('run');
+        const pkgSpec = runIdx > -1 && cleaned[runIdx + 1] ? cleaned[runIdx + 1] : cleaned[0];
+
+        // If it's a smithery-run invocation, switch to local smithery CLI
+        if (hasSmithery && runIdx > -1) {
+          const smitheryPath = path.resolve(process.cwd(), 'node_modules/@smithery/cli/dist/index.js');
+          const rest = cleaned.slice(runIdx); // ['run', '<pkg>', ...args]
+          return {
+            ...conf,
+            command: 'node',
+            args: [smitheryPath, ...rest],
+          };
+        }
+
+        // For direct npm server packages (not smithery), map to local dist if known
+        if (typeof pkgSpec === 'string') {
+          const normalized = pkgSpec.replace(/@(?:(?:latest)|(?:\d[^\s]*))$/i, '');
+          const mappedRel = map[normalized];
+          if (mappedRel) {
+            let restArgs: string[] = [];
+            if (runIdx > -1) {
+              // remove 'run' and following spec for npm server packages
+              restArgs = cleaned.slice(0, runIdx).concat(cleaned.slice(runIdx + 2));
+            } else {
+              restArgs = cleaned.slice(1);
+            }
+            const resolved = path.resolve(process.cwd(), mappedRel);
+            return {
+              ...conf,
+              command: 'node',
+              args: [resolved, ...restArgs],
+            };
+          }
+        }
+      }
+
+      return conf;
+    };
     
     for (const [serverName, serverConfig] of Object.entries(config.mcpServers)) {
       try {
+        // Skip disabled servers
+        if ((serverConfig as any).disabled) {
+          console.log(`⏭️  Skipping disabled MCP server: ${serverName}`);
+          continue;
+        }
+        // Skip tavily-mcp per user request (by name or args)
+        const lowerName = serverName.toLowerCase();
+        const hasTavilyInArgs = Array.isArray((serverConfig as any).args) && (serverConfig as any).args.some((a: string) => typeof a === 'string' && a.toLowerCase().includes('tavily'));
+        if (lowerName.includes('tavily') || hasTavilyInArgs) {
+          console.log(`⏭️  Skipping tavily-mcp: ${serverName}`);
+          continue;
+        }
+        // Skip github if no token yet
+        if (lowerName.includes('github')) {
+          const token = process.env.GITHUB_TOKEN || (serverConfig as any).env?.GITHUB_TOKEN;
+          if (!token) {
+            console.log(`⏭️  Skipping github (no GITHUB_TOKEN)`);
+            continue;
+          }
+        }
+
         console.log(`🔧 Connecting to ${serverName}...`);
+        const localConf = toLocal(serverName, serverConfig);
         
         // MCPClient에 서버 연결
         await mcpClient?.connectToServer({
           name: serverName,
-          command: serverConfig.command,
-          args: serverConfig.args,
-          env: serverConfig.env || {},
-          description: serverConfig.description || `Auto-loaded MCP server: ${serverName}`
+          command: localConf.command,
+          args: localConf.args,
+          env: localConf.env || {},
+          description: localConf.description || `Auto-loaded MCP server: ${serverName}`
         });
 
         // 데이터베이스에 서버 정보 저장
@@ -45,10 +129,10 @@ async function initializeMCPServers() {
           'INSERT OR REPLACE INTO mcp_servers (name, description, command, args, env, status) VALUES (?, ?, ?, ?, ?, ?)',
           [
             serverName,
-            serverConfig.description || `Auto-loaded from config: ${serverName}`,
-            serverConfig.command,
-            JSON.stringify(serverConfig.args),
-            JSON.stringify(serverConfig.env || {}),
+            localConf.description || `Auto-loaded from config: ${serverName}`,
+            localConf.command,
+            JSON.stringify(localConf.args),
+            JSON.stringify(localConf.env || {}),
             'connected'
           ]
         );
@@ -56,8 +140,7 @@ async function initializeMCPServers() {
         console.log(`✅ Successfully connected to ${serverName}`);
       } catch (error) {
         console.error(`❌ Failed to connect to ${serverName}:`, error);
-        
-        // 연결 실패 시에도 데이터베이스에 기록 (상태를 error로)
+        // 실패한 서버는 DB 상태를 disconnected로 기록
         try {
           const db = DatabaseService.getInstance().getDatabase();
           await db.run(
@@ -68,18 +151,14 @@ async function initializeMCPServers() {
               serverConfig.command,
               JSON.stringify(serverConfig.args),
               JSON.stringify(serverConfig.env || {}),
-              'error'
+              'disconnected'
             ]
           );
-        } catch (dbError) {
-          console.error('Failed to save server info to database:', dbError);
-        }
+        } catch {}
       }
     }
-
-    console.log('🎉 MCP server initialization completed');
   } catch (error) {
-    console.error('❌ Error initializing MCP servers:', error);
+    console.error('Error initializing MCP servers:', error);
   }
 }
 
@@ -133,6 +212,10 @@ app.whenReady().then(async () => {
     deepResearchAgent = new DeepResearchAgent();
     console.log('✅ DeepResearchAgent initialized');
 
+    // Initialize ToolBelt (for web_search etc.)
+    toolBelt = new ToolBelt();
+    console.log('✅ ToolBelt initialized');
+
     // Initialize MCP Client
     mcpClient = new MCPClient();
     console.log('✅ MCPClient initialized');
@@ -176,6 +259,25 @@ app.whenReady().then(async () => {
     } catch (error) {
       console.error("Error communicating with AI Service:", error);
       return "Sorry, there was an error processing your request.";
+    }
+  });
+
+  // New: chat-with-web (default web search + structured citations)
+  ipcMain.handle('chat-with-web', async (event, message: string, modelName: string) => {
+    try {
+      if (!aiService) throw new Error('AI Service not initialized');
+      if (!toolBelt) throw new Error('ToolBelt not initialized');
+
+      const findings = await toolBelt.runWebSearch(message, 5);
+      const result = await aiService.generateStructuredAnswer({
+        question: message,
+        findings,
+      }, modelName);
+
+      return result; // { answer, citations }
+    } catch (error) {
+      console.error('Error in chat-with-web:', error);
+      return { answer: '웹 검색을 포함한 응답 생성 중 오류가 발생했습니다.', citations: [] };
     }
   });
 
@@ -223,22 +325,46 @@ app.whenReady().then(async () => {
         if (!aiService) {
           throw new Error('AI Service not initialized');
         }
-        return await aiService.generateTextWithDeepResearch(prompt, modelName);
+        const legacy = await aiService.generateTextWithDeepResearch(prompt, modelName);
+        return { ...legacy, citations: [] };
       }
 
       // Use the new LangChain-based Deep Research Agent
       console.log(`🚀 Starting LangChain Deep Research for: "${prompt}"`);
       const result = await deepResearchAgent.run(prompt);
+
+      const hasSynthesis = typeof result.synthesis === 'string' && result.synthesis.trim().length > 0;
+
+      // 최소침습: 수집 데이터로 citations 구성 (title/url/snippet)
+      const citations = (result.collectedData || []).slice(0, 3).map((d: any) => ({
+        title: d.title || 'Untitled',
+        url: d.url || '',
+        snippet: (d.content || '').slice(0, 180),
+      }));
+
+      // Fallback: if no synthesis, do web-search + structured answer
+      if (!hasSynthesis) {
+        if (!toolBelt || !aiService) throw new Error('Tooling not initialized');
+        const findings = await toolBelt.runWebSearch(prompt, 8);
+        const structured = await aiService.generateStructuredAnswer({ question: prompt, findings }, modelName);
+        return {
+          answer: structured.answer,
+          refinedQuery: result.clarifiedQuery || prompt,
+          citations: structured.citations,
+        };
+      }
       
       return {
         answer: result.synthesis || "Deep research completed but no synthesis available.",
-        refinedQuery: result.clarifiedQuery || prompt
+        refinedQuery: result.clarifiedQuery || prompt,
+        citations,
       };
     } catch (error) {
       console.error('Error in deep-research IPC handler:', error);
       return {
         answer: 'Failed to execute deep research.',
-        refinedQuery: prompt
+        refinedQuery: prompt,
+        citations: [],
       };
     }
   });
@@ -252,18 +378,39 @@ app.whenReady().then(async () => {
 
       console.log(`🔄 Continuing Deep Research with user input: "${userInput}"`);
       const result = await deepResearchAgent.run(userInput, previousState);
+      const hasSynthesis = typeof result.synthesis === 'string' && result.synthesis.trim().length > 0;
       
+      const citations = (result.collectedData || []).slice(0, 3).map((d: any) => ({
+        title: d.title || 'Untitled',
+        url: d.url || '',
+        snippet: (d.content || '').slice(0, 180),
+      }));
+
+      if (!hasSynthesis) {
+        if (!toolBelt || !aiService) throw new Error('Tooling not initialized');
+        const findings = await toolBelt.runWebSearch(userInput, 8);
+        const structured = await aiService.generateStructuredAnswer({ question: userInput, findings }, 'gemini-2.5-flash');
+        return {
+          answer: structured.answer,
+          refinedQuery: result.clarifiedQuery || userInput,
+          state: result,
+          citations: structured.citations,
+        };
+      }
+
       return {
         answer: result.synthesis || "",
         refinedQuery: result.clarifiedQuery || userInput,
-        state: result // Return full state for potential continuation
+        state: result,
+        citations,
       };
     } catch (error) {
       console.error('Error in deep-research-continue IPC handler:', error);
       return {
         answer: 'Failed to continue deep research.',
         refinedQuery: userInput,
-        state: null
+        state: null,
+        citations: [],
       };
     }
   });
@@ -319,6 +466,17 @@ app.whenReady().then(async () => {
     } catch (error) {
       console.error('Error getting MCP servers:', error);
       return [];
+    }
+  });
+
+  // New: list all tools grouped by server
+  ipcMain.handle('get-mcp-tools', async () => {
+    try {
+      if (!mcpClient) throw new Error('MCP Client not initialized');
+      return mcpClient.getAllTools();
+    } catch (error) {
+      console.error('Error getting MCP tools:', error);
+      return {};
     }
   });
 

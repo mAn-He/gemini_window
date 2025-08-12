@@ -61,6 +61,89 @@ export class MultimodalAIService {
     };
   }
 
+  /** 내부 유틸: 응답 본문에서 JSON을 안전하게 추출/파싱 */
+  private parseJsonLoose(text: string): any | null {
+    if (!text) return null;
+    // 코드펜스 내부 JSON 추출 시도
+    const fenceMatch = text.match(/```(?:json)?\n([\s\S]*?)```/i);
+    const candidate = fenceMatch ? fenceMatch[1] : text;
+
+    try {
+      return JSON.parse(candidate);
+    } catch {
+      // 흔한 앞/뒤 설명 텍스트 제거를 위한 보정: 첫 여는 중괄호부터 마지막 닫는 중괄호까지 잘라 파싱
+      const first = candidate.indexOf('{');
+      const last = candidate.lastIndexOf('}');
+      if (first >= 0 && last > first) {
+        try {
+          return JSON.parse(candidate.slice(first, last + 1));
+        } catch {
+          return null;
+        }
+      }
+      return null;
+    }
+  }
+
+  /**
+   * 웹검색 결과를 컨텍스트로 주입하여 구조화된 응답(JSON)을 생성합니다.
+   */
+  public async generateStructuredAnswer(
+    input: {
+      question: string;
+      findings: Array<{ title: string; url: string; snippet: string }>;
+    },
+    modelName: string = 'gemini-2.5-flash'
+  ): Promise<{ answer: string; citations: { title: string; url: string; snippet: string }[] }> {
+    // Mock 모드 처리
+    if (!this.genAI) {
+      return {
+        answer: `Mock answer for: ${input.question}`,
+        citations: input.findings.slice(0, 3),
+      };
+    }
+
+    const model = this.genAI.getGenerativeModel({
+      model: modelName.includes('2.5') ? modelName : 'gemini-2.5-flash',
+      systemInstruction: `
+당신은 세계 최고 수준의 자율적 AI 리서치 에이전트입니다.
+반드시 다음을 지키세요:
+1) 진실 기반: 제공된 findings만 근거로 사용하며, 추측하지 않습니다.
+2) 명료화: 의도 파악이 불가하면 필요한 추가 질문을 제안합니다.
+3) 투명 추론: 결론은 간결히, 인용은 명시적으로 citations에 담습니다.
+출력은 오직 JSON으로, 스키마: {"answer": string, "citations": [{"title": string, "url": string, "snippet": string}]} 만 허용합니다.`
+    });
+
+    const context = input.findings
+      .map((f, i) => `[#${i + 1}] ${f.title}\nURL: ${f.url}\nSnippet: ${f.snippet}`)
+      .join('\n\n');
+
+    const prompt = `사용자 질문:\n${input.question}\n\n참고 가능한 findings (반드시 이 범위 안에서만 근거 사용):\n${context}\n\n위 내용을 기반으로 질문에 답하고, 인용은 citations 배열에 title/url/snippet으로 담아 JSON으로만 출력하세요.`;
+
+    try {
+      const res = await model.generateContent(prompt);
+      const text = res.response.text();
+      const parsed = this.parseJsonLoose(text);
+      if (parsed && typeof parsed.answer === 'string' && Array.isArray(parsed.citations)) {
+        // citations 정규화
+        const citations = (parsed.citations || []).map((c: any) => ({
+          title: typeof c?.title === 'string' ? c.title : 'Untitled',
+          url: typeof c?.url === 'string' ? c.url : '',
+          snippet: typeof c?.snippet === 'string' ? c.snippet : '',
+        }));
+        return { answer: parsed.answer, citations };
+      }
+    } catch (e) {
+      console.error('generateStructuredAnswer error:', e);
+    }
+
+    // 실패 시 폴백
+    return {
+      answer: '죄송합니다. 현재는 제공된 참고 자료를 바탕으로 답변을 생성하지 못했습니다.',
+      citations: input.findings.slice(0, Math.min(3, input.findings.length)),
+    };
+  }
+
   /**
    * 에이전트가 사용할 기본 추론 엔진(LLM)을 반환합니다.
    * @returns BaseLanguageModel 인스턴스

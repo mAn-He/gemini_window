@@ -85,6 +85,8 @@ const api = {
   openFile: () => electron.ipcRenderer.invoke("open-file"),
   processFile: (filePath, prompt) => electron.ipcRenderer.invoke("process-file", filePath, prompt),
   deepResearch: (prompt, modelName) => electron.ipcRenderer.invoke("deep-research", prompt, modelName),
+  // New: default chat with web search & citations
+  chatWithWeb: (message, modelName) => electron.ipcRenderer.invoke("chat-with-web", message, modelName),
   // Canvas APIs
   loadCanvasProject: (projectId) => electron.ipcRenderer.invoke("load-canvas-project", projectId),
   saveCanvasProject: (project) => electron.ipcRenderer.invoke("save-canvas-project", project),
@@ -96,20 +98,12 @@ const api = {
   disconnectMCPServer: (serverName) => electron.ipcRenderer.invoke("disconnect-mcp-server", serverName),
   deleteMCPServer: (serverName) => electron.ipcRenderer.invoke("delete-mcp-server", serverName),
   callMCPTool: (serverName, toolName, args) => electron.ipcRenderer.invoke("call-mcp-tool", serverName, toolName, args),
+  getMCPTools: () => electron.ipcRenderer.invoke("get-mcp-tools"),
   // MCP Config APIs
   getMCPConfigPath: () => electron.ipcRenderer.invoke("get-mcp-config-path"),
   importMCPConfig: (jsonConfig) => electron.ipcRenderer.invoke("import-mcp-config", jsonConfig),
   exportMCPConfig: () => electron.ipcRenderer.invoke("export-mcp-config"),
   addMCPServerToConfig: (serverName, serverConfig) => electron.ipcRenderer.invoke("add-mcp-server-to-config", serverName, serverConfig)
 };
-if (process.contextIsolated) {
-  try {
-    electron.contextBridge.exposeInMainWorld("electron", electronAPI);
-    electron.contextBridge.exposeInMainWorld("api", api);
-  } catch (error) {
-    console.error(error);
-  }
-} else {
-  window.electron = electronAPI;
-  window.api = api;
-}
+electron.contextBridge.exposeInMainWorld("api", api);
+electron.contextBridge.exposeInMainWorld("electron", electronAPI);
