@@ -15104,7 +15104,6 @@ const CanvasEngine = ({
   const [content, setContent] = reactExports.useState("");
   const [preview, setPreview] = reactExports.useState("");
   const [isAIMode, setIsAIMode] = reactExports.useState(false);
-  const [attachedName, setAttachedName] = reactExports.useState("");
   const contentRef = reactExports.useRef(null);
   const previewRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
@@ -15131,23 +15130,6 @@ const CanvasEngine = ({
       return () => clearTimeout(timer);
     }
   }, [content, currentProject]);
-  const handleAttachFile = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setAttachedName(file.name);
-    try {
-      if (file.type.startsWith("text/")) {
-        const txt = await file.text();
-        setContent(txt);
-      } else {
-        setContent(`${content}
-
-[Attached: ${file.name}]`);
-      }
-    } catch (err) {
-      console.error("Attach error:", err);
-    }
-  };
   const loadProject = async (id2) => {
     try {
       const project = await window.electronAPI.loadCanvasProject(id2);
@@ -15192,8 +15174,8 @@ const CanvasEngine = ({
         case "code":
           enhancedPrompt = `Write clean, well-commented code for: ${prompt}. Include examples and explanations.`;
           break;
-        case "resume":
-          enhancedPrompt = `Transform or create an ATS-friendly resume/cover letter for: ${prompt}. Use clear section headings (Summary, Experience with achievements in STAR format, Skills, Education). Optimize for keywords and readability.`;
+        case "research":
+          enhancedPrompt = `Create an interactive research presentation about: ${prompt}. Include key findings, data visualizations, and actionable insights.`;
           break;
       }
       const response = await onAIRequest(enhancedPrompt);
@@ -15244,7 +15226,7 @@ Please ${instruction}. Maintain the overall structure and improve the content.`;
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "h-full bg-gray-900 flex flex-col", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800 border-b border-gray-700 p-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex space-x-2", children: ["document", "app", "code", "resume"].map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex space-x-2", children: ["document", "app", "code", "research"].map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           onClick: () => setMode(m2),
@@ -15283,7 +15265,7 @@ Please ${instruction}. Maintain the overall structure and improve the content.`;
         )
       ] })
     ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800 border-b border-gray-700 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-3 items-center", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800 border-b border-gray-700 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-3", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         "input",
         {
@@ -15307,12 +15289,7 @@ Please ${instruction}. Maintain the overall structure and improve the content.`;
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: isLoading ? "Generating..." : "Generate" })
           ]
         }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "ml-2 text-sm text-gray-300 cursor-pointer", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "file", className: "hidden", onChange: handleAttachFile, accept: "image/*,.pdf,.doc,.docx,.ppt,.pptx,.txt" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-3 py-2 bg-gray-700 rounded border border-gray-600 hover:bg-gray-600", children: "Attach" })
-      ] }),
-      attachedName && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-gray-400", children: attachedName })
+      )
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 flex flex-col", children: [
