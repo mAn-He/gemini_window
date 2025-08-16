@@ -2,7 +2,8 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { spawn, ChildProcess } from 'child_process';
 import { SupervisorAgent } from '../agents/SupervisorAgent';
-import { CanvasService } from '../services/CanvasService'; // Assuming this service will be created
+import { CanvasService } from '../services/CanvasService';
+import { consentService } from '../services/ConsentService';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -114,6 +115,9 @@ async function createWindow() {
   win.on('closed', () => {
     win = null;
   });
+  
+  // Set window for consent service
+  consentService.setWindow(win);
 }
 
 // --- App Lifecycle ---
@@ -140,6 +144,55 @@ app.on('will-quit', () => {
 
 
 // --- IPC Handlers ---
+
+// Handler for file system operations with consent
+ipcMain.handle('fs:read', async (event, filePath: string) => {
+    // Request consent before file access
+    const approved = await consentService.requestConsent(
+        'file_access',
+        'Read File',
+        {
+            filePath,
+            risks: ['File contents will be read and processed by the AI agent']
+        }
+    );
+    
+    if (!approved) {
+        return { error: 'User denied file access permission' };
+    }
+    
+    // Proceed with file reading if approved
+    try {
+        const fs = require('fs').promises;
+        const content = await fs.readFile(filePath, 'utf-8');
+        return { success: true, content };
+    } catch (error: any) {
+        return { error: error.message };
+    }
+});
+
+// Handler for external API calls with consent
+ipcMain.handle('api:call', async (event, endpoint: string, data: any) => {
+    // Request consent before API call
+    const approved = await consentService.requestConsent(
+        'api_call',
+        'External API Call',
+        {
+            apiEndpoint: endpoint,
+            metadata: { data },
+            risks: ['Data will be sent to external service', 'Response will be processed by AI']
+        }
+    );
+    
+    if (!approved) {
+        return { error: 'User denied API call permission' };
+    }
+    
+    // Proceed with API call if approved
+    // Implementation would go here
+    return { success: true };
+});
+
 ipcMain.handle('run-supervisor', async (event, query: string) => {
     const geminiApiKey = process.env.GEMINI_API_KEY;
     const tavilyApiKey = process.env.TAVILY_API_KEY;
