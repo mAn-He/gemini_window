@@ -3,6 +3,7 @@ import path from 'path';
 import { spawn, ChildProcess } from 'child_process';
 import { SupervisorAgent } from '../agents/SupervisorAgent';
 import { CanvasService } from '../services/CanvasService'; // Assuming this service will be created
+import { RAGService } from '../services/RAGService';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -175,5 +176,21 @@ ipcMain.handle('run-canvas-ai', async (event, userPrompt: string, canvasState: a
     } catch (error: any) {
         console.error("Canvas AI service failed:", error);
         return { success: false, error: error.message };
+    }
+});
+
+ipcMain.handle('run-rag-query', async (event, filePath: string, query: string) => {
+    const geminiApiKey = process.env.GEMINI_API_KEY;
+    if (!geminiApiKey) {
+        return { error: "GEMINI_API_KEY is not set." };
+    }
+
+    try {
+        const ragService = RAGService.getInstance(geminiApiKey);
+        const result = await ragService.createAndQuery(filePath, query);
+        return { response: result };
+    } catch (error: any) {
+        console.error("RAG service failed:", error);
+        return { error: error.message || "An unknown error occurred in the RAG service." };
     }
 });

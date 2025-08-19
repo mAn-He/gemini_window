@@ -4,7 +4,7 @@ export interface IElectronAPI {
   getSettings: () => Promise<AppSettings>;
   saveSettings: (settings: AppSettings) => Promise<void>;
   openFile: () => Promise<string | null>;
-  processFile: (filePath: string, prompt: string) => Promise<string>;
+  runRagQuery: (filePath: string, query: string) => Promise<{ response?: string; error?: string }>;
   deepResearch: (prompt: string, modelName: string) => Promise<{ answer: string; refinedQuery: string }>;
   
   // New: default web-search chat with citations
