@@ -148,7 +148,7 @@ ipcMain.handle('run-supervisor', async (event, query: string) => {
         return { error: "API keys for Gemini or Tavily are not set in environment variables." };
     }
 
-    const supervisor = new SupervisorAgent(geminiApiKey, tavilyApiKey);
+    const supervisor = await SupervisorAgent.create(geminiApiKey, tavilyApiKey);
 
     // Define a callback to send updates to the renderer
     const updateCallback = (update: any) => {

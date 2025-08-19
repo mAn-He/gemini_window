@@ -174,7 +174,7 @@ export class DeepResearchAgent {
     if (identifiedGaps.length > 0) {
         this.sendUpdate("Generating tool calls to fill gaps...");
         const modelWithTools = this.model.bindTools(this.toolBelt.getTools());
-        const toolPrompt = `The following information gaps have been identified:\n- ${identifiedGaps.join("\n- ")}\n\nUse the available tools (tavily_search_results_json, arxiv_search, read_webpage_content) optimally to find the necessary information to fill these gaps. Call multiple tools if required.`;
+        const toolPrompt = `The following information gaps have been identified:\n- ${identifiedGaps.join("\n- ")}\n\nTo address these gaps, you must use the specialized academic research tools. First, use 'google_scholar_search' to find relevant papers. Then, use 'fetch_paper_content' with the URLs from the search results to get the full text. Synthesize this information to fill the gaps. Call multiple tools if required.`;
 
         const response = await modelWithTools.invoke([new HumanMessage(toolPrompt)]);
         return { identifiedGaps, messages: [response] };
