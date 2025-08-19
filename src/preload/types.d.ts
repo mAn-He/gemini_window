@@ -3,8 +3,10 @@ export interface IElectronAPI {
   sendMessage: (message: string, modelName: string) => Promise<string>;
   getSettings: () => Promise<AppSettings>;
   saveSettings: (settings: AppSettings) => Promise<void>;
-  openFile: () => Promise<string | null>;
+  openFile: () => Promise<string | null>; // Kept for potential other uses
+  openMediaFile: () => Promise<{ path: string; name: string; mimeType: string; dataUrl?: string } | null>;
   runRagQuery: (filePath: string, query: string) => Promise<{ response?: string; error?: string }>;
+  handleMultimodalPrompt: (prompt: string, filePath: string, mimeType: string) => Promise<{ response?: string; error?: string }>;
   deepResearch: (prompt: string, modelName: string) => Promise<{ answer: string; refinedQuery: string }>;
   
   // New: default web-search chat with citations

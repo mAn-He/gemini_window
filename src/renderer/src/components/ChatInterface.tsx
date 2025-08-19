@@ -11,8 +11,8 @@ interface ChatInterfaceProps {
   setUserInput: (input: string) => void;
   handleSendMessage: () => void;
   setIsToolsOpen: (isOpen: boolean) => void;
-  attachedFile: { path: string; name: string } | null;
-  setAttachedFile: (file: { path: string; name: string } | null) => void;
+  attachedFile: { path: string; name: string; mimeType?: string; dataUrl?: string } | null;
+  setAttachedFile: (file: { path: string; name: string; mimeType?: string; dataUrl?: string } | null) => void;
   isDeepResearchMode: boolean;
   setIsDeepResearchMode: (isMode: boolean) => void;
   researchProgress: string[];
@@ -59,10 +59,9 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   };
 
   const handleFileAttach = async () => {
-    const filePath = await window.api.openFile();
-    if (filePath) {
-      const fileName = filePath.split('\\').pop()?.split('/').pop() || 'attached_file';
-      setAttachedFile({ path: filePath, name: fileName });
+    const file = await window.api.openMediaFile();
+    if (file) {
+      setAttachedFile(file);
     }
   };
 
@@ -146,9 +145,18 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           {/* The entire isDeepResearchMode block for the URL input is removed */}
           
           {attachedFile && (
-            <div className="p-2 bg-gray-600 rounded-md flex items-center gap-2">
-              <Paperclip size={16} />
-              <span>{attachedFile.name}</span>
+            <div className="p-2 bg-gray-600 rounded-md flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 overflow-hidden">
+                {attachedFile.dataUrl && attachedFile.mimeType?.startsWith('image/') ? (
+                  <img src={attachedFile.dataUrl} alt="Preview" className="w-10 h-10 object-cover rounded-md" />
+                ) : (
+                  <Paperclip size={16} />
+                )}
+                <span className="truncate">{attachedFile.name}</span>
+              </div>
+              <button onClick={() => setAttachedFile(null)} className="p-1 hover:bg-gray-500 rounded-full">
+                <X size={16} />
+              </button>
             </div>
           )}
 

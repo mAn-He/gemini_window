@@ -146,9 +146,14 @@ const App: React.FC = () => {
         aiResponseText = result.answer;
 
       } else if (attachedFile) {
-        // Use the new RAG service when a file is attached
-        const result = await window.api.runRagQuery(attachedFile.path, userInput);
-        aiResponseText = result.response || `Error: ${result.error}`;
+        if (attachedFile.mimeType?.startsWith('image/') || attachedFile.mimeType?.startsWith('audio/')) {
+          const result = await window.api.handleMultimodalPrompt(userInput, attachedFile.path, attachedFile.mimeType);
+          aiResponseText = result.response || `Error: ${result.error}`;
+        } else {
+          // Fallback to RAG service for other file types
+          const result = await window.api.runRagQuery(attachedFile.path, userInput);
+          aiResponseText = result.response || `Error: ${result.error}`;
+        }
         setAttachedFile(null);
       } else {
         const result = await window.api.chatWithWeb(userInput, currentModelName);

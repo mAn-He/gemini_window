@@ -8,7 +8,9 @@ const api: IElectronAPI = {
   getSettings: () => ipcRenderer.invoke('get-settings'),
   saveSettings: (settings: AppSettings) => ipcRenderer.invoke('save-settings', settings),
   openFile: () => ipcRenderer.invoke('open-file'),
+  openMediaFile: () => ipcRenderer.invoke('openMediaFile'),
   runRagQuery: (filePath: string, query: string) => ipcRenderer.invoke('run-rag-query', filePath, query),
+  handleMultimodalPrompt: (prompt: string, filePath: string, mimeType: string) => ipcRenderer.invoke('handle-multimodal-prompt', prompt, filePath, mimeType),
   deepResearch: (prompt: string, modelName: string) => ipcRenderer.invoke('deep-research', prompt, modelName),
   
   // New: default chat with web search & citations

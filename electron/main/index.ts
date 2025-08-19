@@ -1,10 +1,13 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import path from 'path';
+import fs from 'fs';
+import mime from 'mime-types';
 import { spawn, ChildProcess } from 'child_process';
 import { SupervisorAgent } from '../agents/SupervisorAgent';
 import { CanvasService } from '../services/CanvasService';
 import { consentService } from '../services/ConsentService';
 import { RAGService } from '../services/RAGService';
+import { MultimodalAIService } from '../services/MultimodalAIService';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -116,9 +119,6 @@ async function createWindow() {
   win.on('closed', () => {
     win = null;
   });
-  
-  // Set window for consent service
-  consentService.setWindow(win);
 }
 
 // --- App Lifecycle ---
@@ -146,52 +146,29 @@ app.on('will-quit', () => {
 
 // --- IPC Handlers ---
 
-// Handler for file system operations with consent
-ipcMain.handle('fs:read', async (event, filePath: string) => {
-    // Request consent before file access
-    const approved = await consentService.requestConsent(
-        'file_access',
-        'Read File',
-        {
-            filePath,
-            risks: ['File contents will be read and processed by the AI agent']
-        }
-    );
-    
-    if (!approved) {
-        return { error: 'User denied file access permission' };
-    }
-    
-    // Proceed with file reading if approved
-    try {
-        const fs = require('fs').promises;
-        const content = await fs.readFile(filePath, 'utf-8');
-        return { success: true, content };
-    } catch (error: any) {
-        return { error: error.message };
-    }
-});
+ipcMain.handle('openMediaFile', async () => {
+  const { filePaths } = await dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [
+      { name: 'Media Files', extensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'mp3', 'wav', 'ogg'] },
+      { name: 'All Files', extensions: ['*'] },
+    ]
+  });
 
-// Handler for external API calls with consent
-ipcMain.handle('api:call', async (event, endpoint: string, data: any) => {
-    // Request consent before API call
-    const approved = await consentService.requestConsent(
-        'api_call',
-        'External API Call',
-        {
-            apiEndpoint: endpoint,
-            metadata: { data },
-            risks: ['Data will be sent to external service', 'Response will be processed by AI']
-        }
-    );
-    
-    if (!approved) {
-        return { error: 'User denied API call permission' };
+  if (filePaths && filePaths.length > 0) {
+    const filePath = filePaths[0];
+    const mimeType = mime.lookup(filePath) || 'application/octet-stream';
+    const fileName = path.basename(filePath);
+
+    let dataUrl: string | undefined = undefined;
+    if (mimeType.startsWith('image/')) {
+      const fileBuffer = fs.readFileSync(filePath);
+      dataUrl = `data:${mimeType};base64,${fileBuffer.toString('base64')}`;
     }
-    
-    // Proceed with API call if approved
-    // Implementation would go here
-    return { success: true };
+
+    return { path: filePath, name: fileName, mimeType, dataUrl };
+  }
+  return null;
 });
 
 ipcMain.handle('run-supervisor', async (event, query: string) => {
@@ -245,5 +222,21 @@ ipcMain.handle('run-rag-query', async (event, filePath: string, query: string) =
     } catch (error: any) {
         console.error("RAG service failed:", error);
         return { error: error.message || "An unknown error occurred in the RAG service." };
+    }
+});
+
+ipcMain.handle('handle-multimodal-prompt', async (event, prompt: string, filePath: string, mimeType: string) => {
+    const geminiApiKey = process.env.GEMINI_API_KEY;
+    if (!geminiApiKey) {
+        return { error: "GEMINI_API_KEY is not set." };
+    }
+
+    try {
+        const multimodalService = new MultimodalAIService(geminiApiKey);
+        const result = await multimodalService.generateContent(prompt, filePath, mimeType);
+        return { response: result };
+    } catch (error: any) {
+        console.error("Multimodal service failed:", error);
+        return { error: error.message || "An unknown error occurred in the Multimodal service." };
     }
 });
