@@ -36,27 +36,33 @@ export class SupervisorAgent {
   private conversationMemory: Map<string, BaseMessage[]> = new Map();
   private maxHistoryLength: number = 20;
 
-  constructor(geminiApiKey: string, tavilyApiKey: string) {
+  private constructor(
+    geminiApiKey: string,
+    toolBelt: ToolBelt
+  ) {
     this.routerModel = new ChatGoogleGenerativeAI({
-      modelName: 'gemini-2.5-pro', // 라우팅에는 빠른 모델 사용
+      modelName: 'gemini-2.5-pro',
       apiKey: geminiApiKey,
       temperature: 0.1,
-      // 구조화된 출력을 위해 JSON 모드 활성화
       generationConfig: { responseMimeType: 'application/json' },
     });
 
     this.routerParser = StructuredOutputParser.fromZodSchema(RouterSchema);
 
-    // 전문 에이전트 초기화
-    const toolBelt = new ToolBelt(tavilyApiKey, geminiApiKey);
+    // Agents are now initialized with the pre-built toolbelt
     this.researchAgent = new DeepResearchAgent(geminiApiKey, toolBelt);
-    this.mleAgent = new MLEAgent(geminiApiKey);
+    this.mleAgent = new MLEAgent(geminiApiKey); // Assuming MLEAgent doesn't need the toolbelt for now
     this.generalChatModel = new ChatGoogleGenerativeAI({
         modelName: 'gemini-2.5-pro',
         apiKey: geminiApiKey,
     });
 
     this.defineWorkflow();
+  }
+
+  public static async create(geminiApiKey: string, tavilyApiKey: string): Promise<SupervisorAgent> {
+    const toolBelt = await ToolBelt.create(tavilyApiKey, geminiApiKey);
+    return new SupervisorAgent(geminiApiKey, toolBelt);
   }
 
   private defineWorkflow() {
