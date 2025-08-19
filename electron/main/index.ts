@@ -2,7 +2,8 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { spawn, ChildProcess } from 'child_process';
 import { SupervisorAgent } from '../agents/SupervisorAgent';
-import { CanvasService } from '../services/CanvasService'; // Assuming this service will be created
+import { CanvasService } from '../services/CanvasService';
+import { consentService } from '../services/ConsentService';
 import { RAGService } from '../services/RAGService';
 
 // Keep a global reference of the window object, if you don't, the window will
