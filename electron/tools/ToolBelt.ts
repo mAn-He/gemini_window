@@ -1,10 +1,12 @@
 import { TavilySearchResults } from "@langchain/community/tools/tavily_search";
 import { ArxivQueryRun } from "@langchain/community/tools/arxiv";
-import { WebBrowser } from "langchain/tools/webbrowser";
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { BaseTool, DynamicTool } from "@langchain/core/tools";
 import DeepResearchService from "../../src/main/services/DeepResearchService";
 import { z } from "zod";
+import { exec } from "child_process";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 export class ToolBelt {
     private tools: BaseTool[];
@@ -15,19 +17,7 @@ export class ToolBelt {
         geminiApiKey: string,
         researchService: typeof DeepResearchService
     ) {
-        // --- Existing General Tools ---
-        const tavilySearch = new TavilySearchResults({
-            maxResults: 5,
-            apiKey: tavilyApiKey,
-        });
-        tavilySearch.name = "tavily_search_results_json";
-        tavilySearch.description = "A general web search tool to get a JSON object of search results.";
-
-        const arxivSearch = new ArxivQueryRun();
-        arxivSearch.name = "arxiv_search";
-        arxivSearch.description = "Searches arxiv.org for academic papers.";
-
-        // --- New, Specialized Research Tools ---
+        // --- Specialized Research Tools ---
         const googleScholarSearch = new DynamicTool({
             name: "google_scholar_search",
             description: "Searches Google Scholar for academic papers and returns a list of top results.",
@@ -53,7 +43,30 @@ export class ToolBelt {
             },
         });
 
-        this.tools = [googleScholarSearch, fetchPaperContent, tavilySearch, arxivSearch];
+        // --- Code Execution Tool ---
+        const executeCommand = new DynamicTool({
+            name: "execute_command",
+            description: "Executes a shell command and returns the output.",
+            schema: z.object({
+                command: z.string().describe("The shell command to execute.")
+            }),
+            func: async ({ command }) => {
+                console.log(`[ToolBelt] Executing command: ${command}`);
+                try {
+                    const { stdout, stderr } = await execAsync(command);
+                    return JSON.stringify({ stdout, stderr });
+                } catch (error: any) {
+                    // If exec fails, it throws an error which contains stdout and stderr
+                    return JSON.stringify({
+                        error: error.message,
+                        stdout: error.stdout,
+                        stderr: error.stderr,
+                    });
+                }
+            },
+        });
+
+        this.tools = [executeCommand, googleScholarSearch, fetchPaperContent];
     }
 
     /**

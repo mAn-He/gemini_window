@@ -45,7 +45,7 @@ export class SupervisorAgent {
 
     // Agents are now initialized with the pre-built toolbelt
     this.researchAgent = new DeepResearchAgent(geminiApiKey, toolBelt);
-    this.mleAgent = new MLEAgent(geminiApiKey); // Assuming MLEAgent doesn't need the toolbelt for now
+    this.mleAgent = new MLEAgent(geminiApiKey, toolBelt);
     this.generalChatModel = new ChatGoogleGenerativeAI({
         modelName: 'gemini-2.5-pro',
         apiKey: geminiApiKey,
