@@ -146,7 +146,9 @@ const App: React.FC = () => {
         aiResponseText = result.answer;
 
       } else if (attachedFile) {
-        aiResponseText = await window.api.processFile(attachedFile.path, userInput);
+        // Use the new RAG service when a file is attached
+        const result = await window.api.runRagQuery(attachedFile.path, userInput);
+        aiResponseText = result.response || `Error: ${result.error}`;
         setAttachedFile(null);
       } else {
         const result = await window.api.chatWithWeb(userInput, currentModelName);
