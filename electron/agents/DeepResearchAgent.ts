@@ -2,14 +2,13 @@
 
 import { StateGraph, END } from '@langchain/langgraph';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { BaseLanguageModel } from '@langchain/core/language_models/base';
 import { AIMessage, HumanMessage, BaseMessage, ToolMessage } from '@langchain/core/messages';
 import { RunnableLambda } from '@langchain/core/runnables';
 import { ToolNode } from "@langchain/langgraph/prebuilt";
 import { z } from 'zod';
 import { StructuredOutputParser } from 'langchain/output_parsers';
 import { ToolBelt } from '../tools/ToolBelt';
-import { retryManager } from '../utils/RetryManager';
 
 const MAX_ITERATIONS = 5;
 
@@ -26,16 +25,12 @@ interface TTDRAgentState {
 
 export class DeepResearchAgent {
   private graph: StateGraph<TTDRAgentState>;
-  private model: ChatGoogleGenerativeAI;
+  private model: BaseLanguageModel;
   private toolBelt: ToolBelt;
   private updateCallback?: (update: any) => void;
 
-  constructor(geminiApiKey: string, toolBelt: ToolBelt) {
-    this.model = new ChatGoogleGenerativeAI({
-      apiKey: geminiApiKey,
-      modelName: 'gemini-2.5-pro',
-      temperature: 0.7,
-    });
+  constructor(model: BaseLanguageModel, toolBelt: ToolBelt) {
+    this.model = model;
     this.toolBelt = toolBelt;
     this.initializeWorkflow();
   }
@@ -89,24 +84,10 @@ export class DeepResearchAgent {
         ["human", "Original Query: {query}"],
     ]);
     const chain = prompt.pipe(this.model);
-    
-    try {
-      const response = await retryManager.executeWithRetry(
-        async () => chain.invoke({ query: state.originalQuery }),
-        {
-          maxRetries: 2,
-          onRetry: (attempt) => {
-            this.sendUpdate(`Retrying clarification (attempt ${attempt})...`);
-          }
-        }
-      );
-      const clarifiedQuery = response.content as string;
-      return { clarifiedQuery, messages: [new AIMessage("Clarified Query: " + clarifiedQuery)] };
-    } catch (error: any) {
-      console.error('Failed to clarify query:', error);
-      this.sendUpdate('Failed to clarify query, using original query.');
-      return { clarifiedQuery: state.originalQuery, messages: [new AIMessage("Using original query due to error.")] };
-    }
+    const response = await chain.invoke({ query: state.originalQuery });
+    const clarifiedQuery = response.content as string;
+
+    return { clarifiedQuery, messages: [new AIMessage("Clarified Query: " + clarifiedQuery)] };
   }
 
   private async planNode(state: TTDRAgentState): Promise<Partial<TTDRAgentState>> {
@@ -125,22 +106,13 @@ export class DeepResearchAgent {
     const chain = prompt.pipe(this.model.bind({ generationConfig: { responseMimeType: 'application/json' } })).pipe(parser);
 
     try {
-        const result = await retryManager.executeWithRetry(
-            async () => chain.invoke({
-                query: state.clarifiedQuery,
-                format_instructions: parser.getFormatInstructions()
-            }),
-            {
-                maxRetries: 2,
-                onRetry: (attempt, error) => {
-                    this.sendUpdate(`Retrying plan generation (attempt ${attempt}): ${error.message}`);
-                }
-            }
-        );
+        const result = await chain.invoke({
+            query: state.clarifiedQuery,
+            format_instructions: parser.getFormatInstructions()
+        });
         return { researchPlan: result.plan, messages: [new AIMessage("Research Plan Generated.")] };
-    } catch (e: any) {
-        console.error("Failed to generate research plan after retries:", e);
-        this.sendUpdate('Using fallback research plan due to errors.');
+    } catch (e) {
+        console.error("Failed to generate research plan:", e);
         return { researchPlan: ["1. Introduction", "2. Core Analysis", "3. Conclusion"], messages: [new AIMessage("Plan generation failed, using fallback.")] };
     }
   }
@@ -158,30 +130,10 @@ export class DeepResearchAgent {
     ]);
 
     const chain = prompt.pipe(this.model);
-    
-    try {
-      const response = await retryManager.executeWithRetry(
-        async () => chain.invoke({ 
-          query: state.clarifiedQuery, 
-          plan: JSON.stringify(state.researchPlan) 
-        }),
-        {
-          maxRetries: 2,
-          onRetry: (attempt) => {
-            this.sendUpdate(`Retrying draft generation (attempt ${attempt})...`);
-          }
-        }
-      );
-      const draftReport = response.content as string;
-      return { draftReport, messages: [new AIMessage("Initial Draft Generated.")] };
-    } catch (error: any) {
-      console.error('Failed to generate draft:', error);
-      this.sendUpdate('Failed to generate draft, creating minimal report.');
-      return { 
-        draftReport: `# Research Report\n\n## Query\n${state.clarifiedQuery}\n\n## Analysis\n[Error generating detailed analysis]\n\n## Conclusion\nUnable to complete full analysis due to technical issues.`,
-        messages: [new AIMessage("Draft generation failed, using minimal template.")] 
-      };
-    }
+    const response = await chain.invoke({ query: state.clarifiedQuery, plan: JSON.stringify(state.researchPlan) });
+    const draftReport = response.content as string;
+
+    return { draftReport, messages: [new AIMessage("Initial Draft Generated.")] };
   }
 
   private async critiqueNode(state: TTDRAgentState): Promise<Partial<TTDRAgentState>> {
@@ -206,27 +158,6 @@ export class DeepResearchAgent {
     ]);
 
     const chain = prompt.pipe(this.model.bind({ generationConfig: { responseMimeType: 'application/json' } })).pipe(parser);
-    
-    try {
-      const result = await retryManager.executeWithRetry(
-        async () => chain.invoke({
-            question: state.clarifiedQuery,
-            draft: state.draftReport,
-            format_instructions: parser.getFormatInstructions()
-        }),
-        {
-          maxRetries: 2,
-          onRetry: (attempt) => {
-            this.sendUpdate(`Retrying critique (attempt ${attempt})...`);
-          }
-        }
-      );
-    } catch (error: any) {
-      console.error('Failed to critique draft:', error);
-      this.sendUpdate('Critique failed, skipping refinement.');
-      return { identifiedGaps: [] };
-    }
-    
     const result = await chain.invoke({
         question: state.clarifiedQuery,
         draft: state.draftReport,
@@ -241,22 +172,8 @@ export class DeepResearchAgent {
         const modelWithTools = this.model.bindTools(this.toolBelt.getTools());
         const toolPrompt = `The following information gaps have been identified:\n- ${identifiedGaps.join("\n- ")}\n\nTo address these gaps, you must use the specialized academic research tools. First, use 'google_scholar_search' to find relevant papers. Then, use 'fetch_paper_content' with the URLs from the search results to get the full text. Synthesize this information to fill the gaps. Call multiple tools if required.`;
 
-        try {
-          const response = await retryManager.executeWithRetry(
-            async () => modelWithTools.invoke([new HumanMessage(toolPrompt)]),
-            {
-              maxRetries: 2,
-              onRetry: (attempt) => {
-                this.sendUpdate(`Retrying tool calls (attempt ${attempt})...`);
-              }
-            }
-          );
-          return { identifiedGaps, messages: [response] };
-        } catch (error: any) {
-          console.error('Failed to generate tool calls:', error);
-          this.sendUpdate('Tool calls failed, proceeding without additional research.');
-          return { identifiedGaps: [] };
-        }
+        const response = await modelWithTools.invoke([new HumanMessage(toolPrompt)]);
+        return { identifiedGaps, messages: [response] };
     }
 
     return { identifiedGaps: [] };
@@ -285,30 +202,15 @@ export class DeepResearchAgent {
     ]);
 
     const chain = prompt.pipe(this.model);
-    
-    try {
-      const response = await retryManager.executeWithRetry(
-        async () => chain.invoke({
-            question: state.clarifiedQuery,
-            gaps: state.identifiedGaps.join('\n- '),
-            draft: state.draftReport,
-            results: formattedResults
-        }),
-        {
-          maxRetries: 2,
-          onRetry: (attempt) => {
-            this.sendUpdate(`Retrying refinement (attempt ${attempt})...`);
-          }
-        }
-      );
-      
-      const refinedReport = response.content.toString();
-      return { draftReport: refinedReport, iterationCount: 1, messages: [new AIMessage("Draft Refined.")] };
-    } catch (error: any) {
-      console.error('Failed to refine draft:', error);
-      this.sendUpdate('Refinement failed, using current draft.');
-      return { draftReport: state.draftReport, iterationCount: 1, messages: [new AIMessage("Refinement failed, keeping current draft.")] };
-    }
+    const response = await chain.invoke({
+        question: state.clarifiedQuery,
+        gaps: state.identifiedGaps.join('\n- '),
+        draft: state.draftReport,
+        results: formattedResults
+    });
+
+    const refinedReport = response.content.toString();
+    return { draftReport: refinedReport, iterationCount: 1, messages: [new AIMessage("Draft Refined.")] };
   }
 
   private sendUpdate(message: string) {
@@ -325,19 +227,12 @@ export class DeepResearchAgent {
     this.updateCallback = callback;
     const inputs = { originalQuery: query };
     let finalState: TTDRAgentState | null = null;
-    
-    try {
-      for await (const s of await this.graph.stream(inputs)) {
-          const [node, state] = Object.entries(s)[0];
-          this.sendUpdate(`Executing node: ${node}`);
-          finalState = state;
-      }
-      this.sendUpdate("Research process complete.");
-      return finalState?.draftReport || "No report generated.";
-    } catch (error: any) {
-      console.error('Fatal error in research workflow:', error);
-      this.sendUpdate(`Research failed: ${error.message}`);
-      return `Research could not be completed due to an error: ${error.message}\n\nPlease try again or rephrase your query.`;
+    for await (const s of await this.graph.stream(inputs)) {
+        const [node, state] = Object.entries(s)[0];
+        this.sendUpdate(`Executing node: ${node}`);
+        finalState = state;
     }
+    this.sendUpdate("Research process complete.");
+    return finalState?.draftReport || "No report generated.";
   }
 }

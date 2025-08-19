@@ -1,5 +1,5 @@
 import { StateGraph, END, ToolNode } from '@langchain/langgraph';
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { BaseLanguageModel } from '@langchain/core/language_models/base';
 import { BaseMessage, HumanMessage, AIMessage, ToolMessage } from '@langchain/core/messages';
 import { ToolBelt } from '../tools/ToolBelt';
 import { RunnableLambda } from '@langchain/core/runnables';
@@ -37,15 +37,11 @@ interface MLEAgentState {
 
 export class MLEAgent {
   private graph: StateGraph<MLEAgentState>;
-  private model: ChatGoogleGenerativeAI;
+  private model: BaseLanguageModel;
   private toolbelt: ToolBelt;
 
-  constructor(geminiApiKey: string, toolBelt: ToolBelt) {
-    this.model = new ChatGoogleGenerativeAI({
-      apiKey: geminiApiKey,
-      modelName: 'gemini-2.5-pro',
-      temperature: 0.1,
-    });
+  constructor(model: BaseLanguageModel, toolBelt: ToolBelt) {
+    this.model = model;
     this.toolbelt = toolBelt;
     this.initializeWorkflow();
   }
