@@ -12,6 +12,7 @@ This is a sophisticated Electron application that brings the power of Google's G
 *   **Deep Research Engine (TTD-DR)**: Implements a "Test-Driven Deep Research" methodology using LangGraph. The agent performs a multi-step process of planning, drafting, and iterative refinement with tool-based fact-checking to produce comprehensive reports.
 *   **Interactive AI Canvas**: A dynamic canvas powered by Fabric.js and Gemini. Users can conversationally add, modify, and remove objects, making it a powerful tool for visual brainstorming and diagramming.
 *   **Model Context Protocol (MCP) Integration**: Ready to connect with local development servers through MCP. The application can robustly start and manage the lifecycle of an MCP server.
+*   **Project-Based RAG**: Create isolated project workspaces to chat with your documents. Each project has its own vector store, ensuring contextually relevant conversations based on the files you upload (PDF, TXT, MD, JS, TS).
 *   **Modern & Secure Desktop UI**: Built with React, TypeScript, and a secure Electron architecture that uses a preload script to bridge the main and renderer processes safely.
 
 ---
@@ -39,6 +40,10 @@ This project has a solid architectural foundation, and the core logic for its ma
 ### 5. **Coding & Supervisor Agents - ✅ Implemented**
 *   **Coding Agent (`MLEAgent.ts`)**: A specialized agent for coding tasks with a well-defined system prompt is complete and functional.
 *   **Supervisor Agent (`SupervisorAgent.ts`)**: The supervisor-router structure is complete. The `routerNode` now dynamically classifies user intent by calling the Gemini API with JSON mode, moving beyond the initial hardcoded logic.
+
+### 6. **Project RAG Feature - ✅ Implemented**
+*   **Implementation Status**: The backend RAG pipeline and frontend UI for the 'Project' feature are complete.
+*   **Details**: The backend uses a `ProjectService` with LangChain.js and ChromaDB to manage project-specific vector stores. The frontend provides a complete UI for creating projects, uploading files, and chatting with the project's documents.
 
 ---
 
