@@ -31,7 +31,24 @@ export interface IElectronAPI {
   importMCPConfig: (jsonConfig: string) => Promise<boolean>;
   exportMCPConfig: () => Promise<string>;
   addMCPServerToConfig: (serverName: string, serverConfig: any) => Promise<boolean>;
+
+  // Project APIs
+  project: {
+    create: (name: string) => Promise<{ success: boolean; project?: any; error?: string }>;
+    list: () => Promise<{ success: boolean; projects?: any[]; error?: string }>;
+    addFile: (projectId: string, filePath: string) => Promise<{ success: boolean; error?: string }>;
+    chat: (projectId: string, question: string) => Promise<{ success: boolean; response?: string; error?: string }>;
+    openFile: () => Promise<{ success: boolean; filePaths: string[] }>;
+  };
 }
+
+// Define the Project structure for frontend usage
+export interface Project {
+  id: string;
+  name: string;
+  files: string[];
+}
+
 
 export interface AppSettings {
   // Placeholder to satisfy references in types; actual shape defined elsewhere
