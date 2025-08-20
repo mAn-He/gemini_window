@@ -34,7 +34,16 @@ const api: IElectronAPI = {
   getMCPConfigPath: () => ipcRenderer.invoke('get-mcp-config-path'),
   importMCPConfig: (jsonConfig: string) => ipcRenderer.invoke('import-mcp-config', jsonConfig),
   exportMCPConfig: () => ipcRenderer.invoke('export-mcp-config'),
-  addMCPServerToConfig: (serverName: string, serverConfig: any) => ipcRenderer.invoke('add-mcp-server-to-config', serverName, serverConfig)
+  addMCPServerToConfig: (serverName: string, serverConfig: any) => ipcRenderer.invoke('add-mcp-server-to-config', serverName, serverConfig),
+
+  // Project APIs
+  project: {
+    create: (name: string) => ipcRenderer.invoke('project:create', name),
+    list: () => ipcRenderer.invoke('project:list'),
+    addFile: (projectId: string, filePath: string) => ipcRenderer.invoke('project:addFile', projectId, filePath),
+    chat: (projectId: string, question: string) => ipcRenderer.invoke('project:chat', projectId, question),
+    openFile: () => ipcRenderer.invoke('project:openFile')
+  }
 }
 
 contextBridge.exposeInMainWorld('api', api)

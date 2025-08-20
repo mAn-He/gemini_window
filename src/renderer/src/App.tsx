@@ -7,6 +7,9 @@ import ChatInterface from './components/ChatInterface';
 import CanvasEngine from './components/Canvas/CanvasEngine';
 import MCPManager from './components/MCP/MCPManager';
 import { motion } from 'framer-motion';
+import { ProjectSidebar } from './components/ProjectSidebar';
+import { ProjectView } from './components/ProjectView';
+import { FolderKanban } from 'lucide-react';
 
 // Define props for the ChatInterface component
 interface ChatInterfaceProps {
@@ -28,7 +31,7 @@ interface ChatInterfaceProps {
 const App: React.FC = () => {
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [activeModel, setActiveModel] = useState<'pro' | 'flash'>('pro');
-  const [activeView, setActiveView] = useState<'chat' | 'canvas' | 'mcp' | 'settings'>('chat');
+  const [activeView, setActiveView] = useState<'chat' | 'canvas' | 'mcp' | 'settings' | 'projects'>('chat');
   const [showCanvasPane, setShowCanvasPane] = useState<boolean>(false);
   
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -210,16 +213,29 @@ const App: React.FC = () => {
   };
 
   // 뷰 변경 핸들러
-  const handleViewChange = (view: 'chat' | 'canvas' | 'mcp' | 'settings') => {
+  const handleViewChange = (view: 'chat' | 'canvas' | 'mcp' | 'settings' | 'projects') => {
     if (view === 'canvas') {
       // open inline canvas pane instead of navigating away
       setShowCanvasPane(true);
       setActiveView('chat');
       return;
     }
+    // For other views, just set the active view
     setActiveView(view);
   };
 
+  // The main return statement needs to decide whether to show the "Project" view
+  // or the original tabbed view.
+  if (activeView === 'projects') {
+    return (
+      <div className="flex h-screen bg-gray-900 text-white">
+        <ProjectSidebar />
+        <ProjectView />
+      </div>
+    );
+  }
+
+  // Original view for 'chat', 'canvas', 'mcp', 'settings'
   return (
     <div className="flex h-screen bg-gray-900 text-white">
       {/* Sidebar */}
@@ -232,6 +248,17 @@ const App: React.FC = () => {
         {/* Navigation */}
         <nav className="flex-1 p-4">
           <div className="space-y-2">
+             {/* Projects Button */}
+             <button
+              onClick={() => handleViewChange('projects')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                activeView === 'projects' ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              <FolderKanban size={20} />
+              <span>Projects</span>
+            </button>
+
             {/* Chat */}
             <button
               onClick={() => handleViewChange('chat')}

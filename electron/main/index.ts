@@ -8,6 +8,7 @@ import { CanvasService } from '../services/CanvasService';
 import { consentService } from '../services/ConsentService';
 import { RAGService } from '../services/RAGService';
 import { MultimodalAIService } from '../services/MultimodalAIService';
+import { ProjectService } from '../services/ProjectService';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -91,6 +92,16 @@ function getCanvasService() {
         canvasService = new CanvasService(geminiApiKey);
     }
     return canvasService;
+}
+
+let projectService: ProjectService | null = null;
+function getProjectService() {
+    if (!projectService) {
+        const geminiApiKey = process.env.GEMINI_API_KEY;
+        if (!geminiApiKey) throw new Error("GEMINI_API_KEY environment variable is not set.");
+        projectService = ProjectService.getInstance(geminiApiKey);
+    }
+    return projectService;
 }
 
 
@@ -239,4 +250,65 @@ ipcMain.handle('handle-multimodal-prompt', async (event, prompt: string, filePat
         console.error("Multimodal service failed:", error);
         return { error: error.message || "An unknown error occurred in the Multimodal service." };
     }
+});
+
+// --- Project Feature IPC Handlers ---
+
+ipcMain.handle('project:create', async (event, name: string) => {
+    try {
+        const service = getProjectService();
+        const project = await service.createProject(name);
+        return { success: true, project };
+    } catch (error: any) {
+        console.error("Project creation failed:", error);
+        return { success: false, error: error.message };
+    }
+});
+
+ipcMain.handle('project:list', async () => {
+    try {
+        const service = getProjectService();
+        const projects = await service.getProjects();
+        return { success: true, projects };
+    } catch (error: any) {
+        console.error("Failed to list projects:", error);
+        return { success: false, error: error.message };
+    }
+});
+
+ipcMain.handle('project:addFile', async (event, projectId: string, filePath: string) => {
+    try {
+        const service = getProjectService();
+        await service.addFileToProject(projectId, filePath);
+        return { success: true };
+    } catch (error: any) {
+        console.error(`Failed to add file to project ${projectId}:`, error);
+        return { success: false, error: error.message };
+    }
+});
+
+ipcMain.handle('project:chat', async (event, projectId: string, question: string) => {
+    try {
+        const service = getProjectService();
+        const response = await service.chatInProject(projectId, question);
+        return { success: true, response };
+    } catch (error: any) {
+        console.error(`Chat in project ${projectId} failed:`, error);
+        return { success: false, error: error.message };
+    }
+});
+
+ipcMain.handle('project:openFile', async () => {
+    const { filePaths } = await dialog.showOpenDialog({
+      properties: ['openFile', 'multiSelections'], // Allow multiple files
+      filters: [
+        { name: 'Documents', extensions: ['pdf', 'md', 'txt', 'js', 'ts', 'json'] },
+        { name: 'All Files', extensions: ['*'] },
+      ]
+    });
+
+    if (filePaths && filePaths.length > 0) {
+      return { success: true, filePaths };
+    }
+    return { success: false, filePaths: [] };
 });
