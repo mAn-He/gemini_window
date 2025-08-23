@@ -16,6 +16,67 @@ This is a sophisticated Electron application that brings the power of Google's G
 
 ---
 
+## 🏛️ Architecture & Flowcharts
+
+To clarify the application's logic, here are a couple of diagrams illustrating the core workflows.
+
+### High-Level Agent Architecture
+
+This diagram shows how the `SupervisorAgent` receives a user request and routes it to the appropriate specialized agent based on the user's classified intent.
+
+```mermaid
+graph TD
+    A[User Request] --> B{Supervisor Agent};
+    B --> C{Router Node: Classify Intent};
+    C -->|"research_request"| D[DeepResearchAgent];
+    C -->|"coding_request"| E[MLEAgent];
+    C -->|"general_chat"| F[GeneralChatModel];
+    D --> G[Final Response];
+    E --> G;
+    F --> G;
+
+    subgraph "SupervisorAgent Workflow"
+        C
+        D
+        E
+        F
+    end
+
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#ccf,stroke:#333,stroke-width:2px
+    style E fill:#cfc,stroke:#333,stroke-width:2px
+    style F fill:#fcf,stroke:#333,stroke-width:2px
+```
+
+### Deep Research (TTD-DR) Process Flow
+
+This diagram details the internal state machine of the `DeepResearchAgent`. It follows a "Test-Driven Deep Research" methodology, where an initial draft is iteratively critiqued and refined using tool-based fact-checking.
+
+```mermaid
+graph TD
+    A[Start] --> B(Clarify Query);
+    B --> C(Formulate Plan);
+    C --> D(Generate 'Noisy' Draft);
+    D --> E{Critique Draft};
+    E -->|Gaps Identified| F(Generate Tool Calls);
+    F --> G[Search: Execute Tools];
+    G --> H(Refine Draft);
+    H --> E;
+    E -->|No Gaps Found| I[End: Final Report];
+
+    subgraph "TTD-DR Iterative Loop"
+        E
+        F
+        G
+        H
+    end
+
+    style E fill:#f9f,stroke:#333,stroke-width:2px
+    style G fill:#ccf,stroke:#333,stroke-width:2px
+```
+
+---
+
 ## 📊 Implementation Status
 
 This project has a solid architectural foundation, and the core logic for its main features has been fully implemented.
