@@ -1,5 +1,9 @@
 # Gemini Desktop
 
+
+https://github.com/user-attachments/assets/d453934b-c4da-430e-9f60-e580a10fd683
+
+
 **An AI-Powered Research Assistant with Deep Research, a Dynamic Canvas, and MCP Support.**
 
 This is a sophisticated Electron application that brings the power of Google's Gemini AI to your desktop, supercharged with advanced, multi-step research capabilities. It is built with React, TypeScript, LangGraph.js, and the Gemini 2.5 Pro AI model to create a professional research workflow.
@@ -62,6 +66,10 @@ This project has a solid architectural foundation, and the core logic for its ma
 - Electron Builder (Packaging)
 
 ---
+
+
+https://github.com/user-attachments/assets/c422be6f-11bb-4474-a582-aff8e71b7199
+
 
 ## 🚀 Quick Start
 
