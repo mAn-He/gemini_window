@@ -83,7 +83,9 @@ const api = {
   getSettings: () => electron.ipcRenderer.invoke("get-settings"),
   saveSettings: (settings) => electron.ipcRenderer.invoke("save-settings", settings),
   openFile: () => electron.ipcRenderer.invoke("open-file"),
-  processFile: (filePath, prompt) => electron.ipcRenderer.invoke("process-file", filePath, prompt),
+  openMediaFile: () => electron.ipcRenderer.invoke("openMediaFile"),
+  runRagQuery: (filePath, query) => electron.ipcRenderer.invoke("run-rag-query", filePath, query),
+  handleMultimodalPrompt: (prompt, filePath, mimeType) => electron.ipcRenderer.invoke("handle-multimodal-prompt", prompt, filePath, mimeType),
   deepResearch: (prompt, modelName) => electron.ipcRenderer.invoke("deep-research", prompt, modelName),
   // New: default chat with web search & citations
   chatWithWeb: (message, modelName) => electron.ipcRenderer.invoke("chat-with-web", message, modelName),
@@ -103,7 +105,15 @@ const api = {
   getMCPConfigPath: () => electron.ipcRenderer.invoke("get-mcp-config-path"),
   importMCPConfig: (jsonConfig) => electron.ipcRenderer.invoke("import-mcp-config", jsonConfig),
   exportMCPConfig: () => electron.ipcRenderer.invoke("export-mcp-config"),
-  addMCPServerToConfig: (serverName, serverConfig) => electron.ipcRenderer.invoke("add-mcp-server-to-config", serverName, serverConfig)
+  addMCPServerToConfig: (serverName, serverConfig) => electron.ipcRenderer.invoke("add-mcp-server-to-config", serverName, serverConfig),
+  // Project APIs
+  project: {
+    create: (name) => electron.ipcRenderer.invoke("project:create", name),
+    list: () => electron.ipcRenderer.invoke("project:list"),
+    addFile: (projectId, filePath) => electron.ipcRenderer.invoke("project:addFile", projectId, filePath),
+    chat: (projectId, question) => electron.ipcRenderer.invoke("project:chat", projectId, question),
+    openFile: () => electron.ipcRenderer.invoke("project:openFile")
+  }
 };
 electron.contextBridge.exposeInMainWorld("api", api);
 electron.contextBridge.exposeInMainWorld("electron", electronAPI);

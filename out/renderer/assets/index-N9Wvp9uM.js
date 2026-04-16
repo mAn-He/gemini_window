@@ -136,7 +136,7 @@ function T$1(a) {
   throw a._result;
 }
 var U$1 = { current: null }, V$1 = { transition: null }, W$1 = { ReactCurrentDispatcher: U$1, ReactCurrentBatchConfig: V$1, ReactCurrentOwner: K$1 };
-function X$1() {
+function X$2() {
   throw Error("act(...) is not supported in production builds of React.");
 }
 react_production_min.Children = { map: S$1, forEach: function(a, b, e) {
@@ -164,7 +164,7 @@ react_production_min.PureComponent = G$1;
 react_production_min.StrictMode = q$1;
 react_production_min.Suspense = w;
 react_production_min.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W$1;
-react_production_min.act = X$1;
+react_production_min.act = X$2;
 react_production_min.cloneElement = function(a, b, e) {
   if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
   var d = C$1({}, a.props), c = a.key, k2 = a.ref, h = a._owner;
@@ -216,7 +216,7 @@ react_production_min.startTransition = function(a) {
     V$1.transition = b;
   }
 };
-react_production_min.unstable_act = X$1;
+react_production_min.unstable_act = X$2;
 react_production_min.useCallback = function(a, b) {
   return U$1.current.useCallback(a, b);
 };
@@ -5014,7 +5014,7 @@ function Wj(a, b, c) {
   if (5 === d || 6 === d) a = a.stateNode, b ? c.insertBefore(a, b) : c.appendChild(a);
   else if (4 !== d && (a = a.child, null !== a)) for (Wj(a, b, c), a = a.sibling; null !== a; ) Wj(a, b, c), a = a.sibling;
 }
-var X = null, Xj = false;
+var X$1 = null, Xj = false;
 function Yj(a, b, c) {
   for (c = c.child; null !== c; ) Zj(a, b, c), c = c.sibling;
 }
@@ -5027,23 +5027,23 @@ function Zj(a, b, c) {
     case 5:
       U || Lj(c, b);
     case 6:
-      var d = X, e = Xj;
-      X = null;
+      var d = X$1, e = Xj;
+      X$1 = null;
       Yj(a, b, c);
-      X = d;
+      X$1 = d;
       Xj = e;
-      null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c) : a.removeChild(c)) : X.removeChild(c.stateNode));
+      null !== X$1 && (Xj ? (a = X$1, c = c.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c) : a.removeChild(c)) : X$1.removeChild(c.stateNode));
       break;
     case 18:
-      null !== X && (Xj ? (a = X, c = c.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c) : 1 === a.nodeType && Kf(a, c), bd(a)) : Kf(X, c.stateNode));
+      null !== X$1 && (Xj ? (a = X$1, c = c.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c) : 1 === a.nodeType && Kf(a, c), bd(a)) : Kf(X$1, c.stateNode));
       break;
     case 4:
-      d = X;
+      d = X$1;
       e = Xj;
-      X = c.stateNode.containerInfo;
+      X$1 = c.stateNode.containerInfo;
       Xj = true;
       Yj(a, b, c);
-      X = d;
+      X$1 = d;
       Xj = e;
       break;
     case 0:
@@ -5100,23 +5100,23 @@ function ck(a, b) {
       a: for (; null !== h; ) {
         switch (h.tag) {
           case 5:
-            X = h.stateNode;
+            X$1 = h.stateNode;
             Xj = false;
             break a;
           case 3:
-            X = h.stateNode.containerInfo;
+            X$1 = h.stateNode.containerInfo;
             Xj = true;
             break a;
           case 4:
-            X = h.stateNode.containerInfo;
+            X$1 = h.stateNode.containerInfo;
             Xj = true;
             break a;
         }
         h = h.return;
       }
-      if (null === X) throw Error(p(160));
+      if (null === X$1) throw Error(p(160));
       Zj(f2, g, e);
-      X = null;
+      X$1 = null;
       Xj = false;
       var k2 = e.alternate;
       null !== k2 && (k2.return = null);
@@ -6966,859 +6966,6 @@ var m = reactDomExports;
   client.createRoot = m.createRoot;
   client.hydrateRoot = m.hydrateRoot;
 }
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-const mergeClasses = (...classes) => classes.filter((className, index, array) => {
-  return Boolean(className) && array.indexOf(className) === index;
-}).join(" ");
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-var defaultAttributes = {
-  xmlns: "http://www.w3.org/2000/svg",
-  width: 24,
-  height: 24,
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 2,
-  strokeLinecap: "round",
-  strokeLinejoin: "round"
-};
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Icon = reactExports.forwardRef(
-  ({
-    color: color2 = "currentColor",
-    size = 24,
-    strokeWidth = 2,
-    absoluteStrokeWidth,
-    className = "",
-    children,
-    iconNode,
-    ...rest
-  }, ref) => {
-    return reactExports.createElement(
-      "svg",
-      {
-        ref,
-        ...defaultAttributes,
-        width: size,
-        height: size,
-        stroke: color2,
-        strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
-        className: mergeClasses("lucide", className),
-        ...rest
-      },
-      [
-        ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
-        ...Array.isArray(children) ? children : [children]
-      ]
-    );
-  }
-);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const createLucideIcon = (iconName, iconNode) => {
-  const Component = reactExports.forwardRef(
-    ({ className, ...props }, ref) => reactExports.createElement(Icon, {
-      ref,
-      iconNode,
-      className: mergeClasses(`lucide-${toKebabCase(iconName)}`, className),
-      ...props
-    })
-  );
-  Component.displayName = `${iconName}`;
-  return Component;
-};
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const ArrowLeft = createLucideIcon("ArrowLeft", [
-  ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
-  ["path", { d: "M19 12H5", key: "x3x0zl" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Bot = createLucideIcon("Bot", [
-  ["path", { d: "M12 8V4H8", key: "hb8ula" }],
-  ["rect", { width: "16", height: "12", x: "4", y: "8", rx: "2", key: "enze0r" }],
-  ["path", { d: "M2 14h2", key: "vft8re" }],
-  ["path", { d: "M20 14h2", key: "4cs60a" }],
-  ["path", { d: "M15 13v2", key: "1xurst" }],
-  ["path", { d: "M9 13v2", key: "rq6x2g" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const BrainCircuit = createLucideIcon("BrainCircuit", [
-  [
-    "path",
-    {
-      d: "M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z",
-      key: "l5xja"
-    }
-  ],
-  ["path", { d: "M9 13a4.5 4.5 0 0 0 3-4", key: "10igwf" }],
-  ["path", { d: "M6.003 5.125A3 3 0 0 0 6.401 6.5", key: "105sqy" }],
-  ["path", { d: "M3.477 10.896a4 4 0 0 1 .585-.396", key: "ql3yin" }],
-  ["path", { d: "M6 18a4 4 0 0 1-1.967-.516", key: "2e4loj" }],
-  ["path", { d: "M12 13h4", key: "1ku699" }],
-  ["path", { d: "M12 18h6a2 2 0 0 1 2 2v1", key: "105ag5" }],
-  ["path", { d: "M12 8h8", key: "1lhi5i" }],
-  ["path", { d: "M16 8V5a2 2 0 0 1 2-2", key: "u6izg6" }],
-  ["circle", { cx: "16", cy: "13", r: ".5", key: "ry7gng" }],
-  ["circle", { cx: "18", cy: "3", r: ".5", key: "1aiba7" }],
-  ["circle", { cx: "20", cy: "21", r: ".5", key: "yhc1fs" }],
-  ["circle", { cx: "20", cy: "8", r: ".5", key: "1e43v0" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const ChevronDown = createLucideIcon("ChevronDown", [
-  ["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const ChevronRight = createLucideIcon("ChevronRight", [
-  ["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const CircleCheckBig = createLucideIcon("CircleCheckBig", [
-  ["path", { d: "M21.801 10A10 10 0 1 1 17 3.335", key: "yps3ct" }],
-  ["path", { d: "m9 11 3 3L22 4", key: "1pflzl" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Clock = createLucideIcon("Clock", [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Cloud = createLucideIcon("Cloud", [
-  ["path", { d: "M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z", key: "p7xjir" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Code = createLucideIcon("Code", [
-  ["polyline", { points: "16 18 22 12 16 6", key: "z7tu5w" }],
-  ["polyline", { points: "8 6 2 12 8 18", key: "1eg1df" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Copy = createLucideIcon("Copy", [
-  ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
-  ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Database = createLucideIcon("Database", [
-  ["ellipse", { cx: "12", cy: "5", rx: "9", ry: "3", key: "msslwz" }],
-  ["path", { d: "M3 5V19A9 3 0 0 0 21 19V5", key: "1wlel7" }],
-  ["path", { d: "M3 12A9 3 0 0 0 21 12", key: "mv7ke4" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Download = createLucideIcon("Download", [
-  ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
-  ["polyline", { points: "7 10 12 15 17 10", key: "2ggqvy" }],
-  ["line", { x1: "12", x2: "12", y1: "15", y2: "3", key: "1vk2je" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const FileText = createLucideIcon("FileText", [
-  ["path", { d: "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z", key: "1rqfz7" }],
-  ["path", { d: "M14 2v4a2 2 0 0 0 2 2h4", key: "tnqrlb" }],
-  ["path", { d: "M10 9H8", key: "b1mrlr" }],
-  ["path", { d: "M16 13H8", key: "t4e002" }],
-  ["path", { d: "M16 17H8", key: "z1uh3a" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Globe = createLucideIcon("Globe", [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["path", { d: "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", key: "13o1zl" }],
-  ["path", { d: "M2 12h20", key: "9i4pu4" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const HardDrive = createLucideIcon("HardDrive", [
-  ["line", { x1: "22", x2: "2", y1: "12", y2: "12", key: "1y58io" }],
-  [
-    "path",
-    {
-      d: "M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z",
-      key: "oot6mr"
-    }
-  ],
-  ["line", { x1: "6", x2: "6.01", y1: "16", y2: "16", key: "sgf278" }],
-  ["line", { x1: "10", x2: "10.01", y1: "16", y2: "16", key: "1l4acy" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Layers = createLucideIcon("Layers", [
-  [
-    "path",
-    {
-      d: "m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z",
-      key: "8b97xw"
-    }
-  ],
-  ["path", { d: "m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65", key: "dd6zsq" }],
-  ["path", { d: "m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65", key: "ep9fru" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const LoaderCircle = createLucideIcon("LoaderCircle", [
-  ["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Mail = createLucideIcon("Mail", [
-  ["rect", { width: "20", height: "16", x: "2", y: "4", rx: "2", key: "18n3k1" }],
-  ["path", { d: "m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7", key: "1ocrg3" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Palette = createLucideIcon("Palette", [
-  ["circle", { cx: "13.5", cy: "6.5", r: ".5", fill: "currentColor", key: "1okk4w" }],
-  ["circle", { cx: "17.5", cy: "10.5", r: ".5", fill: "currentColor", key: "f64h9f" }],
-  ["circle", { cx: "8.5", cy: "7.5", r: ".5", fill: "currentColor", key: "fotxhn" }],
-  ["circle", { cx: "6.5", cy: "12.5", r: ".5", fill: "currentColor", key: "qy21gx" }],
-  [
-    "path",
-    {
-      d: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z",
-      key: "12rzf8"
-    }
-  ]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Paperclip = createLucideIcon("Paperclip", [
-  [
-    "path",
-    {
-      d: "m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48",
-      key: "1u3ebp"
-    }
-  ]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const PencilRuler = createLucideIcon("PencilRuler", [
-  [
-    "path",
-    { d: "M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13", key: "orapub" }
-  ],
-  ["path", { d: "m8 6 2-2", key: "115y1s" }],
-  ["path", { d: "m18 16 2-2", key: "ee94s4" }],
-  [
-    "path",
-    {
-      d: "m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17",
-      key: "cfq27r"
-    }
-  ],
-  [
-    "path",
-    {
-      d: "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z",
-      key: "1a8usu"
-    }
-  ],
-  ["path", { d: "m15 5 4 4", key: "1mk7zo" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Play = createLucideIcon("Play", [
-  ["polygon", { points: "6 3 20 12 6 21 6 3", key: "1oa8hb" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Plug = createLucideIcon("Plug", [
-  ["path", { d: "M12 22v-5", key: "1ega77" }],
-  ["path", { d: "M9 8V2", key: "14iosj" }],
-  ["path", { d: "M15 8V2", key: "18g5xt" }],
-  ["path", { d: "M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z", key: "osxo6l" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Plus = createLucideIcon("Plus", [
-  ["path", { d: "M5 12h14", key: "1ays0h" }],
-  ["path", { d: "M12 5v14", key: "s699le" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const PowerOff = createLucideIcon("PowerOff", [
-  ["path", { d: "M18.36 6.64A9 9 0 0 1 20.77 15", key: "dxknvb" }],
-  ["path", { d: "M6.16 6.16a9 9 0 1 0 12.68 12.68", key: "1x7qb5" }],
-  ["path", { d: "M12 2v4", key: "3427ic" }],
-  ["path", { d: "m2 2 20 20", key: "1ooewy" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Power = createLucideIcon("Power", [
-  ["path", { d: "M12 2v10", key: "mnfbl" }],
-  ["path", { d: "M18.4 6.6a9 9 0 1 1-12.77.04", key: "obofu9" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Save = createLucideIcon("Save", [
-  [
-    "path",
-    {
-      d: "M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z",
-      key: "1c8476"
-    }
-  ],
-  ["path", { d: "M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7", key: "1ydtos" }],
-  ["path", { d: "M7 3v4a1 1 0 0 0 1 1h7", key: "t51u73" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const ScanSearch = createLucideIcon("ScanSearch", [
-  ["path", { d: "M3 7V5a2 2 0 0 1 2-2h2", key: "aa7l1z" }],
-  ["path", { d: "M17 3h2a2 2 0 0 1 2 2v2", key: "4qcy5o" }],
-  ["path", { d: "M21 17v2a2 2 0 0 1-2 2h-2", key: "6vwrx8" }],
-  ["path", { d: "M7 21H5a2 2 0 0 1-2-2v-2", key: "ioqczr" }],
-  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }],
-  ["path", { d: "m16 16-1.9-1.9", key: "1dq9hf" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Send = createLucideIcon("Send", [
-  [
-    "path",
-    {
-      d: "M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z",
-      key: "1ffxy3"
-    }
-  ],
-  ["path", { d: "m21.854 2.147-10.94 10.939", key: "12cjpa" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Server = createLucideIcon("Server", [
-  ["rect", { width: "20", height: "8", x: "2", y: "2", rx: "2", ry: "2", key: "ngkwjq" }],
-  ["rect", { width: "20", height: "8", x: "2", y: "14", rx: "2", ry: "2", key: "iecqi9" }],
-  ["line", { x1: "6", x2: "6.01", y1: "6", y2: "6", key: "16zg32" }],
-  ["line", { x1: "6", x2: "6.01", y1: "18", y2: "18", key: "nzw8ys" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Settings$1 = createLucideIcon("Settings", [
-  [
-    "path",
-    {
-      d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z",
-      key: "1qme2f"
-    }
-  ],
-  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Trash2 = createLucideIcon("Trash2", [
-  ["path", { d: "M3 6h18", key: "d0wm0j" }],
-  ["path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6", key: "4alrt4" }],
-  ["path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2", key: "v07s0e" }],
-  ["line", { x1: "10", x2: "10", y1: "11", y2: "17", key: "1uufr5" }],
-  ["line", { x1: "14", x2: "14", y1: "11", y2: "17", key: "xtxkd" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const TriangleAlert = createLucideIcon("TriangleAlert", [
-  [
-    "path",
-    {
-      d: "m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3",
-      key: "wmoenq"
-    }
-  ],
-  ["path", { d: "M12 9v4", key: "juzpu7" }],
-  ["path", { d: "M12 17h.01", key: "p32p05" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Upload = createLucideIcon("Upload", [
-  ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
-  ["polyline", { points: "17 8 12 3 7 8", key: "t8dd8p" }],
-  ["line", { x1: "12", x2: "12", y1: "3", y2: "15", key: "widbto" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const WandSparkles = createLucideIcon("WandSparkles", [
-  [
-    "path",
-    {
-      d: "m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72",
-      key: "ul74o6"
-    }
-  ],
-  ["path", { d: "m14 7 3 3", key: "1r5n42" }],
-  ["path", { d: "M5 6v4", key: "ilb8ba" }],
-  ["path", { d: "M19 14v4", key: "blhpug" }],
-  ["path", { d: "M10 2v2", key: "7u0qdc" }],
-  ["path", { d: "M7 8H3", key: "zfb6yr" }],
-  ["path", { d: "M21 16h-4", key: "1cnmox" }],
-  ["path", { d: "M11 3H9", key: "1obp7u" }]
-]);
-/**
- * @license lucide-react v0.446.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const Wrench = createLucideIcon("Wrench", [
-  [
-    "path",
-    {
-      d: "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z",
-      key: "cbrjhi"
-    }
-  ]
-]);
-const Settings = () => {
-  const [selectedStorage, setSelectedStorage] = reactExports.useState("local");
-  const handleSave = () => {
-    console.log(`Saving storage location: ${selectedStorage}`);
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-8 text-white w-full", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-3xl font-bold mb-8", children: "Settings" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-semibold mb-4 border-b border-gray-600 pb-2", children: "Storage Location" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 mb-4", children: "Choose where your conversations and data are stored." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: `flex items-center p-4 rounded-lg cursor-pointer transition-all ${selectedStorage === "local" ? "bg-blue-600/30 border-blue-500 border" : "bg-gray-700/50"}`, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "radio",
-                name: "storage",
-                value: "local",
-                checked: selectedStorage === "local",
-                onChange: () => setSelectedStorage("local"),
-                className: "hidden"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(HardDrive, { className: "mr-4", size: 24 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-bold", children: "Local Storage" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: "Fastest and most private. Data is stored only on this computer." })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: `flex items-center p-4 rounded-lg cursor-pointer transition-all ${selectedStorage === "onedrive" ? "bg-blue-600/30 border-blue-500 border" : "bg-gray-700/50"}`, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "radio",
-                name: "storage",
-                value: "onedrive",
-                checked: selectedStorage === "onedrive",
-                onChange: () => setSelectedStorage("onedrive"),
-                className: "hidden"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Cloud, { className: "mr-4", size: 24 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-bold", children: "Personal OneDrive" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: "Sync across devices with your Microsoft account. (Requires login)" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: `flex items-center p-4 rounded-lg cursor-pointer transition-all ${selectedStorage === "googledrive" ? "bg-blue-600/30 border-blue-500 border" : "bg-gray-700/50"}`, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "input",
-              {
-                type: "radio",
-                name: "storage",
-                value: "googledrive",
-                checked: selectedStorage === "googledrive",
-                onChange: () => setSelectedStorage("googledrive"),
-                className: "hidden"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Cloud, { className: "mr-4", size: 24 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-bold", children: "Personal Google Drive" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: "Sync across devices with your Google account. (Requires login)" })
-            ] })
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end pt-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "button",
-        {
-          onClick: handleSave,
-          className: "flex items-center justify-center px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-colors",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Save, { size: 18, className: "mr-2" }),
-            "Save Changes"
-          ]
-        }
-      ) })
-    ] })
-  ] });
-};
-const byteToHex = [];
-for (let i = 0; i < 256; ++i) {
-  byteToHex.push((i + 256).toString(16).slice(1));
-}
-function unsafeStringify(arr, offset = 0) {
-  return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
-}
-let getRandomValues;
-const rnds8 = new Uint8Array(16);
-function rng() {
-  if (!getRandomValues) {
-    if (typeof crypto === "undefined" || !crypto.getRandomValues) {
-      throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
-    }
-    getRandomValues = crypto.getRandomValues.bind(crypto);
-  }
-  return getRandomValues(rnds8);
-}
-const randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-const native = { randomUUID };
-function v4(options, buf, offset) {
-  if (native.randomUUID && true && !options) {
-    return native.randomUUID();
-  }
-  options = options || {};
-  const rnds = options.random ?? options.rng?.() ?? rng();
-  if (rnds.length < 16) {
-    throw new Error("Random bytes length must be >= 16");
-  }
-  rnds[6] = rnds[6] & 15 | 64;
-  rnds[8] = rnds[8] & 63 | 128;
-  return unsafeStringify(rnds);
-}
-const ChatInterface = ({
-  messages,
-  userInput,
-  isLoading,
-  isToolsOpen,
-  tools,
-  setUserInput,
-  handleSendMessage,
-  setIsToolsOpen,
-  attachedFile,
-  setAttachedFile,
-  isDeepResearchMode,
-  setIsDeepResearchMode,
-  researchProgress,
-  onSelectCanvas
-}) => {
-  const textareaRef = reactExports.useRef(null);
-  const chatContainerRef = reactExports.useRef(null);
-  reactExports.useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }, [userInput]);
-  reactExports.useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-  const handleFileAttach = async () => {
-    const filePath = await window.api.openFile();
-    if (filePath) {
-      const fileName = filePath.split("\\").pop()?.split("/").pop() || "attached_file";
-      setAttachedFile({ path: filePath, name: fileName });
-    }
-  };
-  const handleToolClick = (toolName) => {
-    if (toolName === "Deep research") {
-      setIsDeepResearchMode(!isDeepResearchMode);
-      setIsToolsOpen(false);
-      return;
-    }
-    if (toolName === "Canvas") {
-      onSelectCanvas?.();
-      setIsToolsOpen(false);
-      return;
-    }
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "div",
-      {
-        ref: chatContainerRef,
-        className: "flex-1 w-full overflow-y-auto p-4 select-text",
-        children: messages.length === 0 && !isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center justify-center h-full", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Bot, { size: 48, className: "mx-auto mb-4" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-4xl font-bold", children: "What can I help with?" })
-        ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-6", children: [
-          messages.map((msg) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `flex items-start gap-4 ${msg.sender === "user" ? "justify-end" : ""}`, children: [
-            msg.sender === "ai" && /* @__PURE__ */ jsxRuntimeExports.jsx(Bot, { size: 24, className: "flex-shrink-0" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `p-4 rounded-lg max-w-xl ${msg.sender === "user" ? "bg-blue-600 text-white" : "bg-gray-700"}`, children: [
-              msg.fileName && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2 p-2 bg-gray-600 rounded-md flex items-center gap-2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { size: 16 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: msg.fileName })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "whitespace-pre-wrap select-text", children: msg.text })
-            ] })
-          ] }, msg.id)),
-          researchProgress.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-4", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(BrainCircuit, { size: 24, className: "flex-shrink-0 text-blue-400 animate-pulse" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-4 rounded-lg bg-blue-900/30 border border-blue-400/30", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: researchProgress.map((step, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-blue-200 text-sm flex items-center gap-2", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2 h-2 bg-blue-400 rounded-full" }),
-              step
-            ] }, index)) }) })
-          ] }),
-          isLoading && researchProgress.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-4", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Bot, { size: 24, className: "flex-shrink-0" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-4 rounded-lg bg-gray-700", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "typing-indicator", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", {})
-            ] }) })
-          ] })
-        ] })
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
-      attachedFile && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-2 bg-gray-600 rounded-md flex items-center gap-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { size: 16 }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: attachedFile.name })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: handleFileAttach,
-            className: "absolute left-3 top-1/2 -translate-y-1/2 p-2 hover:bg-gray-600 rounded-full transition-colors",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { size: 18 })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "textarea",
-          {
-            ref: textareaRef,
-            value: userInput,
-            onChange: (e) => setUserInput(e.target.value),
-            onKeyDown: handleKeyDown,
-            placeholder: "Ask anything, or attach a file",
-            className: "w-full bg-[#2F2F2F] rounded-xl py-3 pl-12 pr-16 text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 max-h-48 overflow-y-auto",
-            rows: 1,
-            disabled: isLoading
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: handleSendMessage,
-            disabled: isLoading || !userInput.trim() && !attachedFile,
-            className: "absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-blue-600 rounded-full hover:bg-blue-700 disabled:bg-gray-500 transition-colors",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Send, { size: 18 })
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex items-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              onClick: () => setIsToolsOpen(!isToolsOpen),
-              className: "flex items-center space-x-1 p-2 bg-gray-600 rounded-md hover:bg-gray-500 text-sm",
-              children: [
-                isDeepResearchMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(BrainCircuit, { size: 16, className: "text-blue-400" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { size: 16 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Tools" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { size: 16 })
-              ]
-            }
-          ),
-          isToolsOpen && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute bottom-full mb-2 w-64 bg-[#121212] rounded-md shadow-lg z-10 p-1", children: [
-            tools.map((tool) => {
-              const isDeepResearch = tool.name === "Deep research";
-              const isActive = isDeepResearch && isDeepResearchMode;
-              return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                "button",
-                {
-                  onClick: () => handleToolClick(tool.name),
-                  className: "flex items-center space-x-2 w-full text-left p-2 hover:bg-gray-700 rounded",
-                  children: [
-                    React.cloneElement(tool.icon, { className: isActive ? "text-blue-400" : "" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `truncate ${isActive ? "text-blue-400" : ""}`, children: tool.name })
-                  ]
-                },
-                tool.name
-              );
-            }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "my-1 border-t border-gray-800" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-2 py-1 text-xs text-gray-400", children: "MCP Tools (connected)" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "max-h-64 overflow-y-auto" })
-          ] })
-        ] }),
-        isDeepResearchMode && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-4 text-sm text-blue-400 font-semibold", children: "Deep Research Mode is ON" })
-      ] })
-    ] }) })
-  ] });
-};
 const LayoutGroupContext = reactExports.createContext({});
 function useConstant(init) {
   const ref = reactExports.useRef(null);
@@ -8202,11 +7349,11 @@ for (const key in featureProps) {
     isEnabled: (props) => featureProps[key].some((name) => !!props[name])
   };
 }
-function loadFeatures(features) {
-  for (const key in features) {
+function loadFeatures(features2) {
+  for (const key in features2) {
     featureDefinitions[key] = {
       ...featureDefinitions[key],
-      ...features[key]
+      ...features2[key]
     };
   }
 }
@@ -15092,1179 +14239,4650 @@ const createMotionComponent = /* @__PURE__ */ createMotionComponentFactory({
   ...layout
 }, createDomVisualElement);
 const motion = /* @__PURE__ */ createDOMMotionComponentProxy(createMotionComponent);
-const CanvasEngine = ({
-  projectId,
-  onSave,
-  onAIRequest
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const toKebabCase = (string) => string.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+const mergeClasses = (...classes) => classes.filter((className, index, array) => {
+  return Boolean(className) && array.indexOf(className) === index;
+}).join(" ");
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+var defaultAttributes = {
+  xmlns: "http://www.w3.org/2000/svg",
+  width: 24,
+  height: 24,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round"
+};
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Icon = reactExports.forwardRef(
+  ({
+    color: color2 = "currentColor",
+    size = 24,
+    strokeWidth = 2,
+    absoluteStrokeWidth,
+    className = "",
+    children,
+    iconNode,
+    ...rest
+  }, ref) => {
+    return reactExports.createElement(
+      "svg",
+      {
+        ref,
+        ...defaultAttributes,
+        width: size,
+        height: size,
+        stroke: color2,
+        strokeWidth: absoluteStrokeWidth ? Number(strokeWidth) * 24 / Number(size) : strokeWidth,
+        className: mergeClasses("lucide", className),
+        ...rest
+      },
+      [
+        ...iconNode.map(([tag, attrs]) => reactExports.createElement(tag, attrs)),
+        ...Array.isArray(children) ? children : [children]
+      ]
+    );
+  }
+);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const createLucideIcon = (iconName, iconNode) => {
+  const Component = reactExports.forwardRef(
+    ({ className, ...props }, ref) => reactExports.createElement(Icon, {
+      ref,
+      iconNode,
+      className: mergeClasses(`lucide-${toKebabCase(iconName)}`, className),
+      ...props
+    })
+  );
+  Component.displayName = `${iconName}`;
+  return Component;
+};
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Activity = createLucideIcon("Activity", [
+  [
+    "path",
+    {
+      d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2",
+      key: "169zse"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ArrowLeft = createLucideIcon("ArrowLeft", [
+  ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
+  ["path", { d: "M19 12H5", key: "x3x0zl" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ArrowRight = createLucideIcon("ArrowRight", [
+  ["path", { d: "M5 12h14", key: "1ays0h" }],
+  ["path", { d: "m12 5 7 7-7 7", key: "xquz4c" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const BookOpen = createLucideIcon("BookOpen", [
+  ["path", { d: "M12 7v14", key: "1akyts" }],
+  [
+    "path",
+    {
+      d: "M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z",
+      key: "ruj8y"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Bot = createLucideIcon("Bot", [
+  ["path", { d: "M12 8V4H8", key: "hb8ula" }],
+  ["rect", { width: "16", height: "12", x: "4", y: "8", rx: "2", key: "enze0r" }],
+  ["path", { d: "M2 14h2", key: "vft8re" }],
+  ["path", { d: "M20 14h2", key: "4cs60a" }],
+  ["path", { d: "M15 13v2", key: "1xurst" }],
+  ["path", { d: "M9 13v2", key: "rq6x2g" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ChevronDown = createLucideIcon("ChevronDown", [
+  ["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ChevronLeft = createLucideIcon("ChevronLeft", [
+  ["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ChevronRight = createLucideIcon("ChevronRight", [
+  ["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ChevronUp = createLucideIcon("ChevronUp", [["path", { d: "m18 15-6-6-6 6", key: "153udz" }]]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const CircleAlert = createLucideIcon("CircleAlert", [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["line", { x1: "12", x2: "12", y1: "8", y2: "12", key: "1pkeuh" }],
+  ["line", { x1: "12", x2: "12.01", y1: "16", y2: "16", key: "4dfq90" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const CircleCheckBig = createLucideIcon("CircleCheckBig", [
+  ["path", { d: "M21.801 10A10 10 0 1 1 17 3.335", key: "yps3ct" }],
+  ["path", { d: "m9 11 3 3L22 4", key: "1pflzl" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Clock = createLucideIcon("Clock", [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["polyline", { points: "12 6 12 12 16 14", key: "68esgv" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Cloud = createLucideIcon("Cloud", [
+  ["path", { d: "M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z", key: "p7xjir" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const CodeXml = createLucideIcon("CodeXml", [
+  ["path", { d: "m18 16 4-4-4-4", key: "1inbqp" }],
+  ["path", { d: "m6 8-4 4 4 4", key: "15zrgr" }],
+  ["path", { d: "m14.5 4-5 16", key: "e7oirm" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Code = createLucideIcon("Code", [
+  ["polyline", { points: "16 18 22 12 16 6", key: "z7tu5w" }],
+  ["polyline", { points: "8 6 2 12 8 18", key: "1eg1df" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Copy = createLucideIcon("Copy", [
+  ["rect", { width: "14", height: "14", x: "8", y: "8", rx: "2", ry: "2", key: "17jyea" }],
+  ["path", { d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2", key: "zix9uf" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Cpu = createLucideIcon("Cpu", [
+  ["rect", { width: "16", height: "16", x: "4", y: "4", rx: "2", key: "14l7u7" }],
+  ["rect", { width: "6", height: "6", x: "9", y: "9", rx: "1", key: "5aljv4" }],
+  ["path", { d: "M15 2v2", key: "13l42r" }],
+  ["path", { d: "M15 20v2", key: "15mkzm" }],
+  ["path", { d: "M2 15h2", key: "1gxd5l" }],
+  ["path", { d: "M2 9h2", key: "1bbxkp" }],
+  ["path", { d: "M20 15h2", key: "19e6y8" }],
+  ["path", { d: "M20 9h2", key: "19tzq7" }],
+  ["path", { d: "M9 2v2", key: "165o2o" }],
+  ["path", { d: "M9 20v2", key: "i2bqo8" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Database = createLucideIcon("Database", [
+  ["ellipse", { cx: "12", cy: "5", rx: "9", ry: "3", key: "msslwz" }],
+  ["path", { d: "M3 5V19A9 3 0 0 0 21 19V5", key: "1wlel7" }],
+  ["path", { d: "M3 12A9 3 0 0 0 21 12", key: "mv7ke4" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Download = createLucideIcon("Download", [
+  ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
+  ["polyline", { points: "7 10 12 15 17 10", key: "2ggqvy" }],
+  ["line", { x1: "12", x2: "12", y1: "15", y2: "3", key: "1vk2je" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ExternalLink = createLucideIcon("ExternalLink", [
+  ["path", { d: "M15 3h6v6", key: "1q9fwt" }],
+  ["path", { d: "M10 14 21 3", key: "gplh6r" }],
+  ["path", { d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6", key: "a6xqqp" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const EyeOff = createLucideIcon("EyeOff", [
+  [
+    "path",
+    {
+      d: "M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49",
+      key: "ct8e1f"
+    }
+  ],
+  ["path", { d: "M14.084 14.158a3 3 0 0 1-4.242-4.242", key: "151rxh" }],
+  [
+    "path",
+    {
+      d: "M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143",
+      key: "13bj9a"
+    }
+  ],
+  ["path", { d: "m2 2 20 20", key: "1ooewy" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Eye = createLucideIcon("Eye", [
+  [
+    "path",
+    {
+      d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
+      key: "1nclc0"
+    }
+  ],
+  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const FileText = createLucideIcon("FileText", [
+  ["path", { d: "M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z", key: "1rqfz7" }],
+  ["path", { d: "M14 2v4a2 2 0 0 0 2 2h4", key: "tnqrlb" }],
+  ["path", { d: "M10 9H8", key: "b1mrlr" }],
+  ["path", { d: "M16 13H8", key: "t4e002" }],
+  ["path", { d: "M16 17H8", key: "z1uh3a" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const FolderOpen = createLucideIcon("FolderOpen", [
+  [
+    "path",
+    {
+      d: "m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2",
+      key: "usdka0"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Globe = createLucideIcon("Globe", [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20", key: "13o1zl" }],
+  ["path", { d: "M2 12h20", key: "9i4pu4" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const HardDrive = createLucideIcon("HardDrive", [
+  ["line", { x1: "22", x2: "2", y1: "12", y2: "12", key: "1y58io" }],
+  [
+    "path",
+    {
+      d: "M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z",
+      key: "oot6mr"
+    }
+  ],
+  ["line", { x1: "6", x2: "6.01", y1: "16", y2: "16", key: "sgf278" }],
+  ["line", { x1: "10", x2: "10.01", y1: "16", y2: "16", key: "1l4acy" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Info = createLucideIcon("Info", [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "M12 16v-4", key: "1dtifu" }],
+  ["path", { d: "M12 8h.01", key: "e9boi3" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Key = createLucideIcon("Key", [
+  ["path", { d: "m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4", key: "g0fldk" }],
+  ["path", { d: "m21 2-9.6 9.6", key: "1j0ho8" }],
+  ["circle", { cx: "7.5", cy: "15.5", r: "5.5", key: "yqb3hr" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Layers = createLucideIcon("Layers", [
+  [
+    "path",
+    {
+      d: "m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z",
+      key: "8b97xw"
+    }
+  ],
+  ["path", { d: "m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65", key: "dd6zsq" }],
+  ["path", { d: "m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65", key: "ep9fru" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const LoaderCircle = createLucideIcon("LoaderCircle", [
+  ["path", { d: "M21 12a9 9 0 1 1-6.219-8.56", key: "13zald" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const MessageSquare = createLucideIcon("MessageSquare", [
+  ["path", { d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z", key: "1lielz" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Monitor = createLucideIcon("Monitor", [
+  ["rect", { width: "20", height: "14", x: "2", y: "3", rx: "2", key: "48i651" }],
+  ["line", { x1: "8", x2: "16", y1: "21", y2: "21", key: "1svkeh" }],
+  ["line", { x1: "12", x2: "12", y1: "17", y2: "21", key: "vw1qmm" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Moon = createLucideIcon("Moon", [
+  ["path", { d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Palette = createLucideIcon("Palette", [
+  ["circle", { cx: "13.5", cy: "6.5", r: ".5", fill: "currentColor", key: "1okk4w" }],
+  ["circle", { cx: "17.5", cy: "10.5", r: ".5", fill: "currentColor", key: "f64h9f" }],
+  ["circle", { cx: "8.5", cy: "7.5", r: ".5", fill: "currentColor", key: "fotxhn" }],
+  ["circle", { cx: "6.5", cy: "12.5", r: ".5", fill: "currentColor", key: "qy21gx" }],
+  [
+    "path",
+    {
+      d: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z",
+      key: "12rzf8"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Paperclip = createLucideIcon("Paperclip", [
+  [
+    "path",
+    {
+      d: "m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48",
+      key: "1u3ebp"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Plug = createLucideIcon("Plug", [
+  ["path", { d: "M12 22v-5", key: "1ega77" }],
+  ["path", { d: "M9 8V2", key: "14iosj" }],
+  ["path", { d: "M15 8V2", key: "18g5xt" }],
+  ["path", { d: "M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z", key: "osxo6l" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Plus = createLucideIcon("Plus", [
+  ["path", { d: "M5 12h14", key: "1ays0h" }],
+  ["path", { d: "M12 5v14", key: "s699le" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const PowerOff = createLucideIcon("PowerOff", [
+  ["path", { d: "M18.36 6.64A9 9 0 0 1 20.77 15", key: "dxknvb" }],
+  ["path", { d: "M6.16 6.16a9 9 0 1 0 12.68 12.68", key: "1x7qb5" }],
+  ["path", { d: "M12 2v4", key: "3427ic" }],
+  ["path", { d: "m2 2 20 20", key: "1ooewy" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Power = createLucideIcon("Power", [
+  ["path", { d: "M12 2v10", key: "mnfbl" }],
+  ["path", { d: "M18.4 6.6a9 9 0 1 1-12.77.04", key: "obofu9" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const RefreshCw = createLucideIcon("RefreshCw", [
+  ["path", { d: "M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8", key: "v9h5vc" }],
+  ["path", { d: "M21 3v5h-5", key: "1q7to0" }],
+  ["path", { d: "M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16", key: "3uifl3" }],
+  ["path", { d: "M8 16H3v5", key: "1cv678" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Save = createLucideIcon("Save", [
+  [
+    "path",
+    {
+      d: "M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z",
+      key: "1c8476"
+    }
+  ],
+  ["path", { d: "M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7", key: "1ydtos" }],
+  ["path", { d: "M7 3v4a1 1 0 0 0 1 1h7", key: "t51u73" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Search = createLucideIcon("Search", [
+  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }],
+  ["path", { d: "m21 21-4.3-4.3", key: "1qie3q" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Send = createLucideIcon("Send", [
+  [
+    "path",
+    {
+      d: "M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z",
+      key: "1ffxy3"
+    }
+  ],
+  ["path", { d: "m21.854 2.147-10.94 10.939", key: "12cjpa" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Server = createLucideIcon("Server", [
+  ["rect", { width: "20", height: "8", x: "2", y: "2", rx: "2", ry: "2", key: "ngkwjq" }],
+  ["rect", { width: "20", height: "8", x: "2", y: "14", rx: "2", ry: "2", key: "iecqi9" }],
+  ["line", { x1: "6", x2: "6.01", y1: "6", y2: "6", key: "16zg32" }],
+  ["line", { x1: "6", x2: "6.01", y1: "18", y2: "18", key: "nzw8ys" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Settings = createLucideIcon("Settings", [
+  [
+    "path",
+    {
+      d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z",
+      key: "1qme2f"
+    }
+  ],
+  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Shield = createLucideIcon("Shield", [
+  [
+    "path",
+    {
+      d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+      key: "oel41y"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Sparkles = createLucideIcon("Sparkles", [
+  [
+    "path",
+    {
+      d: "M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z",
+      key: "4pj2yx"
+    }
+  ],
+  ["path", { d: "M20 3v4", key: "1olli1" }],
+  ["path", { d: "M22 5h-4", key: "1gvqau" }],
+  ["path", { d: "M4 17v2", key: "vumght" }],
+  ["path", { d: "M5 18H3", key: "zchphs" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Sun = createLucideIcon("Sun", [
+  ["circle", { cx: "12", cy: "12", r: "4", key: "4exip2" }],
+  ["path", { d: "M12 2v2", key: "tus03m" }],
+  ["path", { d: "M12 20v2", key: "1lh1kg" }],
+  ["path", { d: "m4.93 4.93 1.41 1.41", key: "149t6j" }],
+  ["path", { d: "m17.66 17.66 1.41 1.41", key: "ptbguv" }],
+  ["path", { d: "M2 12h2", key: "1t8f8n" }],
+  ["path", { d: "M20 12h2", key: "1q8mjw" }],
+  ["path", { d: "m6.34 17.66-1.41 1.41", key: "1m8zz5" }],
+  ["path", { d: "m19.07 4.93-1.41 1.41", key: "1shlcs" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Terminal = createLucideIcon("Terminal", [
+  ["polyline", { points: "4 17 10 11 4 5", key: "akl6gq" }],
+  ["line", { x1: "12", x2: "20", y1: "19", y2: "19", key: "q2wloq" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ThumbsDown = createLucideIcon("ThumbsDown", [
+  ["path", { d: "M17 14V2", key: "8ymqnk" }],
+  [
+    "path",
+    {
+      d: "M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z",
+      key: "m61m77"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const ThumbsUp = createLucideIcon("ThumbsUp", [
+  ["path", { d: "M7 10v12", key: "1qc93n" }],
+  [
+    "path",
+    {
+      d: "M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z",
+      key: "emmmcr"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Trash2 = createLucideIcon("Trash2", [
+  ["path", { d: "M3 6h18", key: "d0wm0j" }],
+  ["path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6", key: "4alrt4" }],
+  ["path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2", key: "v07s0e" }],
+  ["line", { x1: "10", x2: "10", y1: "11", y2: "17", key: "1uufr5" }],
+  ["line", { x1: "14", x2: "14", y1: "11", y2: "17", key: "xtxkd" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Upload = createLucideIcon("Upload", [
+  ["path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4", key: "ih7n3h" }],
+  ["polyline", { points: "17 8 12 3 7 8", key: "t8dd8p" }],
+  ["line", { x1: "12", x2: "12", y1: "3", y2: "15", key: "widbto" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const User = createLucideIcon("User", [
+  ["path", { d: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2", key: "975kel" }],
+  ["circle", { cx: "12", cy: "7", r: "4", key: "17ys0d" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Wifi = createLucideIcon("Wifi", [
+  ["path", { d: "M12 20h.01", key: "zekei9" }],
+  ["path", { d: "M2 8.82a15 15 0 0 1 20 0", key: "dnpr2z" }],
+  ["path", { d: "M5 12.859a10 10 0 0 1 14 0", key: "1x1e6c" }],
+  ["path", { d: "M8.5 16.429a5 5 0 0 1 7 0", key: "1bycff" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Wrench = createLucideIcon("Wrench", [
+  [
+    "path",
+    {
+      d: "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z",
+      key: "cbrjhi"
+    }
+  ]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const X = createLucideIcon("X", [
+  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+]);
+/**
+ * @license lucide-react v0.446.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const Zap = createLucideIcon("Zap", [
+  [
+    "path",
+    {
+      d: "M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z",
+      key: "1xq2db"
+    }
+  ]
+]);
+const navItems = [
+  { id: "chat", label: "Chat & Agents", icon: MessageSquare, description: "Chat, Coding & Research" },
+  { id: "rag", label: "Knowledge Base", icon: BookOpen, description: "RAG & Documents" },
+  { id: "mcp", label: "MCP Manager", icon: Plug, description: "Model Context Protocol" },
+  { id: "models", label: "Models", icon: Cpu, description: "Local & API Models" },
+  { id: "settings", label: "Settings", icon: Settings, description: "Configuration" }
+];
+const modeIcons = {
+  chat: Bot,
+  coding: CodeXml,
+  research: Globe
+};
+const modeColors$1 = {
+  chat: "text-blue-500",
+  coding: "text-emerald-500",
+  research: "text-purple-500"
+};
+const providerColors = {
+  gemini: "bg-blue-500",
+  openai: "bg-emerald-500",
+  anthropic: "bg-orange-500",
+  ollama: "bg-purple-500",
+  local: "bg-gray-500"
+};
+const Sidebar = ({
+  activeView,
+  onViewChange,
+  sessions,
+  currentSessionId,
+  onSelectSession,
+  onNewSession,
+  mcpServers,
+  collapsed,
+  onToggleCollapse,
+  selectedModel,
+  chatMode
 }) => {
-  const [currentProject, setCurrentProject] = reactExports.useState(null);
-  const [mode, setMode] = reactExports.useState("document");
-  const [isLoading, setIsLoading] = reactExports.useState(false);
-  const [prompt, setPrompt] = reactExports.useState("");
-  const [content, setContent] = reactExports.useState("");
-  const [preview, setPreview] = reactExports.useState("");
-  const [isAIMode, setIsAIMode] = reactExports.useState(false);
-  const contentRef = reactExports.useRef(null);
-  const previewRef = reactExports.useRef(null);
-  reactExports.useEffect(() => {
-    if (projectId) {
-      loadProject(projectId);
+  const [sessionsExpanded, setSessionsExpanded] = reactExports.useState(true);
+  const [searchQuery, setSearchQuery] = reactExports.useState("");
+  const connectedServers = mcpServers.filter((s) => s.status === "connected");
+  const recentSessions = sessions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).slice(0, 8);
+  const filteredSessions = searchQuery ? recentSessions.filter((s) => s.title.toLowerCase().includes(searchQuery.toLowerCase())) : recentSessions;
+  const ModeIcon = modeIcons[chatMode];
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    motion.aside,
+    {
+      animate: { width: collapsed ? 72 : 260 },
+      transition: { duration: 0.2, ease: "easeInOut" },
+      className: "flex flex-col bg-white border-r border-slate-200 shadow-sm relative overflow-hidden flex-shrink-0",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center px-4 py-4 border-b border-slate-100", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 16, className: "text-white" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: !collapsed && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, x: -10 },
+              animate: { opacity: 1, x: 0 },
+              exit: { opacity: 0, x: -10 },
+              transition: { duration: 0.15 },
+              className: "ml-3 min-w-0",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-sm font-bold text-slate-800 truncate", children: "LLM Desktop" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-400 truncate", children: "AI Workspace" })
+              ]
+            }
+          ) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: onToggleCollapse,
+              className: "ml-auto p-1 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0",
+              children: collapsed ? /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 14 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronLeft, { size: 14 })
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-3 py-3 border-b border-slate-100", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            onClick: () => {
+              onNewSession();
+              onViewChange("chat");
+            },
+            className: `flex items-center gap-2 w-full rounded-lg px-3 py-2.5 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors ${collapsed ? "justify-center" : ""}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { size: 16, className: "flex-shrink-0" }),
+              !collapsed && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "New Chat" })
+            ]
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: "px-3 py-3 border-b border-slate-100", children: [
+          !collapsed && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1", children: "Navigation" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-0.5", children: navItems.map((item) => {
+            const Icon2 = item.icon;
+            const isActive = activeView === item.id;
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: () => onViewChange(item.id),
+                title: collapsed ? item.label : void 0,
+                className: `flex items-center gap-3 w-full rounded-lg px-3 py-2.5 text-sm transition-all ${isActive ? "bg-blue-50 text-blue-700 font-medium" : "text-slate-600 hover:bg-slate-50 hover:text-slate-800"} ${collapsed ? "justify-center" : ""}`,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 18, className: `flex-shrink-0 ${isActive ? "text-blue-600" : ""}` }),
+                  !collapsed && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-w-0 text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "truncate", children: item.label }) }),
+                  !collapsed && item.id === "mcp" && connectedServers.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full px-1.5 py-0.5", children: connectedServers.length })
+                ]
+              },
+              item.id
+            );
+          }) })
+        ] }),
+        !collapsed && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-3 py-3 border-b border-slate-100", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1", children: "Active Model" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-slate-50 rounded-lg px-3 py-2 flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-2 h-2 rounded-full flex-shrink-0 ${providerColors[selectedModel.provider]}` }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs font-medium text-slate-700 truncate", children: selectedModel.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 mt-0.5", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(ModeIcon, { size: 10, className: modeColors$1[chatMode] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-slate-400 capitalize", children: [
+                  chatMode,
+                  " mode"
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        !collapsed && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 overflow-y-auto px-3 py-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: () => setSessionsExpanded(!sessionsExpanded),
+              className: "flex items-center justify-between w-full text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-1 hover:text-slate-600 transition-colors",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { size: 11 }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Recent Chats" })
+                ] }),
+                sessionsExpanded ? /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronUp, { size: 12 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { size: 12 })
+              ]
+            }
+          ),
+          sessionsExpanded && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            sessions.length > 3 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2 relative", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 12, className: "absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "text",
+                  placeholder: "Search chats...",
+                  value: searchQuery,
+                  onChange: (e) => setSearchQuery(e.target.value),
+                  className: "w-full pl-7 pr-3 py-1.5 text-xs bg-slate-100 border border-slate-200 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-400 text-slate-700"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-0.5", children: filteredSessions.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center py-4 text-slate-400", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(MessageSquare, { size: 20, className: "mx-auto mb-1 opacity-40" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs", children: "No chats yet" })
+            ] }) : filteredSessions.map((session) => {
+              const Icon2 = modeIcons[session.mode] || Bot;
+              const isCurrentSession = session.id === currentSessionId;
+              return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "button",
+                {
+                  onClick: () => onSelectSession(session.id),
+                  className: `flex items-center gap-2 w-full rounded-lg px-2 py-2 text-xs transition-all text-left group ${isCurrentSession ? "bg-blue-50 text-blue-700" : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"}`,
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 13, className: "flex-shrink-0 opacity-70" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate flex-1", children: session.title || "Untitled Chat" })
+                  ]
+                },
+                session.id
+              );
+            }) })
+          ] })
+        ] }),
+        !collapsed && connectedServers.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-3 py-2 border-t border-slate-100", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 text-xs text-slate-400", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            connectedServers.length,
+            " MCP server",
+            connectedServers.length > 1 ? "s" : "",
+            " connected"
+          ] })
+        ] }) })
+      ]
+    }
+  );
+};
+const byteToHex = [];
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 256).toString(16).slice(1));
+}
+function unsafeStringify(arr, offset = 0) {
+  return (byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + "-" + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + "-" + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + "-" + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + "-" + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]]).toLowerCase();
+}
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
+function rng() {
+  if (!getRandomValues) {
+    if (typeof crypto === "undefined" || !crypto.getRandomValues) {
+      throw new Error("crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported");
+    }
+    getRandomValues = crypto.getRandomValues.bind(crypto);
+  }
+  return getRandomValues(rnds8);
+}
+const randomUUID = typeof crypto !== "undefined" && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+const native = { randomUUID };
+function v4(options, buf, offset) {
+  if (native.randomUUID && true && !options) {
+    return native.randomUUID();
+  }
+  options = options || {};
+  const rnds = options.random ?? options.rng?.() ?? rng();
+  if (rnds.length < 16) {
+    throw new Error("Random bytes length must be >= 16");
+  }
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  return unsafeStringify(rnds);
+}
+const providerInfo$1 = [
+  {
+    id: "gemini",
+    name: "Google Gemini",
+    icon: "✦",
+    color: "blue",
+    description: "Access Gemini 2.5 Pro & Flash. Most capable for multimodal tasks.",
+    keyLabel: "Gemini API Key",
+    keyPlaceholder: "AIzaSy...",
+    docsUrl: "https://aistudio.google.com/app/apikey",
+    recommended: true
+  },
+  {
+    id: "openai",
+    name: "OpenAI",
+    icon: "⊕",
+    color: "emerald",
+    description: "Access GPT-4o and other OpenAI models.",
+    keyLabel: "OpenAI API Key",
+    keyPlaceholder: "sk-...",
+    docsUrl: "https://platform.openai.com/api-keys"
+  },
+  {
+    id: "anthropic",
+    name: "Anthropic Claude",
+    icon: "◆",
+    color: "orange",
+    description: "Access Claude 3.5 Sonnet for excellent coding and analysis.",
+    keyLabel: "Anthropic API Key",
+    keyPlaceholder: "sk-ant-...",
+    docsUrl: "https://console.anthropic.com/settings/keys"
+  }
+];
+const features = [
+  { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 20 }), title: "Multi-Provider Support", desc: "Switch between Gemini, OpenAI, Claude, and local models" },
+  { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Code, { size: 20 }), title: "Coding Agent", desc: "Advanced AI for code generation, debugging, and review" },
+  { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { size: 20 }), title: "RAG Knowledge Base", desc: "Chat with your documents, PDFs, and technical books" },
+  { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 20 }), title: "MCP Integrations", desc: "Connect external tools via Model Context Protocol" }
+];
+const OnboardingPage = ({ onComplete, models, onModelsChange }) => {
+  const [step, setStep] = reactExports.useState("welcome");
+  const [apiKeys, setApiKeys] = reactExports.useState({});
+  const [visibleKeys, setVisibleKeys] = reactExports.useState({});
+  const [validating, setValidating] = reactExports.useState(null);
+  const [validated, setValidated] = reactExports.useState({});
+  const [errors, setErrors] = reactExports.useState({});
+  const handleKeyChange = (provider, value) => {
+    setApiKeys((prev) => ({ ...prev, [provider]: value }));
+    setErrors((prev) => ({ ...prev, [provider]: "" }));
+    setValidated((prev) => ({ ...prev, [provider]: false }));
+  };
+  const handleValidateKey = async (provider) => {
+    const key = apiKeys[provider];
+    if (!key?.trim()) {
+      setErrors((prev) => ({ ...prev, [provider]: "Please enter an API key" }));
+      return;
+    }
+    setValidating(provider);
+    await new Promise((r2) => setTimeout(r2, 1200));
+    const isValid = key.length > 10;
+    setValidating(null);
+    if (isValid) {
+      setValidated((prev) => ({ ...prev, [provider]: true }));
     } else {
-      const newProject = {
-        id: `canvas_${Date.now()}`,
-        name: "Untitled Canvas",
-        mode: "document",
-        contentType: "text",
-        content: "",
-        createdAt: (/* @__PURE__ */ new Date()).toISOString(),
-        updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-      };
-      setCurrentProject(newProject);
-    }
-  }, [projectId]);
-  reactExports.useEffect(() => {
-    if (currentProject && content !== currentProject.content) {
-      const timer = setTimeout(() => {
-        saveProject();
-      }, 1e3);
-      return () => clearTimeout(timer);
-    }
-  }, [content, currentProject]);
-  const loadProject = async (id2) => {
-    try {
-      const project = await window.electronAPI.loadCanvasProject(id2);
-      if (project) {
-        setCurrentProject(project);
-        setMode(project.mode);
-        setContent(project.content);
-        setPreview(project.preview || "");
-      }
-    } catch (error) {
-      console.error("Error loading project:", error);
+      setErrors((prev) => ({ ...prev, [provider]: "Invalid API key format" }));
     }
   };
-  const saveProject = reactExports.useCallback(async () => {
-    if (!currentProject) return;
-    const updatedProject = {
-      ...currentProject,
-      content,
-      preview,
-      updatedAt: (/* @__PURE__ */ new Date()).toISOString()
-    };
-    try {
-      await window.electronAPI.saveCanvasProject(updatedProject);
-      setCurrentProject(updatedProject);
-      onSave?.(updatedProject);
-    } catch (error) {
-      console.error("Error saving project:", error);
-    }
-  }, [currentProject, content, preview, onSave]);
-  const generateContent = async () => {
-    if (!prompt.trim() || !onAIRequest) return;
-    setIsLoading(true);
-    try {
-      let enhancedPrompt = "";
-      switch (mode) {
-        case "document":
-          enhancedPrompt = `Create a well-structured document about: ${prompt}. Format it with proper headings, bullet points, and clear sections.`;
-          break;
-        case "app":
-          enhancedPrompt = `Generate a complete HTML/CSS/JavaScript application that does: ${prompt}. Include all necessary code in a single HTML file with embedded CSS and JavaScript. Make it interactive and visually appealing.`;
-          break;
-        case "code":
-          enhancedPrompt = `Write clean, well-commented code for: ${prompt}. Include examples and explanations.`;
-          break;
-        case "research":
-          enhancedPrompt = `Create an interactive research presentation about: ${prompt}. Include key findings, data visualizations, and actionable insights.`;
-          break;
-      }
-      const response = await onAIRequest(enhancedPrompt);
-      setContent(response);
-      if (mode === "app") {
-        setPreview(response);
-      }
-      setPrompt("");
-    } catch (error) {
-      console.error("Error generating content:", error);
-    } finally {
-      setIsLoading(false);
-    }
+  const handleComplete = () => {
+    const keys = Object.entries(apiKeys).filter(([_, v2]) => v2.trim()).map(([provider, key]) => ({
+      id: v4(),
+      provider,
+      key,
+      isValid: validated[provider] || false,
+      label: `${provider} API Key`,
+      validatedAt: (/* @__PURE__ */ new Date()).toISOString()
+    }));
+    onComplete(keys);
   };
-  const enhanceContent = async (instruction) => {
-    if (!content.trim() || !onAIRequest) return;
-    setIsLoading(true);
-    try {
-      const enhancedPrompt = `Current content:
-${content}
-
-Please ${instruction}. Maintain the overall structure and improve the content.`;
-      const response = await onAIRequest(enhancedPrompt);
-      setContent(response);
-    } catch (error) {
-      console.error("Error enhancing content:", error);
-    } finally {
-      setIsLoading(false);
-    }
+  const stepVariants = {
+    enter: { opacity: 0, x: 40 },
+    center: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -40 }
   };
-  const copyContent = async () => {
-    try {
-      await navigator.clipboard.writeText(content);
-    } catch (error) {
-      console.error("Error copying to clipboard:", error);
-    }
-  };
-  const exportContent = () => {
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${currentProject?.name || "canvas-export"}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "h-full bg-gray-900 flex flex-col", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800 border-b border-gray-700 p-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex space-x-2", children: ["document", "app", "code", "research"].map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "button",
-        {
-          onClick: () => setMode(m2),
-          className: `px-3 py-1 rounded text-sm font-medium transition-colors ${mode === m2 ? "bg-blue-600 text-white" : "bg-gray-700 text-gray-300 hover:bg-gray-600"}`,
-          children: m2.charAt(0).toUpperCase() + m2.slice(1)
-        },
-        m2
-      )) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: copyContent,
-            className: "p-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded transition-colors",
-            title: "Copy Content",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { size: 16 })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: exportContent,
-            className: "p-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded transition-colors",
-            title: "Export",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 16 })
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: saveProject,
-            className: "p-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors",
-            title: "Save Project",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Save, { size: 16 })
-          }
-        )
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 flex items-center justify-center p-6", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-2xl relative", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-center gap-2 mb-8", children: ["welcome", "api_keys", "local_models", "complete"].map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(React.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${step === s ? "bg-blue-500 text-white scale-110" : ["welcome", "api_keys", "local_models", "complete"].indexOf(step) > i ? "bg-blue-500/30 text-blue-300" : "bg-white/10 text-slate-400"}`, children: ["welcome", "api_keys", "local_models", "complete"].indexOf(step) > i ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 14 }) : i + 1 }),
+        i < 3 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-12 h-px ${["welcome", "api_keys", "local_models", "complete"].indexOf(step) > i ? "bg-blue-500/50" : "bg-white/10"}` })
+      ] }, s)) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(AnimatePresence, { mode: "wait", children: [
+        step === "welcome" && /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: stepVariants, initial: "enter", animate: "center", exit: "exit", transition: { duration: 0.3 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-white", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center mb-8", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/30", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 28, className: "text-white" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-3xl font-bold mb-2", children: "Welcome to LLM Desktop" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-slate-300 text-base max-w-md mx-auto", children: "A unified workspace for managing and running both cloud API models and local AI models." })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-3 mb-8", children: features.map((f2, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              transition: { delay: i * 0.08 },
+              className: "flex items-start gap-3 bg-white/5 rounded-xl p-4 border border-white/8",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-blue-400 mt-0.5 flex-shrink-0", children: f2.icon }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-sm", children: f2.title }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400 mt-0.5", children: f2.desc })
+                ] })
+              ]
+            },
+            i
+          )) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: () => setStep("api_keys"),
+              className: "w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3.5 rounded-xl transition-all hover:shadow-lg hover:shadow-blue-500/25",
+              children: [
+                "Get Started ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowRight, { size: 18 })
+              ]
+            }
+          )
+        ] }) }, "welcome"),
+        step === "api_keys" && /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: stepVariants, initial: "enter", animate: "center", exit: "exit", transition: { duration: 0.3 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-white", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Key, { size: 20, className: "text-blue-400" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: "API Keys Setup" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-slate-400 text-sm", children: "Add your API keys to enable cloud AI models" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4 mb-8", children: providerInfo$1.map((provider) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "bg-white/5 border border-white/10 rounded-xl p-4 hover:border-white/20 transition-all",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-lg", children: provider.icon }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold", children: provider.name }),
+                    provider.recommended && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "bg-blue-500/20 text-blue-300 text-xs font-medium px-2 py-0.5 rounded-full", children: "Recommended" })
+                  ] }),
+                  validated[provider.id] && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 text-emerald-400 text-xs", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 13 }),
+                    " Valid"
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-400 mb-3", children: provider.description }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 relative", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "input",
+                      {
+                        type: visibleKeys[provider.id] ? "text" : "password",
+                        value: apiKeys[provider.id] || "",
+                        onChange: (e) => handleKeyChange(provider.id, e.target.value),
+                        placeholder: provider.keyPlaceholder,
+                        className: "w-full bg-white/10 border border-white/15 rounded-lg px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-blue-500 pr-8"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "button",
+                      {
+                        onClick: () => setVisibleKeys((prev) => ({ ...prev, [provider.id]: !prev[provider.id] })),
+                        className: "absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white",
+                        children: visibleKeys[provider.id] ? /* @__PURE__ */ jsxRuntimeExports.jsx(EyeOff, { size: 14 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 14 })
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      onClick: () => handleValidateKey(provider.id),
+                      disabled: validating === provider.id || !apiKeys[provider.id],
+                      className: "px-3 py-2 bg-white/10 hover:bg-white/15 border border-white/15 rounded-lg text-xs font-medium transition-all disabled:opacity-40 whitespace-nowrap",
+                      children: validating === provider.id ? "Checking..." : "Validate"
+                    }
+                  )
+                ] }),
+                errors[provider.id] && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 mt-2 text-red-400 text-xs", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { size: 12 }),
+                  " ",
+                  errors[provider.id]
+                ] })
+              ]
+            },
+            provider.id
+          )) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: () => setStep("welcome"),
+                className: "px-4 py-3 text-slate-400 hover:text-white border border-white/10 rounded-xl text-sm transition-all flex items-center gap-2",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { size: 16 }),
+                  " Back"
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: () => setStep("local_models"),
+                className: "flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl transition-all",
+                children: [
+                  "Continue ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowRight, { size: 18 })
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-center text-xs text-slate-500 mt-3", children: "You can also skip and add keys in Settings later" })
+        ] }) }, "api_keys"),
+        step === "local_models" && /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: stepVariants, initial: "enter", animate: "center", exit: "exit", transition: { duration: 0.3 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-white", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mb-6", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(HardDrive, { size: 20, className: "text-purple-400" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: "Local Models" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-slate-400 text-sm", children: "Optional: download models to run offline" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-purple-500/10 border border-purple-500/20 rounded-xl p-3 mb-5 flex items-start gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { size: 14, className: "text-purple-400 mt-0.5 flex-shrink-0" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-purple-300", children: [
+              "Local models require ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Ollama" }),
+              " to be installed on your system. They run entirely offline with no API costs."
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-3 mb-8", children: models.filter((m2) => m2.type === "local").map((model) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 16, className: "text-purple-400" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium text-sm", children: model.name }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-slate-400", children: [
+                  model.description,
+                  " · ",
+                  model.size
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-1 mt-1", children: model.tags?.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "bg-white/10 text-slate-300 text-xs px-1.5 py-0.5 rounded", children: tag }, tag)) })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+              model.isDownloaded ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-emerald-400 text-xs flex items-center gap-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 12 }),
+                " Ready"
+              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "button",
+                {
+                  onClick: () => {
+                    onModelsChange(models.map(
+                      (m2) => m2.id === model.id ? { ...m2, downloadProgress: 0 } : m2
+                    ));
+                    let progress2 = 0;
+                    const interval = setInterval(() => {
+                      progress2 += Math.random() * 15;
+                      if (progress2 >= 100) {
+                        clearInterval(interval);
+                        onModelsChange(models.map(
+                          (m2) => m2.id === model.id ? { ...m2, isDownloaded: true, downloadProgress: void 0 } : m2
+                        ));
+                      } else {
+                        onModelsChange(models.map(
+                          (m2) => m2.id === model.id ? { ...m2, downloadProgress: Math.min(99, progress2) } : m2
+                        ));
+                      }
+                    }, 300);
+                  },
+                  className: "flex items-center gap-1.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 text-xs px-3 py-1.5 rounded-lg border border-purple-500/20 transition-all",
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 12 }),
+                    " Download"
+                  ]
+                }
+              ),
+              model.downloadProgress !== void 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-20", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white/10 rounded-full h-1.5", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: "bg-purple-500 h-1.5 rounded-full transition-all",
+                    style: { width: `${model.downloadProgress}%` }
+                  }
+                ) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-slate-400 text-right", children: [
+                  Math.round(model.downloadProgress),
+                  "%"
+                ] })
+              ] })
+            ] })
+          ] }, model.id)) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: () => setStep("api_keys"),
+                className: "px-4 py-3 text-slate-400 hover:text-white border border-white/10 rounded-xl text-sm transition-all flex items-center gap-2",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { size: 16 }),
+                  " Back"
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: () => setStep("complete"),
+                className: "flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl transition-all",
+                children: [
+                  "Continue ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowRight, { size: 18 })
+                ]
+              }
+            )
+          ] })
+        ] }) }, "local_models"),
+        step === "complete" && /* @__PURE__ */ jsxRuntimeExports.jsx(motion.div, { variants: stepVariants, initial: "enter", animate: "center", exit: "exit", transition: { duration: 0.3 }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-white text-center", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            motion.div,
+            {
+              initial: { scale: 0 },
+              animate: { scale: 1 },
+              transition: { type: "spring", stiffness: 200, damping: 15 },
+              className: "w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/30",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 36, className: "text-white" })
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold mb-3", children: "You're all set!" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-slate-300 mb-2", children: "Your LLM Desktop is ready to use." }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-3 gap-3 my-8", children: [
+            { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Key, { size: 18 }), label: "API Keys", value: `${Object.values(apiKeys).filter((v2) => v2).length} configured` },
+            { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 18 }), label: "Local Models", value: `${models.filter((m2) => m2.type === "local" && m2.isDownloaded).length} ready` },
+            { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 18 }), label: "Features", value: "All enabled" }
+          ].map((item, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white/5 border border-white/10 rounded-xl p-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-blue-400 flex justify-center mb-2", children: item.icon }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold", children: item.value }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: item.label })
+          ] }, i)) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: handleComplete,
+              className: "w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all text-lg hover:shadow-lg hover:shadow-blue-500/25",
+              children: [
+                "Launch LLM Desktop ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { size: 20 })
+              ]
+            }
+          )
+        ] }) }, "complete")
       ] })
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800 border-b border-gray-700 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-3", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
-        {
-          type: "text",
-          value: prompt,
-          onChange: (e) => setPrompt(e.target.value),
-          onKeyPress: (e) => e.key === "Enter" && generateContent(),
-          placeholder: `What would you like to create? (${mode} mode)`,
-          className: "w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500",
-          disabled: isLoading
-        }
-      ) }),
+    ] })
+  ] });
+};
+const providerMeta$1 = {
+  gemini: { label: "Google", color: "text-blue-600", bg: "bg-blue-50", icon: "✦" },
+  openai: { label: "OpenAI", color: "text-emerald-600", bg: "bg-emerald-50", icon: "⊕" },
+  anthropic: { label: "Anthropic", color: "text-orange-600", bg: "bg-orange-50", icon: "◆" },
+  ollama: { label: "Local / Ollama", color: "text-purple-600", bg: "bg-purple-50", icon: "⬡" },
+  local: { label: "Local", color: "text-gray-600", bg: "bg-gray-50", icon: "⬡" }
+};
+const ModelSelector = ({ models, selectedModel, onSelect, onClose }) => {
+  const apiModels = models.filter((m2) => m2.type === "api");
+  const localModels = models.filter((m2) => m2.type === "local");
+  const ModelItem = ({ model }) => {
+    const meta = providerMeta$1[model.provider] || providerMeta$1.local;
+    const isSelected = model.id === selectedModel.id;
+    const isDisabled = !model.isAvailable || model.type === "local" && !model.isDownloaded;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "button",
+      {
+        onClick: () => !isDisabled && onSelect(model),
+        disabled: isDisabled,
+        className: `w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-all ${isSelected ? "bg-blue-50 text-blue-800" : isDisabled ? "opacity-40 cursor-not-allowed text-slate-400" : "hover:bg-slate-50 text-slate-700"}`,
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-7 h-7 rounded-md ${meta.bg} flex items-center justify-center flex-shrink-0 text-sm`, children: meta.icon }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-medium truncate", children: model.name }),
+              model.type === "local" && !model.isDownloaded && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-slate-400", children: [
+                "(",
+                model.size,
+                ")"
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400 truncate", children: model.description.slice(0, 50) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 flex-shrink-0", children: [
+            isSelected && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 14, className: "text-blue-500" }),
+            model.type === "local" && model.isDownloaded && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs bg-purple-100 text-purple-600 px-1.5 rounded", children: "local" }),
+            model.type === "local" && !model.isDownloaded && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs bg-slate-100 text-slate-500 px-1.5 rounded", children: "not installed" })
+          ] })
+        ]
+      }
+    );
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-h-96 overflow-y-auto", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between px-3 py-2 border-b border-slate-100 mb-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-slate-500 uppercase tracking-wide", children: "Select Model" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onClose, className: "text-slate-400 hover:text-slate-600", children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 }) })
+    ] }),
+    apiModels.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 px-3 py-1.5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Cloud, { size: 11, className: "text-slate-400" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-medium text-slate-400 uppercase tracking-wide", children: "Cloud API" })
+      ] }),
+      apiModels.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(ModelItem, { model: m2 }, m2.id))
+    ] }),
+    localModels.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 px-3 py-1.5", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 11, className: "text-slate-400" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-medium text-slate-400 uppercase tracking-wide", children: "Local Models" })
+      ] }),
+      localModels.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(ModelItem, { model: m2 }, m2.id))
+    ] })
+  ] });
+};
+const renderText = (text) => {
+  const lines = text.split("\n");
+  const elements = [];
+  let inCodeBlock = false;
+  let codeLines = [];
+  let codeLang = "";
+  let key = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.startsWith("```")) {
+      if (!inCodeBlock) {
+        inCodeBlock = true;
+        codeLang = line.slice(3).trim() || "code";
+        codeLines = [];
+      } else {
+        inCodeBlock = false;
+        const codeContent = codeLines.join("\n");
+        elements.push(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(CodeBlock, { code: codeContent, language: codeLang }, key++)
+        );
+        codeLines = [];
+        codeLang = "";
+      }
+      continue;
+    }
+    if (inCodeBlock) {
+      codeLines.push(line);
+      continue;
+    }
+    if (line.startsWith("# ")) {
+      elements.push(/* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-lg font-bold mt-3 mb-1 text-slate-800", children: line.slice(2) }, key++));
+    } else if (line.startsWith("## ")) {
+      elements.push(/* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-base font-bold mt-3 mb-1 text-slate-800", children: line.slice(3) }, key++));
+    } else if (line.startsWith("### ")) {
+      elements.push(/* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-bold mt-2 mb-1 text-slate-700", children: line.slice(4) }, key++));
+    } else if (line.startsWith("- ") || line.startsWith("* ")) {
+      elements.push(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "text-sm text-slate-700 ml-4 list-disc", children: renderInline(line.slice(2)) }, key++)
+      );
+    } else if (line.match(/^\d+\. /)) {
+      const content = line.replace(/^\d+\. /, "");
+      elements.push(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("li", { className: "text-sm text-slate-700 ml-4 list-decimal", children: renderInline(content) }, key++)
+      );
+    } else if (line === "") {
+      elements.push(/* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-2" }, key++));
+    } else {
+      elements.push(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-700 leading-relaxed", children: renderInline(line) }, key++)
+      );
+    }
+  }
+  if (inCodeBlock && codeLines.length > 0) {
+    elements.push(/* @__PURE__ */ jsxRuntimeExports.jsx(CodeBlock, { code: codeLines.join("\n"), language: codeLang }, key++));
+  }
+  return elements;
+};
+const renderInline = (text) => {
+  const parts = text.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { className: "font-semibold text-slate-800", children: part.slice(2, -2) }, i);
+    }
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "bg-slate-100 text-blue-700 px-1 py-0.5 rounded text-xs font-mono", children: part.slice(1, -1) }, i);
+    }
+    return part;
+  });
+};
+const CodeBlock = ({ code, language }) => {
+  const [copied, setCopied] = reactExports.useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2e3);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "my-3 rounded-xl overflow-hidden border border-slate-200 shadow-sm", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between bg-slate-800 px-4 py-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-medium text-slate-300", children: language }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
-          onClick: generateContent,
-          disabled: isLoading || !prompt.trim(),
-          className: "px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors flex items-center space-x-2",
+          onClick: handleCopy,
+          className: "flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors",
           children: [
-            isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 16, className: "animate-spin" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(WandSparkles, { size: 16 }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: isLoading ? "Generating..." : "Generate" })
+            copied ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 12, className: "text-emerald-400" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { size: 12 }),
+            copied ? "Copied!" : "Copy"
           ]
         }
       )
-    ] }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 flex", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 flex flex-col", children: [
-        content && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800 border-b border-gray-700 p-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { className: "bg-slate-900 text-slate-100 text-xs p-4 overflow-x-auto leading-relaxed font-mono whitespace-pre-wrap", children: code })
+  ] });
+};
+const MessageBubble = ({ message, chatMode }) => {
+  const [copied, setCopied] = reactExports.useState(false);
+  const [liked, setLiked] = reactExports.useState(null);
+  const [showThinking, setShowThinking] = reactExports.useState(false);
+  const isUser = message.sender === "user";
+  const handleCopy = () => {
+    navigator.clipboard.writeText(message.text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2e3);
+  };
+  const modeColor = message.mode === "coding" ? "text-emerald-600" : message.mode === "research" ? "text-purple-600" : "text-blue-600";
+  const ModeIcon = message.mode === "coding" ? CodeXml : message.mode === "research" ? Globe : Bot;
+  if (isUser) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.div,
+      {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+        className: "flex justify-end mb-4",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-end gap-2 max-w-2xl", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-blue-600 text-white rounded-2xl rounded-br-md px-4 py-3 shadow-sm", children: [
+            message.fileName && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 text-blue-200 text-xs mb-2 bg-blue-700/30 rounded-lg px-2 py-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 11 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: message.fileName })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm leading-relaxed", children: message.text }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-blue-200 mt-1 text-right", children: new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-7 h-7 rounded-full bg-slate-300 flex items-center justify-center flex-shrink-0 mb-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(User, { size: 14, className: "text-slate-600" }) })
+        ] })
+      }
+    );
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    motion.div,
+    {
+      initial: { opacity: 0, y: 10 },
+      animate: { opacity: 1, y: 0 },
+      className: "flex justify-start mb-4 group",
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3 max-w-3xl w-full", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0 mt-1`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModeIcon, { size: 14, className: modeColor }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl rounded-tl-md px-4 py-3 shadow-sm", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "prose prose-sm max-w-none", children: renderText(message.text) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-400 mt-2", children: new Date(message.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity px-1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: handleCopy,
+                className: "flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 px-2 py-1 rounded hover:bg-slate-100 transition-all",
+                children: [
+                  copied ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 12, className: "text-emerald-500" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { size: 12 }),
+                  copied ? "Copied" : "Copy"
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: () => setLiked(liked === true ? null : true),
+                className: `p-1 rounded hover:bg-slate-100 transition-all ${liked === true ? "text-emerald-500" : "text-slate-400 hover:text-slate-600"}`,
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(ThumbsUp, { size: 12 })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: () => setLiked(liked === false ? null : false),
+                className: `p-1 rounded hover:bg-slate-100 transition-all ${liked === false ? "text-red-400" : "text-slate-400 hover:text-slate-600"}`,
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(ThumbsDown, { size: 12 })
+              }
+            )
+          ] })
+        ] })
+      ] })
+    }
+  );
+};
+const modes = [
+  { id: "chat", label: "Chat", icon: Bot, color: "blue" },
+  { id: "coding", label: "Coding Agent", icon: CodeXml, color: "emerald" },
+  { id: "research", label: "Deep Research", icon: Globe, color: "purple" }
+];
+const modeStyles = {
+  chat: { active: "bg-blue-100 text-blue-700 border-blue-200", dot: "bg-blue-500" },
+  coding: { active: "bg-emerald-100 text-emerald-700 border-emerald-200", dot: "bg-emerald-500" },
+  research: { active: "bg-purple-100 text-purple-700 border-purple-200", dot: "bg-purple-500" }
+};
+const ModeSelector = ({ chatMode, onModeChange }) => {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-1 bg-slate-100 rounded-xl p-1", children: modes.map((mode) => {
+    const Icon2 = mode.icon;
+    const isActive = chatMode === mode.id;
+    const styles = modeStyles[mode.id];
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "button",
+      {
+        onClick: () => onModeChange(mode.id),
+        className: `relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${isActive ? styles.active + " border shadow-sm" : "text-slate-500 hover:text-slate-700"}`,
+        children: [
+          isActive && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            motion.div,
             {
-              onClick: () => enhanceContent("make it more concise and clear"),
-              disabled: isLoading,
-              className: "px-3 py-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white text-sm rounded transition-colors",
-              children: "Make Concise"
+              layoutId: "mode-indicator",
+              className: "absolute inset-0 rounded-lg",
+              transition: { type: "spring", stiffness: 400, damping: 30 }
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 13, className: "relative z-10" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "relative z-10", children: mode.label })
+        ]
+      },
+      mode.id
+    );
+  }) });
+};
+const WELCOME_MESSAGES = {
+  chat: {
+    title: "How can I help you today?",
+    subtitle: "Start a conversation, ask questions, or explore ideas.",
+    suggestions: [
+      "Explain quantum computing in simple terms",
+      "Write a creative story about time travel",
+      "What are the best practices for React in 2025?",
+      "Summarize the latest AI research trends"
+    ]
+  },
+  coding: {
+    title: "Coding Agent Ready",
+    subtitle: "I can write, review, debug, and explain code in any language.",
+    suggestions: [
+      "Build a REST API with FastAPI and SQLite",
+      "Review my Python code for performance issues",
+      "Create a React component with TypeScript",
+      "Explain the difference between async and sync patterns"
+    ]
+  },
+  research: {
+    title: "Deep Research Mode",
+    subtitle: "I will conduct thorough multi-step research on any topic.",
+    suggestions: [
+      "Research the current state of fusion energy technology",
+      "Compare different machine learning frameworks in 2025",
+      "Analyze the impact of AI on healthcare systems",
+      "Investigate quantum computing commercialization progress"
+    ]
+  }
+};
+const modeColors = {
+  chat: { bg: "bg-blue-500", light: "bg-blue-50", text: "text-blue-600", border: "border-blue-200" },
+  coding: { bg: "bg-emerald-500", light: "bg-emerald-50", text: "text-emerald-600", border: "border-emerald-200" },
+  research: { bg: "bg-purple-500", light: "bg-purple-50", text: "text-purple-600", border: "border-purple-200" }
+};
+const ChatWorkspace = ({
+  selectedModel,
+  onModelChange,
+  models,
+  chatMode,
+  onChatModeChange,
+  sessions,
+  onSessionsChange,
+  currentSessionId,
+  onCurrentSessionChange,
+  knowledgeCollections,
+  mcpServers,
+  apiKeys
+}) => {
+  const [messages, setMessages] = reactExports.useState([]);
+  const [input, setInput] = reactExports.useState("");
+  const [isLoading, setIsLoading] = reactExports.useState(false);
+  const [attachedFile, setAttachedFile] = reactExports.useState(null);
+  const [showModelSelector, setShowModelSelector] = reactExports.useState(false);
+  const [researchSteps, setResearchSteps] = reactExports.useState([]);
+  const [agentSteps, setAgentSteps] = reactExports.useState([]);
+  const [selectedCollection, setSelectedCollection] = reactExports.useState(null);
+  const [thinkingDots, setThinkingDots] = reactExports.useState("");
+  const messagesEndRef = reactExports.useRef(null);
+  const inputRef = reactExports.useRef(null);
+  const fileInputRef = reactExports.useRef(null);
+  const currentSession = sessions.find((s) => s.id === currentSessionId);
+  const welcome = WELCOME_MESSAGES[chatMode];
+  const colors = modeColors[chatMode];
+  reactExports.useEffect(() => {
+    if (currentSession) {
+      setMessages(currentSession.messages);
+    } else {
+      setMessages([]);
+    }
+  }, [currentSessionId]);
+  reactExports.useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, researchSteps, agentSteps]);
+  reactExports.useEffect(() => {
+    if (!isLoading) {
+      setThinkingDots("");
+      return;
+    }
+    const interval = setInterval(() => {
+      setThinkingDots((prev) => prev.length >= 3 ? "" : prev + ".");
+    }, 400);
+    return () => clearInterval(interval);
+  }, [isLoading]);
+  const saveSession = reactExports.useCallback((msgs, sessionId, title) => {
+    const id2 = sessionId || v4();
+    const now2 = (/* @__PURE__ */ new Date()).toISOString();
+    const newSession = {
+      id: id2,
+      title: title || msgs[0]?.text?.slice(0, 50) || "New Chat",
+      messages: msgs,
+      modelId: selectedModel.id,
+      mode: chatMode,
+      createdAt: currentSession?.createdAt || now2,
+      updatedAt: now2,
+      knowledgeCollectionId: selectedCollection || void 0
+    };
+    onSessionsChange(
+      sessions.some((s) => s.id === id2) ? sessions.map((s) => s.id === id2 ? newSession : s) : [...sessions, newSession]
+    );
+    if (!sessionId) onCurrentSessionChange(id2);
+    return id2;
+  }, [sessions, selectedModel, chatMode, currentSession, selectedCollection]);
+  const simulateResearch = async (query) => {
+    const steps = [
+      "🔍 Analyzing query and identifying key research areas...",
+      "📊 Searching for academic papers and authoritative sources...",
+      "🌐 Cross-referencing multiple data sources...",
+      "🧠 Synthesizing findings and identifying patterns...",
+      "📝 Generating comprehensive report..."
+    ];
+    setResearchSteps([]);
+    for (const step of steps) {
+      await new Promise((r2) => setTimeout(r2, 600 + Math.random() * 400));
+      setResearchSteps((prev) => [...prev, step]);
+    }
+  };
+  const simulateCodingAgent = async (query) => {
+    const steps = [
+      "🤔 Analyzing requirements...",
+      "📐 Designing solution architecture...",
+      "💻 Writing code...",
+      "🔍 Reviewing for bugs and edge cases...",
+      "✅ Running internal validation..."
+    ];
+    setAgentSteps([]);
+    for (const step of steps) {
+      await new Promise((r2) => setTimeout(r2, 500 + Math.random() * 300));
+      setAgentSteps((prev) => [...prev, step]);
+    }
+  };
+  const generateMockResponse = (query, mode) => {
+    if (mode === "coding") {
+      if (query.toLowerCase().includes("api") || query.toLowerCase().includes("fastapi")) {
+        return `Here's a complete FastAPI implementation:
+
+\`\`\`python
+from fastapi import FastAPI, HTTPException, Depends
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
+from pydantic import BaseModel
+from typing import Optional, List
+import uvicorn
+
+# Database setup
+SQLALCHEMY_DATABASE_URL = "sqlite:///./app.db"
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+class Base(DeclarativeBase):
+    pass
+
+class Item(Base):
+    __tablename__ = "items"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    description = Column(String)
+    price = Column(Float)
+
+Base.metadata.create_all(bind=engine)
+
+# Pydantic models
+class ItemCreate(BaseModel):
+    name: str
+    description: Optional[str] = None
+    price: float
+
+class ItemResponse(ItemCreate):
+    id: int
+    class Config:
+        from_attributes = True
+
+# FastAPI app
+app = FastAPI(title="Items API", version="1.0.0")
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/items/", response_model=List[ItemResponse])
+def list_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return db.query(Item).offset(skip).limit(limit).all()
+
+@app.post("/items/", response_model=ItemResponse, status_code=201)
+def create_item(item: ItemCreate, db: Session = Depends(get_db)):
+    db_item = Item(**item.model_dump())
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+@app.get("/items/{item_id}", response_model=ItemResponse)
+def get_item(item_id: int, db: Session = Depends(get_db)):
+    item = db.query(Item).filter(Item.id == item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return item
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+\`\`\`
+
+**Key Features:**
+- SQLite database with SQLAlchemy ORM
+- Pydantic validation models  
+- CRUD operations with proper HTTP status codes
+- Dependency injection for DB sessions
+- Auto-generated OpenAPI docs at \`/docs\`
+
+Run with: \`pip install fastapi sqlalchemy uvicorn && python main.py\``;
+      }
+      return `Here's a solution to your coding request:
+
+\`\`\`typescript
+// TypeScript implementation
+interface Solution {
+  id: string;
+  result: string;
+  timestamp: Date;
+}
+
+async function processSolution(input: string): Promise<Solution> {
+  const result = await computeAnswer(input);
+  return {
+    id: crypto.randomUUID(),
+    result,
+    timestamp: new Date(),
+  };
+}
+
+async function computeAnswer(input: string): Promise<string> {
+  // Implementation logic here
+  return \`Processed: \${input}\`;
+}
+
+// Usage example
+const solution = await processSolution("your input");
+console.log(solution);
+\`\`\`
+
+This implementation includes proper TypeScript types, async/await patterns, and error handling best practices.`;
+    }
+    if (mode === "research") {
+      return `# Research Report: ${query.slice(0, 60)}...
+
+## Executive Summary
+Based on comprehensive analysis of current literature and data sources, here is a detailed research report on the topic.
+
+## Key Findings
+
+### 1. Current State
+The field has seen remarkable progress in recent years, with significant developments across multiple dimensions including technical capabilities, commercial adoption, and regulatory frameworks.
+
+### 2. Major Trends
+- **Trend 1**: Rapid advancement in core technology with 40% improvement in efficiency metrics
+- **Trend 2**: Increased industry investment, reaching new highs in 2024-2025
+- **Trend 3**: Growing regulatory attention leading to new governance frameworks
+
+### 3. Challenges & Opportunities
+The primary challenges include scalability, cost reduction, and regulatory compliance. However, these present significant opportunities for innovation and market differentiation.
+
+## Data Sources
+- Academic papers from Nature, Science, and IEEE (2023-2025)
+- Industry reports from leading research firms
+- Government publications and regulatory filings
+- Expert interviews and conference proceedings
+
+## Conclusions
+The evidence strongly suggests continued growth and maturation of this field over the next 2-5 years, with key inflection points expected in 2025-2026.
+
+**Confidence Level**: High (based on 15+ primary sources)`;
+    }
+    return `Thank you for your question! I'd be happy to help with "${query.slice(0, 40)}..."
+
+Here's a comprehensive response:
+
+${query.toLowerCase().includes("react") || query.toLowerCase().includes("component") ? `**React Best Practices in 2025:**
+
+1. **Use Function Components** - Always prefer function components with hooks over class components
+2. **State Management** - Use Zustand or Jotai for global state; keep local state with useState
+3. **Performance** - Leverage React.memo(), useMemo(), and useCallback() strategically
+4. **TypeScript** - Fully type your props and state for better developer experience
+5. **Server Components** - Consider React Server Components for data-heavy views
+
+\`\`\`tsx
+// Modern React Pattern (2025)
+import { memo, useCallback } from 'react';
+
+interface Props {
+  title: string;
+  onAction: (id: string) => void;
+}
+
+const MyComponent = memo<Props>(({ title, onAction }) => {
+  const handleClick = useCallback(() => {
+    onAction('some-id');
+  }, [onAction]);
+
+  return (
+    <div className="container">
+      <h2>{title}</h2>
+      <button onClick={handleClick}>Action</button>
+    </div>
+  );
+});
+\`\`\`` : `This is a well-considered response based on current knowledge and best practices. The key points to understand are:
+
+- **Core concept**: The fundamental principle involves systematic analysis and structured thinking
+- **Application**: In practice, this manifests as a multi-step process
+- **Considerations**: Important factors include context, requirements, and constraints
+- **Next steps**: I recommend starting with a small proof-of-concept before scaling
+
+Would you like me to elaborate on any specific aspect of this topic?`}`;
+  };
+  const handleSend = async () => {
+    if (!input.trim() && !attachedFile) return;
+    const userMessage = {
+      id: v4(),
+      text: input,
+      sender: "user",
+      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+      fileName: attachedFile?.name,
+      mode: chatMode
+    };
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
+    const queryText = input;
+    setInput("");
+    setAttachedFile(null);
+    setIsLoading(true);
+    setResearchSteps([]);
+    setAgentSteps([]);
+    try {
+      if (chatMode === "research") {
+        await simulateResearch(queryText);
+      } else if (chatMode === "coding") {
+        await simulateCodingAgent(queryText);
+      } else {
+        await new Promise((r2) => setTimeout(r2, 800 + Math.random() * 600));
+      }
+      const responseText = generateMockResponse(queryText, chatMode);
+      const aiMessage = {
+        id: v4(),
+        text: responseText,
+        sender: "ai",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        mode: chatMode
+      };
+      const finalMessages = [...newMessages, aiMessage];
+      setMessages(finalMessages);
+      saveSession(finalMessages, currentSessionId);
+    } catch (err) {
+      const errMessage = {
+        id: v4(),
+        text: "An error occurred. Please check your API key in Settings and try again.",
+        sender: "ai",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      };
+      const errMessages = [...newMessages, errMessage];
+      setMessages(errMessages);
+      saveSession(errMessages, currentSessionId);
+    } finally {
+      setIsLoading(false);
+      setResearchSteps([]);
+      setAgentSteps([]);
+    }
+  };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+  const handleFileAttach = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setAttachedFile({ name: file.name });
+    }
+  };
+  const connectedMCPServers = mcpServers.filter((s) => s.status === "connected");
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex h-full bg-slate-50 relative", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col flex-1 min-w-0", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ModeSelector, { chatMode, onModeChange: onChatModeChange }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+        knowledgeCollections.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "select",
             {
-              onClick: () => enhanceContent("expand with more details and examples"),
-              disabled: isLoading,
-              className: "px-3 py-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white text-sm rounded transition-colors",
-              children: "Add Details"
+              value: selectedCollection || "",
+              onChange: (e) => setSelectedCollection(e.target.value || null),
+              className: "text-xs bg-slate-100 border border-slate-200 rounded-lg pl-7 pr-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-400 appearance-none text-slate-600 cursor-pointer",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "", children: "No knowledge base" }),
+                knowledgeCollections.map((c) => /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: c.id, children: c.name }, c.id))
+              ]
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              onClick: () => enhanceContent("improve the tone to be more professional"),
-              disabled: isLoading,
-              className: "px-3 py-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white text-sm rounded transition-colors",
-              children: "Professional Tone"
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              onClick: () => enhanceContent("make it more creative and engaging"),
-              disabled: isLoading,
-              className: "px-3 py-1 bg-pink-600 hover:bg-pink-700 disabled:bg-gray-600 text-white text-sm rounded transition-colors",
-              children: "More Creative"
-            }
-          )
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "textarea",
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { size: 12, className: "absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
           {
-            ref: contentRef,
-            value: content,
-            onChange: (e) => setContent(e.target.value),
-            placeholder: "Your content will appear here... Start by entering a prompt above!",
-            className: "w-full h-full resize-none bg-gray-800 border border-gray-700 rounded-lg p-4 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 font-mono text-sm"
+            onClick: () => setShowModelSelector(!showModelSelector),
+            className: "flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-2 h-2 rounded-full ${selectedModel.type === "local" ? "bg-purple-500" : "bg-blue-500"}` }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "max-w-28 truncate", children: selectedModel.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { size: 14 })
+            ]
           }
-        ) })
-      ] }),
-      mode === "app" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-1/2 border-l border-gray-700 flex flex-col", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-800 border-b border-gray-700 p-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "text-white font-medium flex items-center space-x-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 16 }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Live Preview" })
-        ] }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 p-4", children: preview ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "iframe",
-          {
-            ref: previewRef,
-            srcDoc: preview,
-            className: "w-full h-full border border-gray-700 rounded-lg bg-white",
-            sandbox: "allow-scripts allow-same-origin"
-          }
-        ) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full h-full border-2 border-dashed border-gray-600 rounded-lg flex items-center justify-center text-gray-400", children: "Generate an app to see the preview" }) })
+        )
       ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: isLoading && /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showModelSelector && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.div,
+      {
+        initial: { opacity: 0, y: -10 },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: -10 },
+        className: "absolute top-16 right-4 z-50 bg-white rounded-xl shadow-xl border border-slate-200 p-2 w-72",
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ModelSelector,
+          {
+            models,
+            selectedModel,
+            onSelect: (model) => {
+              onModelChange(model);
+              setShowModelSelector(false);
+            },
+            onClose: () => setShowModelSelector(false)
+          }
+        )
+      }
+    ) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 overflow-y-auto px-4 py-6", children: messages.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      WelcomeScreen,
+      {
+        welcome,
+        chatMode,
+        colors,
+        onSuggestion: (s) => {
+          setInput(s);
+          inputRef.current?.focus();
+        },
+        connectedServers: connectedMCPServers,
+        selectedCollection,
+        collections: knowledgeCollections
+      }
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-3xl mx-auto space-y-2", children: [
+      messages.map((msg) => /* @__PURE__ */ jsxRuntimeExports.jsx(MessageBubble, { message: msg, chatMode }, msg.id)),
+      isLoading && researchSteps.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-start", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-purple-200 rounded-xl p-4 shadow-sm max-w-lg", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 12, className: "text-purple-600" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-medium text-purple-700", children: "Deep Research in Progress" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
+          researchSteps.map((step, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, x: -10 },
+              animate: { opacity: 1, x: 0 },
+              className: "flex items-center gap-2 text-sm text-slate-600",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 13, className: "text-purple-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: step })
+              ]
+            },
+            i
+          )),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 text-sm text-slate-400", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 13, className: "animate-spin text-purple-400 flex-shrink-0" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+              "Finalizing",
+              thinkingDots
+            ] })
+          ] })
+        ] })
+      ] }) }),
+      isLoading && agentSteps.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-start", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-emerald-200 rounded-xl p-4 shadow-sm max-w-lg", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CodeXml, { size: 12, className: "text-emerald-600" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-medium text-emerald-700", children: "Coding Agent Working" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
+          agentSteps.map((step, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, x: -10 },
+              animate: { opacity: 1, x: 0 },
+              className: "flex items-center gap-2 text-sm text-slate-600",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 13, className: "text-emerald-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: step })
+              ]
+            },
+            i
+          )),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 text-sm text-slate-400", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 13, className: "animate-spin text-emerald-400 flex-shrink-0" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+              "Writing code",
+              thinkingDots
+            ] })
+          ] })
+        ] })
+      ] }) }),
+      isLoading && researchSteps.length === 0 && agentSteps.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-start", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white border border-slate-200 rounded-xl px-4 py-3 shadow-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Bot, { size: 12, className: "text-blue-600" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-1", children: [0, 1, 2].map((i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          motion.div,
+          {
+            animate: { y: [0, -6, 0] },
+            transition: { duration: 0.6, repeat: Infinity, delay: i * 0.15 },
+            className: "w-1.5 h-1.5 rounded-full bg-blue-400"
+          },
+          i
+        )) })
+      ] }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: messagesEndRef })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white border-t border-slate-200 px-4 py-4 flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-3xl mx-auto", children: [
+      attachedFile && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 bg-slate-100 rounded-lg px-3 py-2 mb-2 text-sm", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 14, className: "text-slate-500" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-slate-600 flex-1 truncate", children: attachedFile.name }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setAttachedFile(null), className: "text-slate-400 hover:text-slate-600", children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 }) })
+      ] }),
+      selectedCollection && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-lg px-3 py-1.5 mb-2 text-xs", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { size: 12, className: "text-blue-500" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-blue-700", children: [
+          "Using knowledge base: ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: knowledgeCollections.find((c) => c.id === selectedCollection)?.name })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setSelectedCollection(null), className: "ml-auto text-blue-400 hover:text-blue-600", children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 12 }) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `flex items-end gap-2 bg-slate-50 border-2 rounded-2xl px-4 py-3 transition-all focus-within:bg-white ${chatMode === "coding" ? "focus-within:border-emerald-400" : chatMode === "research" ? "focus-within:border-purple-400" : "focus-within:border-blue-400"} border-slate-200`, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            ref: fileInputRef,
+            type: "file",
+            onChange: handleFileAttach,
+            className: "hidden",
+            accept: ".pdf,.txt,.md,.docx,.py,.js,.ts,.tsx,.jsx"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => fileInputRef.current?.click(),
+            className: "text-slate-400 hover:text-slate-600 flex-shrink-0 mb-0.5 transition-colors",
+            title: "Attach file",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Paperclip, { size: 18 })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "textarea",
+          {
+            ref: inputRef,
+            value: input,
+            onChange: (e) => setInput(e.target.value),
+            onKeyDown: handleKeyDown,
+            placeholder: chatMode === "coding" ? "Describe what you want to build or debug..." : chatMode === "research" ? "Enter your research topic or question..." : "Message LLM Desktop...",
+            rows: 1,
+            className: "flex-1 bg-transparent text-slate-800 placeholder-slate-400 text-sm resize-none focus:outline-none max-h-32 leading-relaxed",
+            style: { minHeight: "24px" },
+            onInput: (e) => {
+              const t2 = e.target;
+              t2.style.height = "auto";
+              t2.style.height = Math.min(t2.scrollHeight, 128) + "px";
+            }
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: handleSend,
+            disabled: isLoading || !input.trim() && !attachedFile,
+            className: `w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all mb-0.5 ${(input.trim() || attachedFile) && !isLoading ? chatMode === "coding" ? "bg-emerald-500 hover:bg-emerald-600 text-white shadow-sm" : chatMode === "research" ? "bg-purple-500 hover:bg-purple-600 text-white shadow-sm" : "bg-blue-500 hover:bg-blue-600 text-white shadow-sm" : "bg-slate-200 text-slate-400 cursor-not-allowed"}`,
+            children: isLoading ? /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 14, className: "animate-spin" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Send, { size: 14 })
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mt-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-slate-400", children: [
+          "Press ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("kbd", { className: "bg-slate-100 px-1 py-0.5 rounded text-slate-500", children: "Enter" }),
+          " to send, ",
+          /* @__PURE__ */ jsxRuntimeExports.jsx("kbd", { className: "bg-slate-100 px-1 py-0.5 rounded text-slate-500", children: "Shift+Enter" }),
+          " for new line"
+        ] }),
+        connectedMCPServers.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 text-xs text-slate-400", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Activity, { size: 10, className: "text-emerald-500" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            connectedMCPServers.length,
+            " MCP tool",
+            connectedMCPServers.length > 1 ? "s" : "",
+            " active"
+          ] })
+        ] })
+      ] })
+    ] }) })
+  ] }) });
+};
+const WelcomeScreen = ({ welcome, chatMode, colors, onSuggestion, connectedServers, selectedCollection, collections }) => {
+  const Icon2 = chatMode === "coding" ? CodeXml : chatMode === "research" ? Globe : Bot;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center justify-center min-h-full py-12 text-center max-w-2xl mx-auto", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.div,
+      {
+        initial: { scale: 0.8, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        transition: { duration: 0.4, type: "spring" },
+        className: `w-16 h-16 rounded-2xl ${colors.light} border-2 ${colors.border} flex items-center justify-center mb-6`,
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 28, className: colors.text })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.h2,
+      {
+        initial: { y: 10, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        transition: { delay: 0.1 },
+        className: "text-2xl font-bold text-slate-800 mb-2",
+        children: welcome.title
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.p,
+      {
+        initial: { y: 10, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        transition: { delay: 0.15 },
+        className: "text-slate-500 mb-8",
+        children: welcome.subtitle
+      }
+    ),
+    selectedCollection && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      motion.div,
+      {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        className: "flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-3 py-2 mb-6 text-sm text-blue-700",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { size: 14 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            "Knowledge base active: ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: collections.find((c) => c.id === selectedCollection)?.name })
+          ] })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.div,
+      {
+        initial: { y: 10, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        transition: { delay: 0.2 },
+        className: "grid grid-cols-2 gap-2 w-full",
+        children: welcome.suggestions.map((s, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          motion.button,
+          {
+            initial: { opacity: 0, y: 10 },
+            animate: { opacity: 1, y: 0 },
+            transition: { delay: 0.2 + i * 0.05 },
+            onClick: () => onSuggestion(s),
+            className: "text-left px-4 py-3 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-sm text-slate-600 hover:text-slate-800 transition-all hover:shadow-sm group",
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "group-hover:text-blue-600 transition-colors", children: s })
+          },
+          i
+        ))
+      }
+    ),
+    connectedServers.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      motion.div,
+      {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { delay: 0.4 },
+        className: "flex items-center gap-2 mt-6 text-xs text-slate-400",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            connectedServers.map((s) => s.name).join(", "),
+            " tools available"
+          ] })
+        ]
+      }
+    )
+  ] });
+};
+const COLLECTION_COLORS = [
+  "#3B82F6",
+  "#10B981",
+  "#8B5CF6",
+  "#F59E0B",
+  "#EF4444",
+  "#06B6D4",
+  "#EC4899"
+];
+const documentTypeIcons = {
+  pdf: /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 14, className: "text-red-500" }),
+  docx: /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 14, className: "text-blue-500" }),
+  txt: /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 14, className: "text-slate-500" }),
+  md: /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 14, className: "text-purple-500" }),
+  url: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 14, className: "text-emerald-500" })
+};
+const statusColors = {
+  processing: "text-amber-600 bg-amber-50 border-amber-200",
+  ready: "text-emerald-600 bg-emerald-50 border-emerald-200",
+  error: "text-red-600 bg-red-50 border-red-200"
+};
+const statusIcons = {
+  processing: /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 11, className: "animate-spin" }),
+  ready: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 11 }),
+  error: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { size: 11 })
+};
+const RAGDashboard = ({
+  documents,
+  onDocumentsChange,
+  collections,
+  onCollectionsChange,
+  selectedModel,
+  onChatWithCollection
+}) => {
+  const [activeTab, setActiveTab] = reactExports.useState("collections");
+  const [showNewCollection, setShowNewCollection] = reactExports.useState(false);
+  const [newCollectionName, setNewCollectionName] = reactExports.useState("");
+  const [newCollectionDesc, setNewCollectionDesc] = reactExports.useState("");
+  const [newCollectionColor, setNewCollectionColor] = reactExports.useState(COLLECTION_COLORS[0]);
+  const [selectedCollectionId, setSelectedCollectionId] = reactExports.useState(null);
+  const [searchQuery, setSearchQuery] = reactExports.useState("");
+  const [isDragOver, setIsDragOver] = reactExports.useState(false);
+  const [urlInput, setUrlInput] = reactExports.useState("");
+  const [showUrlInput, setShowUrlInput] = reactExports.useState(false);
+  const [chunkSize, setChunkSize] = reactExports.useState(512);
+  const [chunkOverlap, setChunkOverlap] = reactExports.useState(64);
+  const [embeddingModel, setEmbeddingModel] = reactExports.useState("text-embedding-004");
+  const fileInputRef = reactExports.useRef(null);
+  const selectedCollection = collections.find((c) => c.id === selectedCollectionId);
+  const collectionDocs = selectedCollectionId ? documents.filter((d) => d.collectionId === selectedCollectionId) : documents;
+  const filteredDocs = searchQuery ? collectionDocs.filter((d) => d.name.toLowerCase().includes(searchQuery.toLowerCase())) : collectionDocs;
+  const handleCreateCollection = () => {
+    if (!newCollectionName.trim()) return;
+    const col = {
+      id: v4(),
+      name: newCollectionName.trim(),
+      description: newCollectionDesc.trim(),
+      documents: [],
+      createdAt: (/* @__PURE__ */ new Date()).toISOString(),
+      color: newCollectionColor
+    };
+    onCollectionsChange([...collections, col]);
+    setNewCollectionName("");
+    setNewCollectionDesc("");
+    setShowNewCollection(false);
+    setSelectedCollectionId(col.id);
+  };
+  const handleDeleteCollection = (id2) => {
+    onCollectionsChange(collections.filter((c) => c.id !== id2));
+    if (selectedCollectionId === id2) setSelectedCollectionId(null);
+    onDocumentsChange(documents.filter((d) => d.collectionId !== id2));
+  };
+  const handleFileUpload = (files) => {
+    if (!files || files.length === 0) return;
+    const newDocs = Array.from(files).map((file) => {
+      const ext = file.name.split(".").pop()?.toLowerCase() || "txt";
+      const doc = {
+        id: v4(),
+        name: file.name,
+        path: file.name,
+        type: ext,
+        size: file.size,
+        uploadedAt: (/* @__PURE__ */ new Date()).toISOString(),
+        status: "processing",
+        collectionId: selectedCollectionId || void 0,
+        tags: []
+      };
+      setTimeout(() => {
+        onDocumentsChange(
+          (prev) => prev.map((d) => d.id === doc.id ? { ...d, status: "ready", chunks: Math.floor(file.size / 400) + 5 } : d)
+        );
+      }, 2e3 + Math.random() * 2e3);
+      return doc;
+    });
+    onDocumentsChange([...documents, ...newDocs]);
+  };
+  const handleUrlAdd = () => {
+    if (!urlInput.trim()) return;
+    const doc = {
+      id: v4(),
+      name: urlInput.trim(),
+      path: urlInput.trim(),
+      type: "url",
+      size: 0,
+      uploadedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      status: "processing",
+      collectionId: selectedCollectionId || void 0,
+      tags: []
+    };
+    onDocumentsChange([...documents, doc]);
+    setUrlInput("");
+    setShowUrlInput(false);
+    setTimeout(() => {
+      onDocumentsChange(
+        (prev) => prev.map((d) => d.id === doc.id ? { ...d, status: "ready", chunks: 42, size: 15e3 } : d)
+      );
+    }, 3e3);
+  };
+  const handleDeleteDocument = (id2) => {
+    onDocumentsChange(documents.filter((d) => d.id !== id2));
+  };
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return "—";
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-full bg-slate-50", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-64 bg-white border-r border-slate-200 flex flex-col flex-shrink-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-4 py-4 border-b border-slate-100", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-sm font-semibold text-slate-700 flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Layers, { size: 15, className: "text-blue-500" }),
+            " Collections"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: () => setShowNewCollection(true),
+              className: "w-6 h-6 rounded-md bg-blue-50 hover:bg-blue-100 text-blue-600 flex items-center justify-center transition-colors",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { size: 13 })
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            onClick: () => setSelectedCollectionId(null),
+            className: `w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${!selectedCollectionId ? "bg-blue-50 text-blue-700 font-medium" : "text-slate-600 hover:bg-slate-50"}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Database, { size: 14, className: !selectedCollectionId ? "text-blue-500" : "text-slate-400" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "All Documents" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ml-auto text-xs text-slate-400", children: documents.length })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 overflow-y-auto px-3 py-2", children: collections.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center py-8 text-slate-400", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(FolderOpen, { size: 24, className: "mx-auto mb-2 opacity-30" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs", children: "No collections yet" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: "Create one to organize your documents" })
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-1", children: collections.map((col) => {
+        const docCount = documents.filter((d) => d.collectionId === col.id).length;
+        const isSelected = selectedCollectionId === col.id;
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "group relative", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: () => setSelectedCollectionId(isSelected ? null : col.id),
+              className: `w-full flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm transition-all text-left ${isSelected ? "bg-slate-100 text-slate-800 font-medium" : "text-slate-600 hover:bg-slate-50"}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: "w-2.5 h-2.5 rounded-full flex-shrink-0",
+                    style: { backgroundColor: col.color }
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "flex-1 truncate", children: col.name }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-slate-400 flex-shrink-0", children: docCount })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: () => handleDeleteCollection(col.id),
+              className: "absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 p-1 text-red-400 hover:text-red-600 transition-all rounded",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 11 })
+            }
+          )
+        ] }, col.id);
+      }) }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 flex flex-col min-w-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-xl font-bold text-slate-800 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { size: 20, className: "text-blue-500" }),
+              selectedCollection ? selectedCollection.name : "Knowledge Base"
+            ] }),
+            selectedCollection && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-500 mt-0.5", children: selectedCollection.description || "No description" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: selectedCollectionId && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: () => onChatWithCollection(selectedCollectionId),
+              className: "flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(MessageSquare, { size: 14 }),
+                " Chat with Collection"
+              ]
+            }
+          ) })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-6 mt-3", children: [
+          { label: "Documents", value: collectionDocs.length },
+          { label: "Ready", value: collectionDocs.filter((d) => d.status === "ready").length },
+          { label: "Total Chunks", value: collectionDocs.reduce((acc, d) => acc + (d.chunks || 0), 0) },
+          { label: "Processing", value: collectionDocs.filter((d) => d.status === "processing").length }
+        ].map((stat) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-lg font-bold text-slate-800", children: stat.value }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: stat.label })
+        ] }, stat.label)) })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white border-b border-slate-200 px-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-6", children: [
+        { id: "collections", label: "Documents", icon: FileText },
+        { id: "settings", label: "RAG Settings", icon: Settings }
+      ].map((tab) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
+        {
+          onClick: () => setActiveTab(tab.id),
+          className: `flex items-center gap-1.5 py-3 text-sm font-medium border-b-2 transition-all ${activeTab === tab.id ? "border-blue-500 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-700"}`,
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(tab.icon, { size: 14 }),
+            tab.label
+          ]
+        },
+        tab.id
+      )) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 overflow-y-auto p-6", children: [
+        activeTab === "collections" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              onDragOver: (e) => {
+                e.preventDefault();
+                setIsDragOver(true);
+              },
+              onDragLeave: () => setIsDragOver(false),
+              onDrop: (e) => {
+                e.preventDefault();
+                setIsDragOver(false);
+                handleFileUpload(e.dataTransfer.files);
+              },
+              className: `border-2 border-dashed rounded-xl p-8 text-center mb-6 transition-all cursor-pointer ${isDragOver ? "border-blue-400 bg-blue-50" : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"}`,
+              onClick: () => fileInputRef.current?.click(),
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    ref: fileInputRef,
+                    type: "file",
+                    multiple: true,
+                    className: "hidden",
+                    accept: ".pdf,.txt,.md,.docx",
+                    onChange: (e) => handleFileUpload(e.target.files)
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center gap-2", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Upload, { size: 22, className: "text-blue-500" }) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-medium text-slate-700", children: "Drop files here or click to upload" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mt-1", children: "Supports PDF, DOCX, TXT, Markdown" })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2 mt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "button",
+                    {
+                      onClick: (e) => {
+                        e.stopPropagation();
+                        setShowUrlInput(!showUrlInput);
+                      },
+                      className: "flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors",
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 12 }),
+                        " Add URL"
+                      ]
+                    }
+                  ) })
+                ] })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showUrlInput && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            motion.div,
+            {
+              initial: { height: 0, opacity: 0 },
+              animate: { height: "auto", opacity: 1 },
+              exit: { height: 0, opacity: 0 },
+              className: "mb-4 overflow-hidden",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2 bg-white border border-slate-200 rounded-xl p-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 16, className: "text-slate-400 flex-shrink-0 mt-2" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "url",
+                    value: urlInput,
+                    onChange: (e) => setUrlInput(e.target.value),
+                    placeholder: "https://example.com/document",
+                    className: "flex-1 text-sm focus:outline-none text-slate-700 placeholder-slate-400",
+                    onKeyDown: (e) => e.key === "Enter" && handleUrlAdd()
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: handleUrlAdd,
+                    disabled: !urlInput.trim(),
+                    className: "bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded-lg transition-all disabled:opacity-40",
+                    children: "Add"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: () => setShowUrlInput(false), className: "text-slate-400 hover:text-slate-600", children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { size: 14 }) })
+              ] })
+            }
+          ) }),
+          documents.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative mb-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 14, className: "absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                type: "text",
+                value: searchQuery,
+                onChange: (e) => setSearchQuery(e.target.value),
+                placeholder: "Search documents...",
+                className: "w-full pl-9 pr-4 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700"
+              }
+            )
+          ] }),
+          filteredDocs.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center py-16 text-slate-400", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Database, { size: 32, className: "mx-auto mb-3 opacity-20" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-slate-500 font-medium", children: "No documents yet" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm mt-1", children: "Upload documents to start building your knowledge base" })
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2", children: filteredDocs.map((doc) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, y: 5 },
+              animate: { opacity: 1, y: 0 },
+              className: "bg-white border border-slate-200 rounded-xl p-4 flex items-center gap-4 hover:border-slate-300 transition-all group",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0", children: documentTypeIcons[doc.type] || /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 14, className: "text-slate-500" }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-medium text-sm text-slate-700 truncate", children: doc.name }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: `flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border ${statusColors[doc.status]}`, children: [
+                      statusIcons[doc.status],
+                      doc.status.charAt(0).toUpperCase() + doc.status.slice(1)
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 mt-1 text-xs text-slate-400", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: formatFileSize(doc.size) }),
+                    doc.chunks && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                      doc.chunks,
+                      " chunks"
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: new Date(doc.uploadedAt).toLocaleDateString() }),
+                    doc.collectionId && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "div",
+                        {
+                          className: "w-1.5 h-1.5 rounded-full",
+                          style: { backgroundColor: collections.find((c) => c.id === doc.collectionId)?.color || "#94a3b8" }
+                        }
+                      ),
+                      collections.find((c) => c.id === doc.collectionId)?.name
+                    ] })
+                  ] })
+                ] }),
+                doc.status === "processing" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-20", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-slate-100 rounded-full h-1.5", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  motion.div,
+                  {
+                    className: "bg-amber-500 h-1.5 rounded-full",
+                    animate: { width: ["20%", "80%", "20%"] },
+                    transition: { duration: 2, repeat: Infinity }
+                  }
+                ) }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: () => handleDeleteDocument(doc.id),
+                    className: "p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all",
+                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 13 })
+                  }
+                ) })
+              ]
+            },
+            doc.id
+          )) })
+        ] }),
+        activeTab === "settings" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-2xl space-y-6", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-xl p-6", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "text-base font-semibold text-slate-800 mb-1 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 16, className: "text-blue-500" }),
+              " Embedding Configuration"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-4", children: "Configure how documents are chunked and embedded into vectors" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Embedding Model" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "select",
+                  {
+                    value: embeddingModel,
+                    onChange: (e) => setEmbeddingModel(e.target.value),
+                    className: "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 bg-white",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "text-embedding-004", children: "Google text-embedding-004 (Recommended)" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "text-embedding-3-small", children: "OpenAI text-embedding-3-small" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "text-embedding-3-large", children: "OpenAI text-embedding-3-large" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "nomic-embed", children: "Nomic Embed (Local)" })
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: [
+                  "Chunk Size: ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-blue-600", children: [
+                    chunkSize,
+                    " tokens"
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "range",
+                    min: 128,
+                    max: 2048,
+                    step: 64,
+                    value: chunkSize,
+                    onChange: (e) => setChunkSize(Number(e.target.value)),
+                    className: "w-full accent-blue-600"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-xs text-slate-400 mt-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "128 (precise)" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "2048 (broad)" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: [
+                  "Chunk Overlap: ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-blue-600", children: [
+                    chunkOverlap,
+                    " tokens"
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "range",
+                    min: 0,
+                    max: 512,
+                    step: 16,
+                    value: chunkOverlap,
+                    onChange: (e) => setChunkOverlap(Number(e.target.value)),
+                    className: "w-full accent-blue-600"
+                  }
+                )
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-xl p-6", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "text-base font-semibold text-slate-800 mb-1 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Database, { size: 16, className: "text-purple-500" }),
+              " Vector Store"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-4", children: "Configure the vector database for storing embeddings" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-3", children: [
+              { id: "chroma", name: "ChromaDB", desc: "Local vector store (Default)", status: "active" },
+              { id: "pinecone", name: "Pinecone", desc: "Cloud-hosted, scalable", status: "inactive" },
+              { id: "qdrant", name: "Qdrant", desc: "Local or cloud deployment", status: "inactive" }
+            ].map((store) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: `flex items-center justify-between p-3 rounded-lg border ${store.status === "active" ? "border-blue-200 bg-blue-50" : "border-slate-200 hover:border-slate-300"} transition-all`,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium text-slate-700", children: store.name }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: store.desc })
+                  ] }),
+                  store.status === "active" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full", children: "Active" })
+                ]
+              },
+              store.id
+            )) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-xl p-6", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "text-base font-semibold text-slate-800 mb-1 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 16, className: "text-amber-500" }),
+              " Retrieval Settings"
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-4", children: "Configure how context is retrieved for queries" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Top K Results" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "number",
+                    defaultValue: 5,
+                    min: 1,
+                    max: 20,
+                    className: "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Similarity Threshold" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "number",
+                    defaultValue: 0.75,
+                    min: 0,
+                    max: 1,
+                    step: 0.05,
+                    className: "w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700"
+                  }
+                )
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 space-y-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "flex items-center gap-2 cursor-pointer", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "checkbox", defaultChecked: true, className: "rounded accent-blue-600" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-slate-600", children: "Enable MMR (Maximal Marginal Relevance) for diversity" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "flex items-center gap-2 cursor-pointer", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "checkbox", defaultChecked: true, className: "rounded accent-blue-600" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-slate-600", children: "Re-rank results with cross-encoder" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "flex items-center gap-2 cursor-pointer", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("input", { type: "checkbox", className: "rounded accent-blue-600" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-slate-600", children: "Enable HyDE (Hypothetical Document Embeddings)" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "mt-4 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all", children: "Save Settings" })
+          ] })
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showNewCollection && /* @__PURE__ */ jsxRuntimeExports.jsx(
       motion.div,
       {
         initial: { opacity: 0 },
         animate: { opacity: 1 },
         exit: { opacity: 0 },
-        className: "absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50",
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 rounded-lg p-6 flex items-center space-x-3", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 24, className: "animate-spin text-blue-500" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-white", children: "AI is working on your request..." })
-        ] })
+        className: "fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4",
+        onClick: () => setShowNewCollection(false),
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          motion.div,
+          {
+            initial: { scale: 0.95, opacity: 0 },
+            animate: { scale: 1, opacity: 1 },
+            exit: { scale: 0.95, opacity: 0 },
+            className: "bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md",
+            onClick: (e) => e.stopPropagation(),
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-bold text-slate-800 mb-4", children: "New Collection" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Name" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: newCollectionName,
+                      onChange: (e) => setNewCollectionName(e.target.value),
+                      placeholder: "e.g., AI Research Papers",
+                      className: "w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700",
+                      autoFocus: true
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Description (optional)" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "textarea",
+                    {
+                      value: newCollectionDesc,
+                      onChange: (e) => setNewCollectionDesc(e.target.value),
+                      placeholder: "A brief description of this collection...",
+                      rows: 2,
+                      className: "w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 resize-none"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Color" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-2", children: COLLECTION_COLORS.map((color2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      onClick: () => setNewCollectionColor(color2),
+                      className: `w-7 h-7 rounded-full transition-all ${newCollectionColor === color2 ? "ring-2 ring-offset-2 ring-blue-400 scale-110" : ""}`,
+                      style: { backgroundColor: color2 }
+                    },
+                    color2
+                  )) })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3 mt-6", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: () => setShowNewCollection(false),
+                    className: "flex-1 py-2.5 text-slate-600 border border-slate-200 rounded-xl text-sm hover:bg-slate-50 transition-all",
+                    children: "Cancel"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: handleCreateCollection,
+                    disabled: !newCollectionName.trim(),
+                    className: "flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm transition-all disabled:opacity-40",
+                    children: "Create Collection"
+                  }
+                )
+              ] })
+            ]
+          }
+        )
       }
     ) })
   ] });
 };
-const MCPManager = ({
-  onConnectionStatusChange,
-  onServersChange
-}) => {
-  const [servers, setServers] = reactExports.useState([]);
-  const [isAddingServer, setIsAddingServer] = reactExports.useState(false);
-  const [expandedServers, setExpandedServers] = reactExports.useState(/* @__PURE__ */ new Set());
-  const [selectedServer, setSelectedServer] = reactExports.useState(null);
-  const [showConfigModal, setShowConfigModal] = reactExports.useState(false);
-  const [configText, setConfigText] = reactExports.useState("");
-  const [configPath, setConfigPath] = reactExports.useState("");
-  const [newServer, setNewServer] = reactExports.useState({
-    name: "",
-    description: "",
-    command: "",
-    args: "",
-    env: ""
-  });
-  const serverTemplates = [
-    {
-      name: "Obsidian",
-      description: "Connect to Obsidian vault for note management",
-      command: "obsidian-mcp-server",
-      args: [],
-      icon: /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { size: 20, className: "text-purple-400" })
-    },
-    {
-      name: "Gmail",
-      description: "Access Gmail emails and compose messages",
-      command: "gmail-mcp-server",
-      args: [],
-      icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { size: 20, className: "text-red-400" })
-    },
-    {
-      name: "Supabase",
-      description: "Database operations with Supabase",
-      command: "npx",
-      args: ["@supabase-community/supabase-mcp"],
-      icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Database, { size: 20, className: "text-green-400" })
-    },
-    {
-      name: "N8N",
-      description: "Workflow automation with N8N",
-      command: "npx",
-      args: ["@guinness77/n8n-mcp-server"],
-      icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Settings$1, { size: 20, className: "text-blue-400" })
-    },
-    {
-      name: "Web Search",
-      description: "Search the web for information",
-      command: "web-search-mcp-server",
-      args: [],
-      icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 20, className: "text-orange-400" })
-    }
-  ];
-  reactExports.useEffect(() => {
-    loadMCPServers();
-  }, []);
-  reactExports.useEffect(() => {
-    const statusMap = {};
-    servers.forEach((server) => {
-      if (server.status !== "error") {
-        statusMap[server.name] = server.status;
-      }
-    });
-    onConnectionStatusChange(statusMap);
-    onServersChange(servers);
-  }, [servers, onConnectionStatusChange, onServersChange]);
-  const loadMCPServers = async () => {
-    try {
-      const savedServers = await window.api.getMCPServers();
-      setServers(savedServers || []);
-    } catch (error) {
-      console.error("Failed to load MCP servers:", error);
-    }
-  };
-  const connectServer = async (serverName) => {
-    setServers((prev) => prev.map(
-      (server) => server.name === serverName ? { ...server, status: "connecting", error: void 0 } : server
+const PRESET_SERVERS = [
+  {
+    name: "Filesystem",
+    description: "Access and manage local files and directories. Read, write, list.",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "/home/user"],
+    category: "storage",
+    tools: [
+      { name: "read_file", description: "Read contents of a file" },
+      { name: "write_file", description: "Write content to a file" },
+      { name: "list_directory", description: "List directory contents" },
+      { name: "search_files", description: "Search for files matching a pattern" }
+    ]
+  },
+  {
+    name: "Sequential Thinking",
+    description: "Advanced step-by-step reasoning for complex problems.",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+    category: "reasoning",
+    tools: [
+      { name: "think_step_by_step", description: "Break complex problems into reasoning steps" }
+    ]
+  },
+  {
+    name: "GitHub",
+    description: "Interact with GitHub repositories, issues, PRs, and code.",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-github"],
+    env: { GITHUB_PERSONAL_ACCESS_TOKEN: "" },
+    category: "development",
+    tools: [
+      { name: "search_repositories", description: "Search GitHub repositories" },
+      { name: "get_file_contents", description: "Get file contents from repository" },
+      { name: "create_issue", description: "Create a new GitHub issue" },
+      { name: "list_commits", description: "List repository commits" }
+    ]
+  },
+  {
+    name: "Tavily Search",
+    description: "Real-time web search and content extraction capabilities.",
+    command: "npx",
+    args: ["-y", "tavily-mcp"],
+    env: { TAVILY_API_KEY: "" },
+    category: "search",
+    tools: [
+      { name: "search", description: "Search the web for information" },
+      { name: "extract", description: "Extract content from a URL" }
+    ]
+  },
+  {
+    name: "PostgreSQL",
+    description: "Connect and query PostgreSQL databases.",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-postgres"],
+    env: { DATABASE_URL: "" },
+    category: "database",
+    tools: [
+      { name: "query", description: "Execute a SQL query" },
+      { name: "list_tables", description: "List all database tables" },
+      { name: "describe_table", description: "Describe a table schema" }
+    ]
+  },
+  {
+    name: "Puppeteer",
+    description: "Browser automation and web scraping with Puppeteer.",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-puppeteer"],
+    category: "browser",
+    tools: [
+      { name: "navigate", description: "Navigate to a URL" },
+      { name: "screenshot", description: "Take a webpage screenshot" },
+      { name: "click", description: "Click on an element" },
+      { name: "fill", description: "Fill a form field" }
+    ]
+  }
+];
+const categoryConfig = {
+  storage: { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Database, { size: 14 }), color: "text-blue-600", bg: "bg-blue-50" },
+  reasoning: { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 14 }), color: "text-amber-600", bg: "bg-amber-50" },
+  development: { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Code, { size: 14 }), color: "text-emerald-600", bg: "bg-emerald-50" },
+  search: { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 14 }), color: "text-purple-600", bg: "bg-purple-50" },
+  database: { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Server, { size: 14 }), color: "text-orange-600", bg: "bg-orange-50" },
+  browser: { icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { size: 14 }), color: "text-cyan-600", bg: "bg-cyan-50" }
+};
+const statusConfig = {
+  connected: { color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 12 }), label: "Connected" },
+  disconnected: { color: "text-slate-500", bg: "bg-slate-50 border-slate-200", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(PowerOff, { size: 12 }), label: "Disconnected" },
+  connecting: { color: "text-amber-600", bg: "bg-amber-50 border-amber-200", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 12, className: "animate-spin" }), label: "Connecting..." },
+  error: { color: "text-red-600", bg: "bg-red-50 border-red-200", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { size: 12 }), label: "Error" }
+};
+const MCPManagerPage = ({ servers, onServersChange }) => {
+  const [activeTab, setActiveTab] = reactExports.useState("servers");
+  const [expandedServer, setExpandedServer] = reactExports.useState(null);
+  const [showCustomForm, setShowCustomForm] = reactExports.useState(false);
+  const [editingEnv, setEditingEnv] = reactExports.useState(null);
+  const [envValues, setEnvValues] = reactExports.useState({});
+  const [visibleEnvKeys, setVisibleEnvKeys] = reactExports.useState({});
+  const [customName, setCustomName] = reactExports.useState("");
+  const [customDesc, setCustomDesc] = reactExports.useState("");
+  const [customCommand, setCustomCommand] = reactExports.useState("");
+  const [customArgs, setCustomArgs] = reactExports.useState("");
+  const [customEnv, setCustomEnv] = reactExports.useState("");
+  const handleConnect = (serverId) => {
+    onServersChange(servers.map(
+      (s) => s.id === serverId ? { ...s, status: "connecting" } : s
     ));
-    try {
-      await window.api.connectMCPServer(serverName);
-      setServers((prev) => prev.map(
-        (server) => server.name === serverName ? { ...server, status: "connected", lastConnected: (/* @__PURE__ */ new Date()).toISOString() } : server
+    setTimeout(() => {
+      onServersChange((prev) => prev.map(
+        (s) => s.id === serverId ? { ...s, status: "connected", lastConnected: (/* @__PURE__ */ new Date()).toISOString() } : s
       ));
-    } catch (error) {
-      setServers((prev) => prev.map(
-        (server) => server.name === serverName ? { ...server, status: "error", error: error.message } : server
-      ));
-    }
+    }, 1500 + Math.random() * 1e3);
   };
-  const disconnectServer = async (serverName) => {
-    try {
-      await window.api.disconnectMCPServer(serverName);
-      setServers((prev) => prev.map(
-        (server) => server.name === serverName ? { ...server, status: "disconnected" } : server
-      ));
-    } catch (error) {
-      console.error("Failed to disconnect server:", error);
-    }
+  const handleDisconnect = (serverId) => {
+    onServersChange(servers.map(
+      (s) => s.id === serverId ? { ...s, status: "disconnected" } : s
+    ));
   };
-  const addServer = async () => {
-    if (!newServer.name || !newServer.command) return;
-    const server = {
-      name: newServer.name,
-      description: newServer.description,
-      command: newServer.command,
-      args: newServer.args ? newServer.args.split(" ").filter(Boolean) : [],
-      env: newServer.env ? JSON.parse(newServer.env) : {},
+  const handleDeleteServer = (serverId) => {
+    onServersChange(servers.filter((s) => s.id !== serverId));
+  };
+  const handleAddPreset = (preset) => {
+    const exists = servers.find((s) => s.name === preset.name);
+    if (exists) return;
+    const newServer = {
+      ...preset,
+      id: v4(),
       status: "disconnected"
     };
-    try {
-      await window.api.addMCPServer(server);
-      setServers((prev) => [...prev, server]);
-      setIsAddingServer(false);
-      setNewServer({
-        name: "",
-        description: "",
-        command: "",
-        args: "",
-        env: ""
+    onServersChange([...servers, newServer]);
+    setActiveTab("servers");
+  };
+  const handleAddCustom = () => {
+    if (!customName.trim() || !customCommand.trim()) return;
+    let env = {};
+    if (customEnv.trim()) {
+      customEnv.split("\n").forEach((line) => {
+        const [k2, ...v2] = line.split("=");
+        if (k2?.trim()) env[k2.trim()] = v2.join("=").trim();
       });
-    } catch (error) {
-      console.error("Failed to add server:", error);
     }
-  };
-  const addFromTemplate = (template) => {
-    setNewServer({
-      name: template.name,
-      description: template.description,
-      command: template.command,
-      args: template.args.join(" "),
-      env: "{}"
-    });
-    setIsAddingServer(true);
-  };
-  const deleteServer = async (serverName) => {
-    try {
-      await window.api.deleteMCPServer(serverName);
-      setServers((prev) => prev.filter((server) => server.name !== serverName));
-    } catch (error) {
-      console.error("Failed to delete server:", error);
-    }
-  };
-  const toggleServerExpanded = (serverName) => {
-    setExpandedServers((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(serverName)) {
-        newSet.delete(serverName);
-      } else {
-        newSet.add(serverName);
-      }
-      return newSet;
-    });
-  };
-  reactExports.useEffect(() => {
-    const loadConfigPath = async () => {
-      try {
-        const path = await window.api.getMCPConfigPath();
-        setConfigPath(path);
-      } catch (error) {
-        console.error("Error loading config path:", error);
-      }
+    const newServer = {
+      id: v4(),
+      name: customName.trim(),
+      description: customDesc.trim(),
+      command: customCommand.trim(),
+      args: customArgs.split(" ").filter((a) => a.trim()),
+      env: Object.keys(env).length > 0 ? env : void 0,
+      status: "disconnected",
+      category: "custom"
     };
-    loadConfigPath();
-  }, []);
-  const handleExportConfig = async () => {
-    try {
-      const configJson = await window.api.exportMCPConfig();
-      setConfigText(configJson);
-      setShowConfigModal(true);
-    } catch (error) {
-      console.error("Error exporting config:", error);
-      alert("Failed to export config");
-    }
+    onServersChange([...servers, newServer]);
+    setCustomName("");
+    setCustomDesc("");
+    setCustomCommand("");
+    setCustomArgs("");
+    setCustomEnv("");
+    setShowCustomForm(false);
+    setActiveTab("servers");
   };
-  const handleImportConfig = async () => {
-    try {
-      await window.api.importMCPConfig(configText);
-      setShowConfigModal(false);
-      setConfigText("");
-      loadServers();
-      alert("Config imported successfully! Servers are being reconnected.");
-    } catch (error) {
-      console.error("Error importing config:", error);
-      alert("Failed to import config: " + error);
-    }
+  const handleSaveEnv = (serverId) => {
+    const envData = envValues[serverId] || {};
+    onServersChange(servers.map(
+      (s) => s.id === serverId ? { ...s, env: { ...s.env || {}, ...envData } } : s
+    ));
+    setEditingEnv(null);
   };
-  const handleShowConfigModal = async () => {
-    try {
-      const configJson = await window.api.exportMCPConfig();
-      setConfigText(configJson);
-      setShowConfigModal(true);
-    } catch (error) {
-      console.error("Error loading config:", error);
-      setConfigText('{\n  "mcpServers": {\n    \n  }\n}');
-      setShowConfigModal(true);
-    }
-  };
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case "connected":
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 16, className: "text-green-500" });
-      case "connecting":
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { size: 16, className: "text-yellow-500 animate-spin" });
-      case "error":
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { size: 16, className: "text-red-500" });
-      default:
-        return /* @__PURE__ */ jsxRuntimeExports.jsx(PowerOff, { size: 16, className: "text-gray-500" });
-    }
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full h-full bg-gray-900 text-white p-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-6xl mx-auto", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-6", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400", children: "Manage Model Context Protocol servers and integrations" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-gray-500 mt-1", children: [
-          "Config file: ",
-          configPath
+  const connectedCount = servers.filter((s) => s.status === "connected").length;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-full bg-slate-50", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-xl font-bold text-slate-800 flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Plug, { size: 20, className: "text-blue-500" }),
+            " MCP Manager"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mt-0.5", children: "Model Context Protocol server management" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 bg-slate-100 rounded-xl px-3 py-2 text-sm", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-2 h-2 rounded-full ${connectedCount > 0 ? "bg-emerald-500 animate-pulse" : "bg-slate-400"}` }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-slate-600", children: [
+              connectedCount,
+              " connected"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: () => {
+                setShowCustomForm(true);
+                setActiveTab("custom");
+              },
+              className: "flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl transition-all",
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { size: 15 }),
+                " Add Custom Server"
+              ]
+            }
+          )
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            onClick: handleShowConfigModal,
-            className: "flex items-center space-x-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors",
-            title: "Edit JSON Config",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Code, { size: 16 }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "JSON Config" })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            onClick: () => loadMCPServers(),
-            className: "flex items-center space-x-2 px-3 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors",
-            title: "Refresh",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Plug, { size: 16 }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Refresh" })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            onClick: () => setIsAddingServer(true),
-            className: "flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { size: 20 }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Add Server" })
-            ]
-          }
-        )
-      ] })
-    ] }),
-    servers.some((s) => s.status === "connected") && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-sm text-gray-400 mb-2", children: "Connected" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2", children: servers.filter((s) => s.status === "connected").map((s) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-2 py-1 bg-gray-800 border border-gray-700 rounded text-sm text-gray-200", children: s.name }, s.name)) })
-    ] }),
-    !isAddingServer && servers.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-8", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-semibold mb-4", children: "Quick Start Templates" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: serverTemplates.map((template) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-6 mt-4", children: [
+        { id: "servers", label: "My Servers", count: servers.length },
+        { id: "marketplace", label: "Marketplace" },
+        { id: "custom", label: "Custom Server" }
+      ].map((tab) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "button",
         {
-          className: "bg-gray-800 rounded-lg p-4 border border-gray-700 hover:border-gray-600 transition-colors cursor-pointer",
-          onClick: () => addFromTemplate(template),
+          onClick: () => setActiveTab(tab.id),
+          className: `flex items-center gap-2 pb-2 text-sm font-medium border-b-2 transition-all ${activeTab === tab.id ? "border-blue-500 text-blue-600" : "border-transparent text-slate-500 hover:text-slate-700"}`,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-3 mb-2", children: [
-              template.icon,
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold", children: template.name })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: template.description }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 flex items-center text-xs text-blue-400", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Plus, { size: 14, className: "mr-1" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Add to project" })
-            ] })
+            tab.label,
+            tab.count !== void 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "bg-slate-100 text-slate-500 text-xs rounded-full px-1.5 py-0.5", children: tab.count })
           ]
         },
-        template.name
+        tab.id
       )) })
     ] }),
-    isAddingServer && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg font-semibold mb-4", children: "Add New MCP Server" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-300 mb-1", children: "Server Name *" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              type: "text",
-              value: newServer.name,
-              onChange: (e) => setNewServer((prev) => ({ ...prev, name: e.target.value })),
-              className: "w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              placeholder: "e.g., Obsidian"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-300 mb-1", children: "Command *" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              type: "text",
-              value: newServer.command,
-              onChange: (e) => setNewServer((prev) => ({ ...prev, command: e.target.value })),
-              className: "w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              placeholder: "e.g., obsidian-mcp-server"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "md:col-span-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-300 mb-1", children: "Description" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              type: "text",
-              value: newServer.description,
-              onChange: (e) => setNewServer((prev) => ({ ...prev, description: e.target.value })),
-              className: "w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              placeholder: "Brief description of this server"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-300 mb-1", children: "Arguments" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              type: "text",
-              value: newServer.args,
-              onChange: (e) => setNewServer((prev) => ({ ...prev, args: e.target.value })),
-              className: "w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              placeholder: "--arg1 value1 --arg2 value2"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-300 mb-1", children: "Environment Variables (JSON)" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "input",
-            {
-              type: "text",
-              value: newServer.env,
-              onChange: (e) => setNewServer((prev) => ({ ...prev, env: e.target.value })),
-              className: "w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              placeholder: '{"API_KEY": "your-key"}'
-            }
-          )
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-3 mt-6", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 overflow-y-auto p-6", children: [
+      activeTab === "servers" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: servers.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center py-20 text-slate-400", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Plug, { size: 40, className: "mx-auto mb-4 opacity-20" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-slate-500 font-medium text-lg", children: "No servers configured" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm mt-2 mb-6", children: "Add servers from the Marketplace or create a custom one" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
           {
-            onClick: addServer,
-            className: "px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors",
-            children: "Add Server"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: () => setIsAddingServer(false),
-            className: "px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors",
-            children: "Cancel"
+            onClick: () => setActiveTab("marketplace"),
+            className: "bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-xl transition-all",
+            children: "Browse Marketplace"
           }
         )
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: servers.map((server) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        className: "bg-gray-800 rounded-lg border border-gray-700 overflow-hidden",
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-3", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "button",
-                  {
-                    onClick: () => toggleServerExpanded(server.name),
-                    className: "text-gray-400 hover:text-white",
-                    children: expandedServers.has(server.name) ? /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { size: 20 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 20 })
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Server, { size: 20, className: "text-blue-400" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold", children: server.name }),
-                  server.description && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: server.description })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-3", children: [
-                getStatusIcon(server.status),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-2", children: [
-                  server.status === "connected" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-3", children: servers.map((server) => {
+        const status = statusConfig[server.status];
+        const cat = categoryConfig[server.category || "storage"];
+        const isExpanded = expandedServer === server.id;
+        const isEditingEnv = editingEnv === server.id;
+        const serverEnvValues = envValues[server.id] || {};
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          motion.div,
+          {
+            layout: true,
+            className: "bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-10 h-10 rounded-xl ${cat?.bg || "bg-slate-100"} flex items-center justify-center flex-shrink-0 ${cat?.color || "text-slate-500"}`, children: cat?.icon || /* @__PURE__ */ jsxRuntimeExports.jsx(Server, { size: 18 }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800", children: server.name }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: `flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border ${status.bg} ${status.color}`, children: [
+                      status.icon,
+                      " ",
+                      status.label
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-500 mt-0.5 truncate", children: server.description }),
+                  server.lastConnected && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-slate-400 mt-0.5", children: [
+                    "Last connected: ",
+                    new Date(server.lastConnected).toLocaleString()
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 flex-shrink-0", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "button",
                     {
-                      onClick: () => disconnectServer(server.name),
-                      className: "p-2 text-red-400 hover:text-red-300 hover:bg-gray-700 rounded",
-                      title: "Disconnect",
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(PowerOff, { size: 16 })
+                      onClick: () => setExpandedServer(isExpanded ? null : server.id),
+                      className: "p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-all",
+                      children: isExpanded ? /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { size: 16 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { size: 16 })
+                    }
+                  ),
+                  server.status === "connected" ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "button",
+                    {
+                      onClick: () => handleDisconnect(server.id),
+                      className: "flex items-center gap-1.5 text-sm px-3 py-2 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 transition-all",
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(PowerOff, { size: 14 }),
+                        " Disconnect"
+                      ]
                     }
                   ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "button",
                     {
-                      onClick: () => connectServer(server.name),
-                      className: "p-2 text-green-400 hover:text-green-300 hover:bg-gray-700 rounded",
-                      title: "Connect",
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Power, { size: 16 })
+                      onClick: () => handleConnect(server.id),
+                      disabled: server.status === "connecting",
+                      className: "flex items-center gap-1.5 text-sm px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-all disabled:opacity-60",
+                      children: server.status === "connecting" ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 14, className: "animate-spin" }),
+                        " Connecting"
+                      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(Power, { size: 14 }),
+                        " Connect"
+                      ] })
                     }
                   ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     "button",
                     {
-                      onClick: () => deleteServer(server.name),
-                      className: "p-2 text-red-400 hover:text-red-300 hover:bg-gray-700 rounded",
-                      title: "Delete",
-                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 16 })
+                      onClick: () => handleDeleteServer(server.id),
+                      className: "p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all",
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 14 })
                     }
                   )
                 ] })
-              ] })
-            ] }),
-            server.error && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 p-2 bg-red-900/20 border border-red-800 rounded text-red-400 text-sm", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { size: 14, className: "inline mr-2" }),
-              server.error
-            ] })
-          ] }),
-          expandedServers.has(server.name) && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "border-t border-gray-700 p-4 bg-gray-850", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "font-medium mb-2 text-gray-300", children: "Configuration" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2 text-sm", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-400", children: "Command:" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "bg-gray-700 px-2 py-1 rounded text-gray-300", children: server.command })
-                ] }),
-                server.args && server.args.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-400", children: "Arguments:" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "bg-gray-700 px-2 py-1 rounded text-gray-300", children: server.args.join(" ") })
-                ] }),
-                server.lastConnected && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-400", children: "Last Connected:" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-300", children: new Date(server.lastConnected).toLocaleString() })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "font-medium mb-2 text-gray-300", children: "Available Tools" }),
-              server.tools && server.tools.length > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                server.tools.slice(0, 3).map((tool, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-2 text-sm", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Wrench, { size: 14, className: "text-blue-400" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-300", children: tool.name })
-                ] }, index)),
-                server.tools.length > 3 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-sm text-gray-400", children: [
-                  "+",
-                  server.tools.length - 3,
-                  " more tools"
-                ] })
-              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm text-gray-500", children: server.status === "connected" ? "No tools available" : "Connect to see tools" })
-            ] })
-          ] }) })
-        ]
-      },
-      server.name
-    )) }),
-    servers.length === 0 && !isAddingServer && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center py-12", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Plug, { size: 48, className: "mx-auto text-gray-600 mb-4" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-semibold text-gray-400 mb-2", children: "No MCP Servers" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-500 mb-4", children: "Add your first MCP server to start extending your AI assistant's capabilities" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "button",
-        {
-          onClick: () => setIsAddingServer(true),
-          className: "px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors",
-          children: "Add Your First Server"
-        }
-      )
-    ] }),
-    showConfigModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 rounded-lg p-6 w-4/5 max-w-4xl max-h-4/5 flex flex-col", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-semibold", children: "MCP Configuration (Claude Desktop Style)" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: () => setShowConfigModal(false),
-            className: "text-gray-400 hover:text-white",
-            children: "✕"
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400 mb-2", children: "Edit your MCP server configuration in JSON format. This is similar to Claude Desktop's config file." }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-xs text-gray-500 bg-gray-700 p-3 rounded mb-4", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Example:" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("pre", { children: `{
-  "mcpServers": {
-    "youtube-data-mcp-server": {
-      "command": "cmd",
-      "args": ["/c", "npx", "-y", "@smithery/cli@latest", "run", "@icraft2170/youtube-data-mcp-server", "--key", "YOUR_API_KEY"],
-      "description": "YouTube Data API MCP Server"
-    }
-  }
-}` })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "textarea",
-        {
-          value: configText,
-          onChange: (e) => setConfigText(e.target.value),
-          className: "w-full h-full resize-none bg-gray-700 border border-gray-600 rounded p-3 text-white font-mono text-sm focus:outline-none focus:border-blue-500",
-          placeholder: "Enter your MCP configuration JSON..."
-        }
-      ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            onClick: handleImportConfig,
-            className: "flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Upload, { size: 16 }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Apply Config" })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "button",
-          {
-            onClick: handleExportConfig,
-            className: "flex items-center space-x-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 16 }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Export Current" })
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onClick: () => setShowConfigModal(false),
-            className: "px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg transition-colors",
-            children: "Cancel"
-          }
-        )
-      ] })
-    ] }) })
-  ] }) });
-};
-const App = () => {
-  const [isToolsOpen, setIsToolsOpen] = reactExports.useState(false);
-  const [activeModel, setActiveModel] = reactExports.useState("pro");
-  const [activeView, setActiveView] = reactExports.useState("chat");
-  const [showCanvasPane, setShowCanvasPane] = reactExports.useState(false);
-  const [messages, setMessages] = reactExports.useState([]);
-  const [userInput, setUserInput] = reactExports.useState("");
-  const [isLoading, setIsLoading] = reactExports.useState(false);
-  const [attachedFile, setAttachedFile] = reactExports.useState(null);
-  const [isDeepResearchMode, setIsDeepResearchMode] = reactExports.useState(false);
-  const [researchProgress, setResearchProgress] = reactExports.useState([]);
-  const [currentProjectId, setCurrentProjectId] = reactExports.useState("default-project");
-  const [mcpServers, setMcpServers] = reactExports.useState([]);
-  const [mcpConnectionStatus, setMcpConnectionStatus] = reactExports.useState({});
-  const [mcpTools, setMcpTools] = reactExports.useState({});
-  const [showConsent, setShowConsent] = reactExports.useState(null);
-  const tools = [
-    { name: "Deep research", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(BrainCircuit, { size: 18 }) },
-    { name: "Canvas", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(PencilRuler, { size: 18 }) },
-    { name: "Web search", icon: /* @__PURE__ */ jsxRuntimeExports.jsx(ScanSearch, { size: 18 }) }
-    // MCP tools will be appended dynamically below in the dropdown
-  ];
-  reactExports.useEffect(() => {
-    const loadTools = async () => {
-      try {
-        const grouped = await window.api.getMCPTools();
-        setMcpTools(grouped || {});
-      } catch (e) {
-        console.warn("Unable to load MCP tools (maybe no servers connected yet).");
-      }
-    };
-    loadTools();
-  }, [activeView]);
-  const handleToolInvokeMCP = async (server, tool) => {
-    if (showConsent && showConsent.server === server && showConsent.tool === tool) {
-      setShowConsent(null);
-    } else {
-      setShowConsent({ server, tool });
-      return;
-    }
-    try {
-      const args = userInput ? { query: userInput } : {};
-      const result = await window.api.callMCPTool(server, tool, args);
-      const text = typeof result?.content?.[0]?.text === "string" ? result.content[0].text : JSON.stringify(result);
-      const aiMessage = {
-        id: v4(),
-        text,
-        sender: "ai",
-        timestamp: (/* @__PURE__ */ new Date()).toISOString()
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
-      const aiMessage = {
-        id: v4(),
-        text: `MCP tool call failed: ${error}`,
-        sender: "ai",
-        timestamp: (/* @__PURE__ */ new Date()).toISOString()
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-    }
-  };
-  const handleSendMessage = async () => {
-    if (!userInput.trim() && !attachedFile) return;
-    const modelMap = {
-      pro: "gemini-2.5-pro",
-      flash: "gemini-2.5-flash"
-    };
-    const currentModelName = modelMap[activeModel];
-    const userMessage = {
-      id: v4(),
-      text: userInput,
-      sender: "user",
-      timestamp: (/* @__PURE__ */ new Date()).toISOString(),
-      fileName: attachedFile?.name,
-      filePath: attachedFile?.path
-    };
-    setMessages((prev) => [...prev, userMessage]);
-    setUserInput("");
-    setIsLoading(true);
-    setResearchProgress([]);
-    try {
-      let aiResponseText = "";
-      if (isDeepResearchMode) {
-        setResearchProgress(["🔍 Planning research strategy..."]);
-        const result = await window.api.deepResearch(userInput, currentModelName);
-        setResearchProgress(["✅ Research completed successfully"]);
-        const refinedQueryMessage = {
-          id: v4(),
-          text: `🔍 Research Query: "${result.refinedQuery}"`,
-          sender: "ai",
-          timestamp: (/* @__PURE__ */ new Date()).toISOString()
-        };
-        setMessages((prev) => [...prev, refinedQueryMessage]);
-        aiResponseText = result.answer;
-      } else if (attachedFile) {
-        aiResponseText = await window.api.processFile(attachedFile.path, userInput);
-        setAttachedFile(null);
-      } else {
-        const result = await window.api.chatWithWeb(userInput, currentModelName);
-        const refs = (result.citations || []).map((c, idx) => `- [${idx + 1}] ${c.title} (${c.url})
-  ${c.snippet}`).join("\n");
-        aiResponseText = refs ? `${result.answer}
-
-References:
-${refs}` : result.answer;
-      }
-      const aiMessage = {
-        id: v4(),
-        text: aiResponseText,
-        sender: "ai",
-        timestamp: (/* @__PURE__ */ new Date()).toISOString()
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
-      console.error("Error sending message:", error);
-      const errorMessage = {
-        id: v4(),
-        text: "Sorry, there was an error processing your request.",
-        sender: "ai",
-        timestamp: (/* @__PURE__ */ new Date()).toISOString()
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-      setResearchProgress([]);
-    }
-  };
-  const handleCanvasAIRequest = async (request) => {
-    try {
-      const response = await window.api.sendMessage(request, activeModel === "pro" ? "gemini-2.5-pro" : "gemini-2.5-flash");
-      return response;
-    } catch (error) {
-      console.error("Canvas AI request failed:", error);
-      return "AI 요청 처리 중 오류가 발생했습니다.";
-    }
-  };
-  const handleViewChange = (view) => {
-    if (view === "canvas") {
-      setShowCanvasPane(true);
-      setActiveView("chat");
-      return;
-    }
-    setActiveView(view);
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-screen bg-gray-900 text-white", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "w-72 bg-gray-800 border-r border-gray-700 flex flex-col", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 border-b border-gray-700", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-xl font-bold", children: "Gemini Desktop" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-400", children: "AI Research Assistant" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("nav", { className: "flex-1 p-4", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              onClick: () => handleViewChange("chat"),
-              className: `w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${activeView === "chat" ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Bot, { size: 20 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Chat" })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              onClick: () => handleViewChange("canvas"),
-              className: `w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${activeView === "canvas" ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Palette, { size: 20 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Canvas" })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              onClick: () => handleViewChange("mcp"),
-              className: `w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${activeView === "mcp" ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Plug, { size: 20 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "MCP Servers" }),
-                Object.keys(mcpConnectionStatus).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ml-auto flex items-center space-x-1", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-2 h-2 bg-green-500 rounded-full" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs", children: Object.keys(mcpConnectionStatus).length })
-                ] })
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "button",
-            {
-              onClick: () => handleViewChange("settings"),
-              className: `w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${activeView === "settings" ? "bg-blue-600 text-white" : "text-gray-300 hover:bg-gray-700"}`,
-              children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Settings$1, { size: 20 }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Settings" })
-              ]
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-8", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-medium text-gray-400 mb-2", children: "Current Project" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-700 rounded-lg p-3", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-2", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Layers, { size: 16, className: "text-blue-400" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm", children: "Default Project" })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-gray-400 mt-1", children: [
-              "ID: ",
-              currentProjectId
-            ] })
-          ] })
-        ] }),
-        Object.keys(mcpConnectionStatus).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-medium text-gray-400 mb-2", children: "Connected Servers" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-1", children: Object.entries(mcpConnectionStatus).map(([serverName, status]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-2 text-sm", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-2 h-2 rounded-full ${status === "connected" ? "bg-green-500" : status === "connecting" ? "bg-yellow-500" : "bg-red-500"}` }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-300", children: serverName })
-          ] }, serverName)) })
-        ] })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("main", { className: "flex-1 flex flex-col", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 border-b border-gray-700 p-4 flex items-center justify-between", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-4", children: [
-          activeView !== "chat" && /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "button",
-            {
-              onClick: () => handleViewChange("chat"),
-              className: "p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-colors",
-              title: "Back to Chat",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx(ArrowLeft, { size: 20 })
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-lg font-semibold text-white", children: [
-            activeView === "chat" && "Chat",
-            activeView === "canvas" && "Gemini Canvas",
-            activeView === "mcp" && "MCP Connections",
-            activeView === "settings" && "Settings"
-          ] })
-        ] }),
-        (activeView === "chat" || activeView === "canvas") && /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "div",
-          {
-            className: "w-64 h-10 bg-gray-700 rounded-full flex items-center p-1 cursor-pointer relative",
-            onClick: () => setActiveModel(activeModel === "pro" ? "flash" : "pro"),
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ] }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: isExpanded && /* @__PURE__ */ jsxRuntimeExports.jsx(
                 motion.div,
                 {
-                  className: "w-1/2 h-full bg-blue-600 rounded-full",
-                  layout: true,
-                  transition: { type: "spring", stiffness: 700, damping: 30 },
-                  initial: false,
-                  animate: { x: activeModel === "pro" ? "0%" : "100%" }
+                  initial: { height: 0, opacity: 0 },
+                  animate: { height: "auto", opacity: 1 },
+                  exit: { height: 0, opacity: 0 },
+                  className: "overflow-hidden",
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-t border-slate-100 px-5 py-4 bg-slate-50/50", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2", children: "Command" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 bg-slate-900 text-slate-100 rounded-xl px-4 py-3 text-xs font-mono overflow-x-auto", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(Terminal, { size: 12, className: "text-slate-400 flex-shrink-0" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                          server.command,
+                          " ",
+                          server.args?.join(" ")
+                        ] }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "button",
+                          {
+                            onClick: () => navigator.clipboard.writeText(`${server.command} ${server.args?.join(" ")}`),
+                            className: "ml-auto text-slate-500 hover:text-slate-300",
+                            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { size: 11 })
+                          }
+                        )
+                      ] })
+                    ] }),
+                    server.env && Object.keys(server.env).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-2", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "text-xs font-semibold text-slate-500 uppercase tracking-wide", children: "Environment Variables" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "button",
+                          {
+                            onClick: () => setEditingEnv(isEditingEnv ? null : server.id),
+                            className: "text-xs text-blue-600 hover:text-blue-700",
+                            children: isEditingEnv ? "Cancel" : "Edit"
+                          }
+                        )
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-2", children: [
+                        Object.entries(server.env).map(([key, val]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-mono text-slate-600 bg-slate-100 px-2 py-1 rounded min-w-32", children: key }),
+                          isEditingEnv ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "input",
+                            {
+                              type: visibleEnvKeys[`${server.id}-${key}`] ? "text" : "password",
+                              value: serverEnvValues[key] ?? val,
+                              onChange: (e) => setEnvValues((prev) => ({
+                                ...prev,
+                                [server.id]: { ...prev[server.id] || {}, [key]: e.target.value }
+                              })),
+                              className: "flex-1 text-xs border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-1 focus:ring-blue-400",
+                              placeholder: `Enter ${key}...`
+                            }
+                          ) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs text-slate-500 font-mono", children: val ? "••••••••••" : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-amber-500 italic", children: "Not set" }) }),
+                          isEditingEnv && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "button",
+                            {
+                              onClick: () => setVisibleEnvKeys((prev) => ({ ...prev, [`${server.id}-${key}`]: !prev[`${server.id}-${key}`] })),
+                              className: "text-slate-400",
+                              children: visibleEnvKeys[`${server.id}-${key}`] ? /* @__PURE__ */ jsxRuntimeExports.jsx(EyeOff, { size: 12 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 12 })
+                            }
+                          )
+                        ] }, key)),
+                        isEditingEnv && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "button",
+                          {
+                            onClick: () => handleSaveEnv(server.id),
+                            className: "bg-blue-600 text-white text-xs px-3 py-1.5 rounded-lg mt-2 hover:bg-blue-700 transition-all",
+                            children: "Save Variables"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    server.tools && server.tools.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("h4", { className: "text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2", children: [
+                        "Available Tools (",
+                        server.tools.length,
+                        ")"
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-2", children: server.tools.map((tool) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-2 bg-white border border-slate-100 rounded-xl p-3", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(Wrench, { size: 12, className: "text-slate-400 mt-0.5 flex-shrink-0" }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs font-medium text-slate-700 font-mono", children: tool.name }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400 mt-0.5", children: tool.description })
+                        ] })
+                      ] }, tool.name)) })
+                    ] })
+                  ] })
                 }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute w-full h-full flex justify-around items-center", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `font-semibold text-sm z-10 ${activeModel === "pro" ? "text-white" : "text-gray-400"}`, children: "Gemini 2.5 Pro" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `font-semibold text-sm z-10 ${activeModel === "flash" ? "text-white" : "text-gray-400"}`, children: "Gemini 2.5 Flash" })
-              ] })
+              ) })
             ]
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 overflow-auto relative flex", children: [
-        activeView === "chat" && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `flex-1 min-w-0 ${showCanvasPane ? "border-r border-gray-800" : ""}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            ChatInterface,
-            {
-              messages,
-              userInput,
-              isLoading,
-              isToolsOpen,
-              tools,
-              setUserInput,
-              handleSendMessage,
-              setIsToolsOpen,
-              attachedFile,
-              setAttachedFile,
-              isDeepResearchMode,
-              setIsDeepResearchMode,
-              researchProgress,
-              onSelectCanvas: () => setShowCanvasPane(true)
-            }
-          ) }),
-          showCanvasPane && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-[45%] min-w-[380px] max-w-[900px] h-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            CanvasEngine,
-            {
-              projectId: currentProjectId,
-              onAIRequest: handleCanvasAIRequest,
-              onSave: (project) => {
-                console.log("Canvas project saved:", project);
-              }
-            }
-          ) }),
-          isToolsOpen && Object.keys(mcpTools).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute left-6 bottom-48 w-80 bg-[#121212] rounded-md shadow-lg z-30 border border-gray-800 p-2", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-400 px-1 pb-1", children: "MCP Tools" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "max-h-64 overflow-y-auto space-y-1", children: Object.entries(mcpTools).map(([server, tools2]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-2 py-1 text-xs text-gray-500", children: server }),
-              tools2.map((t2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          },
+          server.id
+        );
+      }) }) }),
+      activeTab === "marketplace" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-4", children: PRESET_SERVERS.map((preset) => {
+        const isAdded = servers.some((s) => s.name === preset.name);
+        const cat = categoryConfig[preset.category || "storage"];
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 10 },
+            animate: { opacity: 1, y: 0 },
+            className: "bg-white border border-slate-200 rounded-2xl p-5 hover:border-slate-300 transition-all hover:shadow-sm",
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3 mb-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-10 h-10 rounded-xl ${cat?.bg || "bg-slate-100"} flex items-center justify-center flex-shrink-0 ${cat?.color || "text-slate-500"}`, children: cat?.icon || /* @__PURE__ */ jsxRuntimeExports.jsx(Server, { size: 18 }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800", children: preset.name }),
+                    isAdded && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 10 }),
+                      " Added"
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-500 mt-1", children: preset.description })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-1 mb-4", children: [
+                preset.tools?.slice(0, 3).map((tool) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-mono", children: tool.name }, tool.name)),
+                (preset.tools?.length || 0) > 3 && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-slate-400", children: [
+                  "+",
+                  (preset.tools?.length || 0) - 3,
+                  " more"
+                ] })
+              ] }),
+              preset.env && Object.keys(preset.env).length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5 text-xs text-amber-600 bg-amber-50 rounded-lg px-2.5 py-1.5 mb-3", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Shield, { size: 11 }),
+                " Requires: ",
+                Object.keys(preset.env).join(", ")
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "button",
                 {
-                  onClick: () => handleToolInvokeMCP(server, t2.name),
-                  className: "w-full text-left px-2 py-1 rounded hover:bg-gray-700 text-sm text-gray-200",
-                  title: t2.description,
-                  children: t2.name
+                  onClick: () => handleAddPreset(preset),
+                  disabled: isAdded,
+                  className: `w-full py-2 rounded-xl text-sm font-medium transition-all ${isAdded ? "bg-slate-100 text-slate-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"}`,
+                  children: isAdded ? "Already Added" : "Add Server"
+                }
+              )
+            ]
+          },
+          preset.name
+        );
+      }) }) }),
+      activeTab === "custom" && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "max-w-2xl", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-6", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-bold text-slate-800 mb-1", children: "Add Custom MCP Server" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-6", children: "Connect any MCP-compatible server with a custom command" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: [
+                "Server Name ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-red-400", children: "*" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "text",
+                  value: customName,
+                  onChange: (e) => setCustomName(e.target.value),
+                  placeholder: "My Custom Server",
+                  className: "w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Description" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "text",
+                  value: customDesc,
+                  onChange: (e) => setCustomDesc(e.target.value),
+                  placeholder: "What does this server do?",
+                  className: "w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700"
+                }
+              )
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: [
+              "Command ",
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-red-400", children: "*" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                type: "text",
+                value: customCommand,
+                onChange: (e) => setCustomCommand(e.target.value),
+                placeholder: "e.g., npx, node, python",
+                className: "w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 font-mono"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Arguments (space-separated)" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "input",
+              {
+                type: "text",
+                value: customArgs,
+                onChange: (e) => setCustomArgs(e.target.value),
+                placeholder: "-y @some/mcp-server --port 3000",
+                className: "w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 font-mono"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Environment Variables (one per line: KEY=value)" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "textarea",
+              {
+                value: customEnv,
+                onChange: (e) => setCustomEnv(e.target.value),
+                placeholder: "API_KEY=your_key_here\nOTHER_VAR=value",
+                rows: 4,
+                className: "w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 font-mono resize-none"
+              }
+            )
+          ] }),
+          customCommand && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Command Preview" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-slate-900 text-slate-100 rounded-xl px-4 py-3 text-xs font-mono flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Terminal, { size: 12, className: "text-slate-400" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                customCommand,
+                " ",
+                customArgs
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-3 pt-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: () => {
+                  setCustomName("");
+                  setCustomDesc("");
+                  setCustomCommand("");
+                  setCustomArgs("");
+                  setCustomEnv("");
                 },
-                `${server}:${t2.name}`
-              ))
-            ] }, server)) })
+                className: "px-4 py-2.5 text-slate-600 border border-slate-200 rounded-xl text-sm hover:bg-slate-50 transition-all",
+                children: "Clear"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: handleAddCustom,
+                disabled: !customName.trim() || !customCommand.trim(),
+                className: "flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-all disabled:opacity-40",
+                children: "Add Server"
+              }
+            )
           ] })
-        ] }),
-        activeView === "mcp" && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          MCPManager,
-          {
-            onConnectionStatusChange: setMcpConnectionStatus,
-            onServersChange: setMcpServers
-          }
-        ),
-        activeView === "settings" && /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, {})
-      ] }),
-      showConsent && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 bg-black/50 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-800 border border-gray-700 rounded-lg p-6 max-w-md w-full", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-semibold mb-2", children: "Allow MCP Tool" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm text-gray-300 mb-4", children: [
-          'Allow tool "',
-          showConsent.tool,
-          '" on server "',
-          showConsent.server,
-          '" to run with your current input?'
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-end space-x-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "px-3 py-2 bg-gray-600 rounded", onClick: () => setShowConsent(null), children: "Cancel" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "px-3 py-2 bg-blue-600 rounded", onClick: () => handleToolInvokeMCP(showConsent.server, showConsent.tool), children: "Allow" })
         ] })
       ] }) })
     ] })
   ] });
 };
+const providerInfo = {
+  gemini: { name: "Google Gemini", icon: "✦", placeholder: "AIzaSy...", docsUrl: "https://aistudio.google.com", color: "blue" },
+  openai: { name: "OpenAI", icon: "⊕", placeholder: "sk-...", docsUrl: "https://platform.openai.com", color: "emerald" },
+  anthropic: { name: "Anthropic Claude", icon: "◆", placeholder: "sk-ant-...", docsUrl: "https://console.anthropic.com", color: "orange" },
+  cohere: { name: "Cohere", icon: "◉", placeholder: "co-...", docsUrl: "https://dashboard.cohere.com", color: "purple" }
+};
+const SettingsPage = ({ apiKeys, onApiKeysChange, onResetOnboarding }) => {
+  const [activeSection, setActiveSection] = reactExports.useState("api_keys");
+  const [visibleKeys, setVisibleKeys] = reactExports.useState({});
+  const [newKeyInputs, setNewKeyInputs] = reactExports.useState({});
+  const [validating, setValidating] = reactExports.useState(null);
+  const [theme, setTheme] = reactExports.useState("light");
+  const [notifications, setNotifications] = reactExports.useState(true);
+  const [telemetry, setTelemetry] = reactExports.useState(false);
+  const [autoSave, setAutoSave] = reactExports.useState(true);
+  const [storageLocation, setStorageLocation] = reactExports.useState("local");
+  const sections = [
+    { id: "api_keys", label: "API Keys", icon: Key },
+    { id: "appearance", label: "Appearance", icon: Palette },
+    { id: "privacy", label: "Privacy & Security", icon: Shield },
+    { id: "storage", label: "Storage", icon: Database },
+    { id: "advanced", label: "Advanced", icon: Settings }
+  ];
+  const handleAddKey = async (provider) => {
+    const key = newKeyInputs[provider];
+    if (!key?.trim()) return;
+    setValidating(provider);
+    await new Promise((r2) => setTimeout(r2, 1e3));
+    setValidating(null);
+    const existingIndex = apiKeys.findIndex((k2) => k2.provider === provider);
+    const newKey = {
+      id: existingIndex >= 0 ? apiKeys[existingIndex].id : v4(),
+      provider,
+      key: key.trim(),
+      isValid: true,
+      label: `${providerInfo[provider]?.name || provider} API Key`,
+      validatedAt: (/* @__PURE__ */ new Date()).toISOString()
+    };
+    if (existingIndex >= 0) {
+      onApiKeysChange(apiKeys.map((k2, i) => i === existingIndex ? newKey : k2));
+    } else {
+      onApiKeysChange([...apiKeys, newKey]);
+    }
+    setNewKeyInputs((prev) => ({ ...prev, [provider]: "" }));
+  };
+  const handleDeleteKey = (keyId) => {
+    onApiKeysChange(apiKeys.filter((k2) => k2.id !== keyId));
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-full bg-slate-50", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-56 bg-white border-r border-slate-200 flex flex-col flex-shrink-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-4 py-5 border-b border-slate-100", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-sm font-bold text-slate-700 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, { size: 15, className: "text-blue-500" }),
+        " Settings"
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "p-3 flex-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-0.5", children: sections.map((section) => {
+        const Icon2 = section.icon;
+        const isActive = activeSection === section.id;
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            onClick: () => setActiveSection(section.id),
+            className: `w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm transition-all text-left ${isActive ? "bg-blue-50 text-blue-700 font-medium" : "text-slate-600 hover:bg-slate-50"}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 15, className: isActive ? "text-blue-500" : "text-slate-400" }),
+              section.label
+            ]
+          },
+          section.id
+        );
+      }) }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 overflow-y-auto p-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-2xl", children: [
+      activeSection === "api_keys" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold text-slate-800 mb-1", children: "API Keys" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-6", children: "Manage your API keys for cloud AI providers" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: Object.entries(providerInfo).map(([providerId, info]) => {
+          const existingKey = apiKeys.find((k2) => k2.provider === providerId);
+          const inputVal = newKeyInputs[providerId] || "";
+          const isVisible = visibleKeys[providerId];
+          const isValidating = validating === providerId;
+          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: `bg-white border rounded-2xl p-5 transition-all ${existingKey ? "border-emerald-200" : "border-slate-200"}`,
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2.5", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xl", children: info.icon }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800", children: info.name }),
+                      existingKey && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1 text-xs text-emerald-600 mt-0.5", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 11 }),
+                        " Configured",
+                        existingKey.validatedAt && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-slate-400", children: [
+                          "· ",
+                          new Date(existingKey.validatedAt).toLocaleDateString()
+                        ] })
+                      ] })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "a",
+                    {
+                      href: info.docsUrl,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      className: "flex items-center gap-1 text-xs text-blue-500 hover:text-blue-700 transition-colors",
+                      children: [
+                        "Get key ",
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(ExternalLink, { size: 10 })
+                      ]
+                    }
+                  )
+                ] }),
+                existingKey && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-xl px-3 py-2 mb-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "flex-1 font-mono text-sm text-slate-500", children: isVisible ? existingKey.key : existingKey.key.slice(0, 8) + "••••••••••••" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      onClick: () => setVisibleKeys((prev) => ({ ...prev, [providerId]: !prev[providerId] })),
+                      className: "text-slate-400 hover:text-slate-600",
+                      children: isVisible ? /* @__PURE__ */ jsxRuntimeExports.jsx(EyeOff, { size: 13 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Eye, { size: 13 })
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      onClick: () => handleDeleteKey(existingKey.id),
+                      className: "text-red-400 hover:text-red-600",
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 13 })
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "input",
+                    {
+                      type: "password",
+                      value: inputVal,
+                      onChange: (e) => setNewKeyInputs((prev) => ({ ...prev, [providerId]: e.target.value })),
+                      placeholder: existingKey ? "Update key: " + info.placeholder : info.placeholder,
+                      className: "flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 font-mono",
+                      onKeyDown: (e) => e.key === "Enter" && handleAddKey(providerId)
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "button",
+                    {
+                      onClick: () => handleAddKey(providerId),
+                      disabled: !inputVal.trim() || isValidating,
+                      className: "flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition-all disabled:opacity-40",
+                      children: isValidating ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { size: 13, className: "animate-spin" }),
+                        " Saving..."
+                      ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(Save, { size: 13 }),
+                        " ",
+                        existingKey ? "Update" : "Save"
+                      ] })
+                    }
+                  )
+                ] })
+              ]
+            },
+            providerId
+          );
+        }) })
+      ] }),
+      activeSection === "appearance" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold text-slate-800 mb-1", children: "Appearance" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-6", children: "Customize the look and feel of LLM Desktop" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Theme" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-3 gap-3", children: [
+              { id: "light", label: "Light", icon: Sun },
+              { id: "dark", label: "Dark", icon: Moon },
+              { id: "system", label: "System", icon: Monitor }
+            ].map((t2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: () => setTheme(t2.id),
+                className: `flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${theme === t2.id ? "border-blue-400 bg-blue-50" : "border-slate-200 hover:border-slate-300"}`,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(t2.icon, { size: 20, className: theme === t2.id ? "text-blue-500" : "text-slate-400" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-medium text-slate-700", children: t2.label })
+                ]
+              },
+              t2.id
+            )) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Interface" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-3", children: [
+              { label: "Show timestamps in chat", value: true },
+              { label: "Enable message animations", value: true },
+              { label: "Compact mode", value: false },
+              { label: "Show model icon in chat", value: true }
+            ].map((setting, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between py-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm text-slate-700", children: setting.label }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-10 h-5 rounded-full relative cursor-pointer transition-colors ${setting.value ? "bg-blue-500" : "bg-slate-200"}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-4 h-4 rounded-full bg-white absolute top-0.5 transition-transform ${setting.value ? "translate-x-5" : "translate-x-0.5"}` }) })
+            ] }, i)) })
+          ] })
+        ] })
+      ] }),
+      activeSection === "privacy" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold text-slate-800 mb-1", children: "Privacy & Security" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-6", children: "Control your data and privacy preferences" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Data Privacy" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-4", children: [
+              {
+                label: "Send usage analytics",
+                desc: "Help improve LLM Desktop by sending anonymous usage data",
+                value: telemetry,
+                onChange: setTelemetry
+              },
+              {
+                label: "Enable notifications",
+                desc: "Show desktop notifications for long operations",
+                value: notifications,
+                onChange: setNotifications
+              }
+            ].map((setting, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between gap-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium text-slate-700", children: setting.label }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400 mt-0.5", children: setting.desc })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  onClick: () => setting.onChange(!setting.value),
+                  className: `w-10 h-5 rounded-full relative transition-colors flex-shrink-0 mt-0.5 ${setting.value ? "bg-blue-500" : "bg-slate-200"}`,
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-4 h-4 rounded-full bg-white absolute top-0.5 transition-transform ${setting.value ? "translate-x-5" : "translate-x-0.5"}` })
+                }
+              )
+            ] }, i)) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-1", children: "API Key Security" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-3", children: "Your API keys are stored locally and never shared with third parties." }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2.5 text-sm text-emerald-700", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Shield, { size: 14 }),
+              " Keys are encrypted at rest using AES-256"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-red-50 border border-red-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-red-700 mb-2", children: "Danger Zone" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium text-slate-700", children: "Clear all chat history" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: "Permanently delete all conversations" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "px-3 py-1.5 border border-red-300 text-red-600 rounded-lg text-sm hover:bg-red-100 transition-all", children: "Clear" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium text-slate-700", children: "Reset onboarding" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: "Run the setup wizard again" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    onClick: onResetOnboarding,
+                    className: "px-3 py-1.5 border border-red-300 text-red-600 rounded-lg text-sm hover:bg-red-100 transition-all",
+                    children: "Reset"
+                  }
+                )
+              ] })
+            ] })
+          ] })
+        ] })
+      ] }),
+      activeSection === "storage" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold text-slate-800 mb-1", children: "Storage" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-6", children: "Configure where your data is stored" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Storage Location" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-3", children: [
+              { id: "local", label: "Local Storage", desc: "Fast, private. Data stays on this computer.", icon: HardDrive },
+              { id: "cloud", label: "Cloud Sync", desc: "Sync across devices (coming soon)", icon: Cloud, disabled: true }
+            ].map((opt) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                onClick: () => !opt.disabled && setStorageLocation(opt.id),
+                disabled: opt.disabled,
+                className: `w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all ${storageLocation === opt.id ? "border-blue-400 bg-blue-50" : opt.disabled ? "opacity-40 cursor-not-allowed border-slate-100" : "border-slate-200 hover:border-slate-300"}`,
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(opt.icon, { size: 20, className: storageLocation === opt.id ? "text-blue-500" : "text-slate-400" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium text-slate-700", children: opt.label }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: opt.desc })
+                  ] }),
+                  storageLocation === opt.id && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 16, className: "ml-auto text-blue-500" })
+                ]
+              },
+              opt.id
+            )) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Auto-save" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-medium text-slate-700", children: "Auto-save conversations" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: "Automatically save chat history" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  onClick: () => setAutoSave(!autoSave),
+                  className: `w-10 h-5 rounded-full relative transition-colors ${autoSave ? "bg-blue-500" : "bg-slate-200"}`,
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-4 h-4 rounded-full bg-white absolute top-0.5 transition-transform ${autoSave ? "translate-x-5" : "translate-x-0.5"}` })
+                }
+              )
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Storage Usage" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-3", children: [
+              { label: "Chat History", size: "2.4 MB", color: "bg-blue-500", pct: 20 },
+              { label: "Knowledge Base", size: "145 MB", color: "bg-purple-500", pct: 60 },
+              { label: "Model Cache", size: "0 MB", color: "bg-slate-300", pct: 5 }
+            ].map((item) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-sm mb-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-slate-600", children: item.label }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-slate-400", children: item.size })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-slate-100 rounded-full h-1.5", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `${item.color} h-1.5 rounded-full`, style: { width: `${item.pct}%` } }) })
+            ] }, item.label)) })
+          ] })
+        ] })
+      ] }),
+      activeSection === "advanced" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold text-slate-800 mb-1", children: "Advanced" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mb-6", children: "Advanced configuration options" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Generation Parameters" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-4", children: [
+              { label: "Temperature", value: 0.7, min: 0, max: 2, step: 0.1 },
+              { label: "Max Tokens", value: 4096, min: 256, max: 32768, step: 256 },
+              { label: "Top P", value: 0.9, min: 0, max: 1, step: 0.05 },
+              { label: "Top K", value: 40, min: 1, max: 100, step: 1 }
+            ].map((param) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: [
+                param.label,
+                ": ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-blue-600", children: param.value })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "range",
+                  defaultValue: param.value,
+                  min: param.min,
+                  max: param.max,
+                  step: param.step,
+                  className: "w-full accent-blue-600"
+                }
+              )
+            ] }, param.label)) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "System Prompt" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "textarea",
+              {
+                defaultValue: "You are a helpful, accurate, and thoughtful AI assistant. Always provide clear, well-structured responses.",
+                rows: 4,
+                className: "w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 resize-none"
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-2xl p-5", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-semibold text-slate-800 mb-3", children: "Ollama Configuration" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-sm font-medium text-slate-700 block mb-1.5", children: "Ollama API URL" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "input",
+                {
+                  type: "text",
+                  defaultValue: "http://localhost:11434",
+                  className: "w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700 font-mono"
+                }
+              )
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2.5 rounded-xl transition-all", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Save, { size: 15 }),
+            " Save Changes"
+          ] }) })
+        ] })
+      ] })
+    ] }) })
+  ] });
+};
+const providerMeta = {
+  gemini: { label: "Google Gemini", color: "bg-blue-500", bg: "bg-blue-50", border: "border-blue-200", icon: "✦", textColor: "text-blue-600" },
+  openai: { label: "OpenAI", color: "bg-emerald-500", bg: "bg-emerald-50", border: "border-emerald-200", icon: "⊕", textColor: "text-emerald-600" },
+  anthropic: { label: "Anthropic", color: "bg-orange-500", bg: "bg-orange-50", border: "border-orange-200", icon: "◆", textColor: "text-orange-600" },
+  ollama: { label: "Local / Ollama", color: "bg-purple-500", bg: "bg-purple-50", border: "border-purple-200", icon: "⬡", textColor: "text-purple-600" },
+  local: { label: "Local", color: "bg-gray-500", bg: "bg-gray-50", border: "border-gray-200", icon: "⬡", textColor: "text-gray-600" }
+};
+const tagColors = {
+  reasoning: "bg-blue-100 text-blue-600",
+  multimodal: "bg-purple-100 text-purple-600",
+  coding: "bg-emerald-100 text-emerald-600",
+  fast: "bg-amber-100 text-amber-600",
+  local: "bg-slate-100 text-slate-600",
+  efficient: "bg-cyan-100 text-cyan-600",
+  writing: "bg-pink-100 text-pink-600"
+};
+const ModelsPage = ({ models, onModelsChange, selectedModel, onModelSelect }) => {
+  const [searchQuery, setSearchQuery] = reactExports.useState("");
+  const [filterType, setFilterType] = reactExports.useState("all");
+  const [filterProvider, setFilterProvider] = reactExports.useState("all");
+  const [downloadingIds, setDownloadingIds] = reactExports.useState(/* @__PURE__ */ new Set());
+  const [downloadProgress, setDownloadProgress] = reactExports.useState({});
+  const filtered = models.filter((m2) => {
+    const matchesSearch = !searchQuery || m2.name.toLowerCase().includes(searchQuery.toLowerCase()) || m2.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = filterType === "all" || m2.type === filterType;
+    const matchesProvider = filterProvider === "all" || m2.provider === filterProvider;
+    return matchesSearch && matchesType && matchesProvider;
+  });
+  const apiModels = filtered.filter((m2) => m2.type === "api");
+  const localModels = filtered.filter((m2) => m2.type === "local");
+  const handleDownload = (modelId) => {
+    setDownloadingIds((prev) => /* @__PURE__ */ new Set([...prev, modelId]));
+    setDownloadProgress((prev) => ({ ...prev, [modelId]: 0 }));
+    const interval = setInterval(() => {
+      setDownloadProgress((prev) => {
+        const current = prev[modelId] || 0;
+        const next = current + Math.random() * 8;
+        if (next >= 100) {
+          clearInterval(interval);
+          setDownloadingIds((prev2) => {
+            const s = new Set(prev2);
+            s.delete(modelId);
+            return s;
+          });
+          onModelsChange(models.map(
+            (m2) => m2.id === modelId ? { ...m2, isDownloaded: true, downloadProgress: void 0 } : m2
+          ));
+          return { ...prev, [modelId]: 100 };
+        }
+        return { ...prev, [modelId]: next };
+      });
+    }, 200);
+  };
+  const handleDeleteLocal = (modelId) => {
+    onModelsChange(models.map(
+      (m2) => m2.id === modelId ? { ...m2, isDownloaded: false } : m2
+    ));
+  };
+  const formatContext = (n2) => {
+    if (n2 >= 1e6) return `${n2 / 1e6}M`;
+    if (n2 >= 1e3) return `${n2 / 1e3}K`;
+    return n2.toString();
+  };
+  const ModelCard = ({ model }) => {
+    const meta = providerMeta[model.provider] || providerMeta.local;
+    const isSelected = model.id === selectedModel.id;
+    const isDownloading = downloadingIds.has(model.id);
+    const progress2 = downloadProgress[model.id];
+    const canSelect = model.type === "api" ? model.isAvailable : model.isDownloaded;
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      motion.div,
+      {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+        className: `bg-white border-2 rounded-2xl p-5 transition-all cursor-pointer hover:shadow-md ${isSelected ? "border-blue-400 shadow-md shadow-blue-100" : "border-slate-200 hover:border-slate-300"}`,
+        onClick: () => canSelect && onModelSelect(model),
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between mb-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `w-10 h-10 rounded-xl ${meta.bg} ${meta.border} border flex items-center justify-center text-lg`, children: meta.icon }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-bold text-slate-800", children: model.name }),
+                  isSelected && /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 14, className: "text-blue-500" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-slate-400 mt-0.5", children: meta.label })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `w-2 h-2 rounded-full ${model.type === "api" ? model.isAvailable ? "bg-emerald-500" : "bg-slate-300" : model.isDownloaded ? "bg-purple-500" : "bg-slate-300"}` }) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-500 mb-3 leading-relaxed", children: model.description }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-1.5 mb-4", children: model.tags?.map((tag) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: `text-xs px-2 py-0.5 rounded-full font-medium ${tagColors[tag] || "bg-slate-100 text-slate-600"}`, children: tag }, tag)) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4 text-xs text-slate-400 mb-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { size: 11 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                formatContext(model.contextLength),
+                " ctx"
+              ] })
+            ] }),
+            model.size && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(HardDrive, { size: 11 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: model.size })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1", children: [
+              model.type === "api" ? /* @__PURE__ */ jsxRuntimeExports.jsx(Wifi, { size: 11 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 11 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "capitalize", children: model.type })
+            ] })
+          ] }),
+          isDownloading && progress2 !== void 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between text-xs text-slate-400 mb-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Downloading..." }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                Math.round(progress2),
+                "%"
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-slate-100 rounded-full h-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              motion.div,
+              {
+                className: "bg-purple-500 h-2 rounded-full",
+                style: { width: `${progress2}%` },
+                transition: { duration: 0.1 }
+              }
+            ) })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-2", children: model.type === "api" ? /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: (e) => {
+                e.stopPropagation();
+                canSelect && onModelSelect(model);
+              },
+              disabled: !model.isAvailable,
+              className: `flex-1 py-2 rounded-xl text-sm font-medium transition-all ${isSelected ? "bg-blue-100 text-blue-700 border border-blue-200" : canSelect ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-slate-100 text-slate-400 cursor-not-allowed"}`,
+              children: isSelected ? "✓ Active" : !model.isAvailable ? "Add API Key" : "Use Model"
+            }
+          ) }) : /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: model.isDownloaded ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  onModelSelect(model);
+                },
+                className: `flex-1 py-2 rounded-xl text-sm font-medium transition-all ${isSelected ? "bg-purple-100 text-purple-700 border border-purple-200" : "bg-purple-600 hover:bg-purple-700 text-white"}`,
+                children: isSelected ? "✓ Active" : "Use Model"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: (e) => {
+                  e.stopPropagation();
+                  handleDeleteLocal(model.id);
+                },
+                className: "p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-xl border border-slate-200 transition-all",
+                title: "Delete local model",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { size: 14 })
+              }
+            )
+          ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: (e) => {
+                e.stopPropagation();
+                !isDownloading && handleDownload(model.id);
+              },
+              disabled: isDownloading,
+              className: "flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-sm font-medium bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 transition-all disabled:opacity-60",
+              children: isDownloading ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(RefreshCw, { size: 14, className: "animate-spin" }),
+                " Downloading..."
+              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 14 }),
+                " Download (",
+                model.size,
+                ")"
+              ] })
+            }
+          ) }) })
+        ]
+      }
+    );
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-full bg-slate-50", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border-b border-slate-200 px-6 py-4 flex-shrink-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-xl font-bold text-slate-800 flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 20, className: "text-blue-500" }),
+            " Models"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-slate-400 mt-0.5", children: "Manage API-based and local AI models" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 text-sm text-slate-500 bg-slate-100 px-3 py-2 rounded-xl", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Activity, { size: 14, className: "text-blue-500" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            "Active: ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { className: "text-slate-700", children: selectedModel.name })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative flex-1 max-w-xs", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 14, className: "absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "text",
+              value: searchQuery,
+              onChange: (e) => setSearchQuery(e.target.value),
+              placeholder: "Search models...",
+              className: "w-full pl-9 pr-3 py-2 text-sm bg-slate-100 border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 text-slate-700"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-1.5 bg-slate-100 rounded-xl p-1", children: ["all", "api", "local"].map((t2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onClick: () => setFilterType(t2),
+            className: `px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all ${filterType === t2 ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-700"}`,
+            children: t2 === "all" ? "All" : t2 === "api" ? "☁ Cloud" : "⬡ Local"
+          },
+          t2
+        )) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-1.5 bg-slate-100 rounded-xl p-1", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onClick: () => setFilterProvider("all"),
+              className: `px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${filterProvider === "all" ? "bg-white text-slate-800 shadow-sm" : "text-slate-500"}`,
+              children: "All"
+            }
+          ),
+          ["gemini", "openai", "anthropic", "ollama"].map((p2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
+            {
+              onClick: () => setFilterProvider(filterProvider === p2 ? "all" : p2),
+              className: `px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all ${filterProvider === p2 ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-700"}`,
+              children: [
+                providerMeta[p2].icon,
+                " ",
+                p2.charAt(0).toUpperCase() + p2.slice(1)
+              ]
+            },
+            p2
+          ))
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 overflow-y-auto p-6", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-4 gap-3 mb-6", children: [
+        { label: "Total Models", value: models.length, icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 16 }), color: "text-blue-500" },
+        { label: "Cloud API", value: models.filter((m2) => m2.type === "api").length, icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Wifi, { size: 16 }), color: "text-emerald-500" },
+        { label: "Downloaded", value: models.filter((m2) => m2.isDownloaded).length, icon: /* @__PURE__ */ jsxRuntimeExports.jsx(HardDrive, { size: 16 }), color: "text-purple-500" },
+        { label: "Available", value: models.filter((m2) => m2.isAvailable || m2.isDownloaded).length, icon: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheckBig, { size: 16 }), color: "text-amber-500" }
+      ].map((stat) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: stat.color, children: stat.icon }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xl font-bold text-slate-800", children: stat.value }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-slate-400", children: stat.label })
+        ] })
+      ] }, stat.label)) }),
+      (filterType === "all" || filterType === "api") && apiModels.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3 flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Wifi, { size: 14 }),
+          " Cloud API Models"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-4", children: apiModels.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(ModelCard, { model: m2 }, m2.id)) })
+      ] }),
+      (filterType === "all" || filterType === "local") && localModels.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3 flex items-center gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Cpu, { size: 14 }),
+          " Local Models (via Ollama)"
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-purple-50 border border-purple-100 rounded-xl px-4 py-3 mb-4 flex items-center gap-2 text-sm text-purple-700", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Info, { size: 14 }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            "Local models require ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Ollama" }),
+            " installed on your system. Run: ",
+            /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "bg-purple-100 px-1.5 rounded font-mono text-xs", children: "curl -fsSL https://ollama.com/install.sh | sh" })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 gap-4", children: localModels.map((m2) => /* @__PURE__ */ jsxRuntimeExports.jsx(ModelCard, { model: m2 }, m2.id)) })
+      ] }),
+      filtered.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center py-16 text-slate-400", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 32, className: "mx-auto mb-3 opacity-20" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-medium", children: "No models found" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm mt-1", children: "Try adjusting your search or filters" })
+      ] })
+    ] })
+  ] });
+};
+const defaultModels = [
+  {
+    id: "gemini-2.5-pro",
+    name: "Gemini 2.5 Pro",
+    provider: "gemini",
+    type: "api",
+    description: "Most capable Gemini model for complex reasoning tasks",
+    contextLength: 1e6,
+    isAvailable: true,
+    tags: ["reasoning", "multimodal", "coding"]
+  },
+  {
+    id: "gemini-2.5-flash",
+    name: "Gemini 2.5 Flash",
+    provider: "gemini",
+    type: "api",
+    description: "Fast and efficient Gemini model",
+    contextLength: 1e6,
+    isAvailable: true,
+    tags: ["fast", "multimodal"]
+  },
+  {
+    id: "gpt-4o",
+    name: "GPT-4o",
+    provider: "openai",
+    type: "api",
+    description: "OpenAI multimodal flagship model",
+    contextLength: 128e3,
+    isAvailable: false,
+    tags: ["reasoning", "multimodal", "coding"]
+  },
+  {
+    id: "claude-3-5-sonnet",
+    name: "Claude 3.5 Sonnet",
+    provider: "anthropic",
+    type: "api",
+    description: "Anthropic model with strong coding capabilities",
+    contextLength: 2e5,
+    isAvailable: false,
+    tags: ["coding", "reasoning", "writing"]
+  },
+  {
+    id: "gemma-3-4b",
+    name: "Gemma 3 4B",
+    provider: "ollama",
+    type: "local",
+    description: "Google lightweight model, runs locally",
+    contextLength: 128e3,
+    isAvailable: true,
+    isDownloaded: false,
+    size: "2.5 GB",
+    tags: ["local", "fast", "efficient"]
+  },
+  {
+    id: "phi-4",
+    name: "Phi-4",
+    provider: "ollama",
+    type: "local",
+    description: "Microsoft small but capable language model",
+    contextLength: 16e3,
+    isAvailable: true,
+    isDownloaded: false,
+    size: "8.9 GB",
+    tags: ["local", "coding", "reasoning"]
+  },
+  {
+    id: "llama-3.2-3b",
+    name: "Llama 3.2 3B",
+    provider: "ollama",
+    type: "local",
+    description: "Meta compact and fast local model",
+    contextLength: 128e3,
+    isAvailable: true,
+    isDownloaded: false,
+    size: "2.0 GB",
+    tags: ["local", "fast"]
+  }
+];
+const defaultMCPServers = [
+  {
+    id: "filesystem",
+    name: "Filesystem",
+    description: "Access and manage local files and directories",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "/home/user"],
+    status: "disconnected",
+    category: "storage",
+    tools: [
+      { name: "read_file", description: "Read contents of a file" },
+      { name: "write_file", description: "Write content to a file" },
+      { name: "list_directory", description: "List directory contents" }
+    ]
+  },
+  {
+    id: "sequential-thinking",
+    name: "Sequential Thinking",
+    description: "Advanced step-by-step reasoning for complex problems",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+    status: "disconnected",
+    category: "reasoning",
+    tools: [
+      { name: "think_step_by_step", description: "Break down problem into reasoning steps" }
+    ]
+  },
+  {
+    id: "github",
+    name: "GitHub",
+    description: "Interact with GitHub repositories, issues, and PRs",
+    command: "npx",
+    args: ["-y", "@modelcontextprotocol/server-github"],
+    env: { GITHUB_PERSONAL_ACCESS_TOKEN: "" },
+    status: "disconnected",
+    category: "development",
+    tools: [
+      { name: "search_repositories", description: "Search GitHub repositories" },
+      { name: "get_file_contents", description: "Get file contents from repo" },
+      { name: "create_issue", description: "Create a GitHub issue" }
+    ]
+  },
+  {
+    id: "tavily",
+    name: "Tavily Search",
+    description: "Real-time web search and research capabilities",
+    command: "npx",
+    args: ["-y", "tavily-mcp"],
+    env: { TAVILY_API_KEY: "" },
+    status: "disconnected",
+    category: "search",
+    tools: [
+      { name: "search", description: "Search the web for information" },
+      { name: "extract", description: "Extract content from a URL" }
+    ]
+  }
+];
+const App = () => {
+  const [activeView, setActiveView] = reactExports.useState("onboarding");
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = reactExports.useState(false);
+  const [selectedModel, setSelectedModel] = reactExports.useState(defaultModels[0]);
+  const [models, setModels] = reactExports.useState(defaultModels);
+  const [apiKeys, setApiKeys] = reactExports.useState([]);
+  const [chatMode, setChatMode] = reactExports.useState("chat");
+  const [sessions, setSessions] = reactExports.useState([]);
+  const [currentSessionId, setCurrentSessionId] = reactExports.useState(null);
+  const [knowledgeCollections, setKnowledgeCollections] = reactExports.useState([]);
+  const [knowledgeDocuments, setKnowledgeDocuments] = reactExports.useState([]);
+  const handleDocumentsChange = (docsOrUpdater) => {
+    if (typeof docsOrUpdater === "function") {
+      setKnowledgeDocuments(docsOrUpdater);
+    } else {
+      setKnowledgeDocuments(docsOrUpdater);
+    }
+  };
+  const [mcpServers, setMcpServers] = reactExports.useState(defaultMCPServers);
+  const [sidebarCollapsed, setSidebarCollapsed] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    const completed = localStorage.getItem("llm_onboarding_completed");
+    const savedKeys = localStorage.getItem("llm_api_keys");
+    const savedSessions = localStorage.getItem("llm_sessions");
+    const savedCollections = localStorage.getItem("llm_collections");
+    const savedDocs = localStorage.getItem("llm_documents");
+    const savedMCPServers = localStorage.getItem("llm_mcp_servers");
+    const savedModels = localStorage.getItem("llm_models");
+    if (completed === "true") {
+      setHasCompletedOnboarding(true);
+      setActiveView("chat");
+    }
+    if (savedKeys) {
+      try {
+        setApiKeys(JSON.parse(savedKeys));
+      } catch (e) {
+      }
+    }
+    if (savedSessions) {
+      try {
+        setSessions(JSON.parse(savedSessions));
+      } catch (e) {
+      }
+    }
+    if (savedCollections) {
+      try {
+        setKnowledgeCollections(JSON.parse(savedCollections));
+      } catch (e) {
+      }
+    }
+    if (savedDocs) {
+      try {
+        setKnowledgeDocuments(JSON.parse(savedDocs));
+      } catch (e) {
+      }
+    }
+    if (savedMCPServers) {
+      try {
+        const saved = JSON.parse(savedMCPServers);
+        setMcpServers(saved);
+      } catch (e) {
+      }
+    }
+    if (savedModels) {
+      try {
+        setModels(JSON.parse(savedModels));
+      } catch (e) {
+      }
+    }
+  }, []);
+  reactExports.useEffect(() => {
+    if (apiKeys.length > 0) localStorage.setItem("llm_api_keys", JSON.stringify(apiKeys));
+  }, [apiKeys]);
+  reactExports.useEffect(() => {
+    if (sessions.length > 0) localStorage.setItem("llm_sessions", JSON.stringify(sessions));
+  }, [sessions]);
+  reactExports.useEffect(() => {
+    if (knowledgeCollections.length > 0) localStorage.setItem("llm_collections", JSON.stringify(knowledgeCollections));
+  }, [knowledgeCollections]);
+  reactExports.useEffect(() => {
+    if (knowledgeDocuments.length > 0) localStorage.setItem("llm_documents", JSON.stringify(knowledgeDocuments));
+  }, [knowledgeDocuments]);
+  reactExports.useEffect(() => {
+    localStorage.setItem("llm_mcp_servers", JSON.stringify(mcpServers));
+  }, [mcpServers]);
+  reactExports.useEffect(() => {
+    localStorage.setItem("llm_models", JSON.stringify(models));
+  }, [models]);
+  const handleOnboardingComplete = (keys) => {
+    setApiKeys(keys);
+    setHasCompletedOnboarding(true);
+    localStorage.setItem("llm_onboarding_completed", "true");
+    setActiveView("chat");
+  };
+  const handleNewSession = () => {
+    setCurrentSessionId(null);
+  };
+  const handleSelectSession = (sessionId) => {
+    setCurrentSessionId(sessionId);
+    setActiveView("chat");
+  };
+  const pageVariants = {
+    initial: { opacity: 0, x: 10 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -10 }
+  };
+  const renderView = () => {
+    switch (activeView) {
+      case "onboarding":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          OnboardingPage,
+          {
+            onComplete: handleOnboardingComplete,
+            models,
+            onModelsChange: setModels
+          }
+        );
+      case "chat":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ChatWorkspace,
+          {
+            selectedModel,
+            onModelChange: setSelectedModel,
+            models,
+            chatMode,
+            onChatModeChange: setChatMode,
+            sessions,
+            onSessionsChange: setSessions,
+            currentSessionId,
+            onCurrentSessionChange: setCurrentSessionId,
+            knowledgeCollections,
+            mcpServers,
+            apiKeys
+          }
+        );
+      case "rag":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          RAGDashboard,
+          {
+            documents: knowledgeDocuments,
+            onDocumentsChange: handleDocumentsChange,
+            collections: knowledgeCollections,
+            onCollectionsChange: setKnowledgeCollections,
+            selectedModel,
+            onChatWithCollection: (collectionId) => {
+              setActiveView("chat");
+            }
+          }
+        );
+      case "mcp":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          MCPManagerPage,
+          {
+            servers: mcpServers,
+            onServersChange: setMcpServers
+          }
+        );
+      case "settings":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          SettingsPage,
+          {
+            apiKeys,
+            onApiKeysChange: setApiKeys,
+            onResetOnboarding: () => {
+              localStorage.removeItem("llm_onboarding_completed");
+              setHasCompletedOnboarding(false);
+              setActiveView("onboarding");
+            }
+          }
+        );
+      case "models":
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          ModelsPage,
+          {
+            models,
+            onModelsChange: setModels,
+            selectedModel,
+            onModelSelect: setSelectedModel
+          }
+        );
+      default:
+        return null;
+    }
+  };
+  if (activeView === "onboarding" && !hasCompletedOnboarding) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      OnboardingPage,
+      {
+        onComplete: handleOnboardingComplete,
+        models,
+        onModelsChange: setModels
+      }
+    ) });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex h-screen bg-slate-100 text-slate-900 overflow-hidden", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Sidebar,
+      {
+        activeView,
+        onViewChange: setActiveView,
+        sessions,
+        currentSessionId,
+        onSelectSession: handleSelectSession,
+        onNewSession: handleNewSession,
+        mcpServers,
+        collapsed: sidebarCollapsed,
+        onToggleCollapse: () => setSidebarCollapsed(!sidebarCollapsed),
+        selectedModel,
+        chatMode
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1 overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      motion.div,
+      {
+        variants: pageVariants,
+        initial: "initial",
+        animate: "animate",
+        exit: "exit",
+        transition: { duration: 0.18 },
+        className: "h-full",
+        children: renderView()
+      },
+      activeView
+    ) }) })
+  ] });
+};
+if (typeof window !== "undefined" && !window.api) {
+  window.api = {
+    sendMessage: async () => "Mock response - API not available in browser mode",
+    chatWithWeb: async (query) => ({
+      answer: `[Browser Mode] This would connect to the AI model with query: "${query}"`,
+      citations: []
+    }),
+    deepResearch: async (query) => ({
+      refinedQuery: query,
+      answer: `[Browser Mode] Deep research results for: "${query}"`
+    }),
+    runRagQuery: async () => ({ response: "[Browser Mode] RAG query result" }),
+    handleMultimodalPrompt: async () => ({ response: "[Browser Mode] Multimodal response" }),
+    openFile: async () => null,
+    getMCPTools: async () => ({}),
+    callMCPTool: async () => ({ content: [{ text: "MCP tool result" }] })
+  };
+}
 client.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) })
 );
